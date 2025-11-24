@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Useless Button - Click If You Dare</title>
+    <style>
+        :root {
+            --color-bg: #f5f5f5;
+            --color-surface: #ffffff;
+            --color-text: #1a1a1a;
+            --color-primary: #ff6b6b;
+            --color-primary-hover: #ff5252;
+            --color-secondary: #4ecdc4;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-bg: #1a1a1a;
+                --color-surface: #2d2d2d;
+                --color-text: #f5f5f5;
+                --color-primary: #ff6b6b;
+                --color-primary-hover: #ff5252;
+                --color-secondary: #4ecdc4;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ad-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 160px;
+            background: var(--color-surface);
+            padding: 20px;
+            text-align: center;
+            border-right: 2px solid var(--color-secondary);
+            font-size: 14px;
+            z-index: 1000;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ad-sidebar a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 1;
+            margin-top: 0;
+            margin-left: 160px;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 8vw, 4rem);
+            margin-bottom: 1rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .tagline {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--color-text);
+            opacity: 0.7;
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease 0.3s both;
+        }
+
+        .button-wrapper {
+            position: relative;
+            display: inline-block;
+            margin: 2rem 0;
+        }
+
+        #useless-button {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            padding: clamp(1rem, 3vw, 2rem) clamp(2rem, 6vw, 4rem);
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 40px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: pulse 2s infinite, fadeInUp 0.8s ease 0.5s both;
+        }
+
+        #useless-button:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        #useless-button:hover:before {
+            width: 300px;
+            height: 300px;
+        }
+
+        #useless-button:hover {
+            background: var(--color-primary-hover);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 50px rgba(255, 107, 107, 0.6);
+        }
+
+        #useless-button:active {
+            transform: translateY(0) scale(0.95);
+        }
+
+        .counter {
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+            margin-top: 2rem;
+            opacity: 0.6;
+            animation: fadeIn 1s ease 0.8s both;
+        }
+
+        .counter-number {
+            font-weight: 700;
+            color: var(--color-primary);
+            font-size: 1.3em;
+        }
+
+        .share-section {
+            margin-top: 3rem;
+            animation: fadeIn 1s ease 1s both;
+        }
+
+        .share-text {
+            font-size: 0.9rem;
+            opacity: 0.5;
+            margin-bottom: 1rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            border: 2px solid var(--color-text);
+            background: transparent;
+            color: var(--color-text);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        .share-btn:hover {
+            background: var(--color-text);
+            color: var(--color-bg);
+            transform: translateY(-2px);
+        }
+
+        .floating-emoji {
+            position: fixed;
+            font-size: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            animation: float 3s ease-out forwards;
+        }
+
+        @keyframes float {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-200px) rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            font-size: 0.8rem;
+            opacity: 0.4;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .ad-sidebar {
+                width: 100%;
+                height: 60px;
+                bottom: auto;
+                border-right: none;
+                border-bottom: 2px solid var(--color-secondary);
+                padding: 10px;
+            }
+            
+            .container {
+                margin-left: 0;
+                margin-top: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="ad-sidebar">
+        📢 Ad Space<br>
+        <a href="#">Google AdSense</a>
+    </div>
+
+    <div class="container">
+        <div class="button-wrapper">
+            <button id="useless-button" aria-label="Click the useless button">
+                CLICK ME
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // URL Pool: 85% Fun Sites, 15% Affiliate Links
+        const urlPool = {
+            // Fun/Random Sites (85%)
+            fun: [
+                'https://www.wikipedia.org/wiki/Special:Random',
+                'https://theuselessweb.com',
+                'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                'https://www.fallingfalling.com',
+                'https://cat-bounce.com',
+                'https://www.staggeringbeauty.com',
+                'https://www.omfgdogs.com',
+                'https://www.koalastothemax.com',
+                'https://puginarug.com',
+                'https://alwaysjudgeabookbyitscover.com',
+                'https://thatsthefinger.com',
+                'https://cant-not-tweet-this.com',
+                'https://weirdorconfusing.com',
+                'https://www.pointerpointer.com',
+                'https://www.republiquedesmangues.fr',
+                'https://www.eelslap.com',
+                'https://www.donothingfor2minutes.com',
+                'https://www.trypap.com',
+                'https://www.patience-is-a-virtue.org',
+                'https://pixelthoughts.co',
+                'https://www.windows93.net',
+                'https://www.hackertyper.com',
+                'https://www.geoguessr.com',
+                'https://www.incredibox.com',
+                'https://quickdraw.withgoogle.com',
+                'https://thequietplaceproject.xyz',
+                'https://www.nohello.com',
+                'https://isitchristmas.com',
+                'https://www.checkbox.rip',
+                'https://endless.horse',
+                'https://www.sanger.dk',
+                'https://www.partridgegetslucky.com',
+                'https://www.randomcolour.com',
+                'https://www.randomuselesswebsites.com'
+            ],
+            
+            // Affiliate Links - Meme/Novelty Products (15%)
+            // Replace these with YOUR actual Amazon Associates affiliate links
+            affiliate: [
+                'https://www.amazon.com/dp/B07X6C9RMF?tag=YOURID-20', // Funny coffee mug
+                'https://www.amazon.com/dp/B085R4WJ5Y?tag=YOURID-20', // Desk toy
+                'https://www.amazon.com/dp/B07QKSQHM1?tag=YOURID-20', // Novelty item
+                'https://www.amazon.com/dp/B08L7NRV7J?tag=YOURID-20', // Gag gift
+                'https://www.amazon.com/dp/B087CQ5XD8?tag=YOURID-20', // Meme shirt
+                'https://www.amazon.com/dp/B07P7VCP9V?tag=YOURID-20'  // Random gadget
+            ]
+        };
+
+        // Click counter (stored in memory, resets on page reload)
+        let clickCount = parseInt(sessionStorage.getItem('clickCount')) || 0;
+        const clickCountElement = document.getElementById('click-count');
+        clickCountElement.textContent = clickCount.toLocaleString();
+
+        // Emoji pool for floating effects
+        const emojis = ['😂', '🤦‍♂️', '🎉', '🤷‍♀️', '😅', '🎊', '💫', '⭐', '✨', '🌟', '🎯', '🎪'];
+
+        // Button click handler
+        const button = document.getElementById('useless-button');
+        button.addEventListener('click', function(e) {
+            // Increment counter
+            clickCount++;
+            clickCountElement.textContent = clickCount.toLocaleString();
+            sessionStorage.setItem('clickCount', clickCount);
+
+            // Create floating emoji
+            createFloatingEmoji(e.clientX, e.clientY);
+
+            // Random redirect logic: 85% fun, 15% affiliate
+            const randomNum = Math.random();
+            let targetUrl;
+
+            if (randomNum < 0.85) {
+                // 85% chance: Random fun site
+                targetUrl = urlPool.fun[Math.floor(Math.random() * urlPool.fun.length)];
+            } else {
+                // 15% chance: Affiliate link
+                targetUrl = urlPool.affiliate[Math.floor(Math.random() * urlPool.affiliate.length)];
+            }
+
+            // Redirect to selected URL
+            setTimeout(() => {
+                window.open(targetUrl, '_blank', 'noopener,noreferrer');
+            }, 300);
+        });
+
+        // Create floating emoji animation
+        function createFloatingEmoji(x, y) {
+            const emoji = document.createElement('div');
+            emoji.className = 'floating-emoji';
+            emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.style.left = x + 'px';
+            emoji.style.top = y + 'px';
+            document.body.appendChild(emoji);
+
+            setTimeout(() => {
+                emoji.remove();
+            }, 3000);
+        }
+
+        // Share functionality
+        const shareUrl = window.location.href;
+        const shareText = 'I just found the most useless button on the internet 😂';
+
+        document.getElementById('share-twitter').href = 
+            `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+        
+        document.getElementById('share-reddit').href = 
+            `https://www.reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareText)}`;
+        
+        document.getElementById('share-facebook').href = 
+            `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+
+        // Fun: Change button text randomly
+        const buttonTexts = [
+            'CLICK ME',
+            'PUSH IT',
+            'DO IT',
+            'PRESS ME',
+            'TAP HERE',
+            'WHY NOT?',
+            'JUST CLICK',
+            'ONE MORE',
+            'AGAIN!'
+        ];
+
+        setInterval(() => {
+            button.textContent = buttonTexts[Math.floor(Math.random() * buttonTexts.length)];
+        }, 3000);
+    </script>
+</body>
+</html>
+
