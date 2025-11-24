@@ -383,10 +383,8 @@
                 targetUrl = urlPool.affiliate[Math.floor(Math.random() * urlPool.affiliate.length)];
             }
 
-            // Redirect to selected URL
-            setTimeout(() => {
-                window.open(targetUrl, '_blank', 'noopener,noreferrer');
-            }, 300);
+            // Redirect to selected URL (direct navigation to avoid popup blockers)
+            window.location.href = targetUrl;
         });
 
         // Create floating emoji animation
@@ -435,4 +433,3 @@
     </script>
 </body>
 </html>
-
