@@ -1,0 +1,11 @@
+{
+  "name": "useless-button",
+  "version": "1.0.0",
+  "description": "A stupidly simple website with one button that redirects to 300+ random meme/annoying websites.",
+  "main": "index.html",
+  "keywords": [
+    "button", "meme", "random", "redirect", "useless", "weird", "pastel"
+  ],
+  "author": "You",
+  "license": "MIT"
+}
