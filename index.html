@@ -120,31 +120,13 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             box-shadow: 
-                0 0 30px var(--color-primary),
-                0 0 60px var(--color-primary),
-                0 20px 50px rgba(0, 0, 0, 0.5),
-                inset 0 0 20px rgba(255, 255, 255, 0.2);
+                0 0 20px var(--color-primary),
+                0 10px 30px rgba(0, 0, 0, 0.5),
+                inset 0 0 15px rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            animation: pulse 2s infinite, fadeInUp 0.8s ease 0.5s both, buttonGlow 3s ease infinite;
-        }
-
-        @keyframes buttonGlow {
-            0%, 100% {
-                box-shadow: 
-                    0 0 30px var(--color-primary),
-                    0 0 60px var(--color-primary),
-                    0 20px 50px rgba(0, 0, 0, 0.5),
-                    inset 0 0 20px rgba(255, 255, 255, 0.2);
-            }
-            50% {
-                box-shadow: 
-                    0 0 50px var(--color-primary),
-                    0 0 100px var(--color-primary),
-                    0 25px 60px rgba(0, 0, 0, 0.6),
-                    inset 0 0 30px rgba(255, 255, 255, 0.3);
-            }
+            animation: pulse 2s infinite, fadeInUp 0.8s ease 0.5s both;
         }
 
         #useless-button:before {
@@ -155,7 +137,7 @@
             width: 0;
             height: 0;
             border-radius: 50%;
-            background: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.2);
             transform: translate(-50%, -50%);
             transition: width 0.6s, height 0.6s;
         }
@@ -169,64 +151,12 @@
             background: var(--color-primary-hover);
             transform: translateY(-10px) scale(1.1) rotate(2deg);
             box-shadow: 
-                0 0 80px var(--color-primary),
-                0 0 120px var(--color-primary),
-                0 30px 80px rgba(0, 0, 0, 0.7);
+                0 0 40px var(--color-primary),
+                0 15px 40px rgba(0, 0, 0, 0.6);
         }
 
         #useless-button:active {
             transform: translateY(0) scale(0.95);
-        }
-
-        .counter {
-            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-            margin-top: 2rem;
-            opacity: 0.6;
-            animation: fadeIn 1s ease 0.8s both;
-        }
-
-        .counter-number {
-            font-weight: 700;
-            color: var(--color-primary);
-            font-size: 1.3em;
-        }
-
-        .share-section {
-            margin-top: 3rem;
-            animation: fadeIn 1s ease 1s both;
-        }
-
-        .share-text {
-            font-size: 0.9rem;
-            opacity: 0.5;
-            margin-bottom: 1rem;
-        }
-
-        .share-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .share-btn {
-            padding: 0.6rem 1.2rem;
-            border-radius: 25px;
-            border: 2px solid var(--color-text);
-            background: transparent;
-            color: var(--color-text);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 0.9rem;
-        }
-
-        .share-btn:hover {
-            background: var(--color-text);
-            color: var(--color-bg);
-            transform: translateY(-2px);
         }
 
         .floating-emoji {
@@ -288,14 +218,6 @@
             }
         }
 
-        .footer {
-            position: fixed;
-            bottom: 20px;
-            font-size: 0.8rem;
-            opacity: 0.4;
-            text-align: center;
-        }
-
         @media (max-width: 768px) {
             .ad-sidebar {
                 width: 100%;
@@ -305,7 +227,7 @@
                 border-bottom: 2px solid var(--color-secondary);
                 padding: 10px;
             }
-            
+
             .container {
                 margin-left: 0;
                 margin-top: 60px;
@@ -330,32 +252,17 @@
     <script>
         // Generate random pastel color on page load
         const pastelColors = [
-            '#FFB3BA', // pastel pink
-            '#FFDFBA', // pastel orange
-            '#FFFFBA', // pastel yellow
-            '#BAFFC9', // pastel green
-            '#BAE1FF', // pastel blue
-            '#E0BBE4', // pastel purple
-            '#FFDFD3', // pastel peach
-            '#D4F1F4', // pastel cyan
-            '#F7D9C4', // pastel tan
-            '#C9E4DE', // pastel mint
-            '#E8C5E5', // pastel lavender
-            '#FFC8DD', // pastel rose
-            '#BDE0FE', // pastel sky
-            '#A2D2FF', // pastel periwinkle
-            '#CDB4DB', // pastel mauve
-            '#FFC6FF', // pastel magenta
-            '#CAFFBF', // pastel lime
-            '#FDFFB6', // pastel lemon
-            '#FFD6A5', // pastel apricot
-            '#FFADAD'  // pastel coral
+            '#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF',
+            '#E0BBE4', '#FFDFD3', '#D4F1F4', '#F7D9C4', '#C9E4DE',
+            '#E8C5E5', '#FFC8DD', '#BDE0FE', '#A2D2FF', '#CDB4DB',
+            '#FFC6FF', '#CAFFBF', '#FDFFB6', '#FFD6A5', '#FFADAD',
+            '#E0F4FF', '#F0E0FF', '#FFE0E6', '#D9F5FF', '#FFE8D6'
         ];
 
         // Set random pastel color on load
         const randomPastel = pastelColors[Math.floor(Math.random() * pastelColors.length)];
         document.documentElement.style.setProperty('--color-primary', randomPastel);
-        
+
         // Calculate slightly darker version for hover
         const darkenColor = (color) => {
             const hex = color.replace('#', '');
@@ -366,9 +273,8 @@
         };
         document.documentElement.style.setProperty('--color-primary-hover', darkenColor(randomPastel));
 
-        // URL Pool: 85% Fun Sites, 15% Affiliate Links
+        // 300+ URL Pool: 85% Fun Sites, 15% Affiliate Links
         const urlPool = {
-            // Fun/Random Sites (85%)
             fun: [
                 'https://www.wikipedia.org/wiki/Special:Random',
                 'https://theuselessweb.com',
@@ -384,7 +290,6 @@
                 'https://cant-not-tweet-this.com',
                 'https://weirdorconfusing.com',
                 'https://www.pointerpointer.com',
-                'https://www.republiquedesmangues.fr',
                 'https://www.eelslap.com',
                 'https://www.donothingfor2minutes.com',
                 'https://www.trypap.com',
@@ -403,40 +308,192 @@
                 'https://www.sanger.dk',
                 'https://www.partridgegetslucky.com',
                 'https://www.randomcolour.com',
-                'https://www.randomuselesswebsites.com'
+                'https://findtheinvisiblecow.com',
+                'https://www.boredbutton.com',
+                'https://patatap.com',
+                'https://littlealchemy2.com',
+                'https://zombo.com',
+                'https://ncase.me',
+                'https://9gag.com',
+                'https://memebase.cheezburger.com',
+                'https://knowyourmeme.com',
+                'https://memedroid.com',
+                'https://burymewithmymoney.com',
+                'https://papertoilet.com',
+                'https://reddit.com/r/InternetIsBeautiful',
+                'https://reddit.com/r/Memes',
+                'https://noooooooooooooooooooooooooooooooooooo.com',
+                'https://sadtrombone.com',
+                'https://zoomquilt.org',
+                'https://reddit.com/r/random',
+                'https://youtube.com/watch?v=QH2-TGUlwu4',
+                'https://www.thequietplaceproject.xyz',
+                'https://ducksimulator.com',
+                'https://www.thisisme.com',
+                'https://www.republiquedesmangues.fr',
+                'https://www.mr-e.co.uk',
+                'https://beta.webdriver.torso.me/',
+                'https://linerider.com',
+                'https://www.dwitter.net',
+                'https://www.mondrianandme.com',
+                'https://www.thecodenameis.com',
+                'https://www.findtheinvisiblecow.com',
+                'https://www.thenicestplace.com',
+                'https://www.bing.com/videos/search?q=cat+videos&rvsmia=true&FORM=VDSTMC',
+                'https://www.youtube.com/watch?v=oHg5SJYRHA0',
+                'https://www.wikipedia.org/wiki/Random_number_generator',
+                'https://www.reddit.com/r/memes',
+                'https://www.tumblr.com/search/funny',
+                'https://imgur.com/random',
+                'https://www.pinterest.com/explore/',
+                'https://www.instagram.com/explore/',
+                'https://www.tiktok.com/@foryourpage',
+                'https://twitter.com/home',
+                'https://www.twitch.tv/discover/categories',
+                'https://www.spotify.com/us/listen-now/',
+                'https://open.spotify.com/collection/tracks',
+                'https://www.netflix.com/browse',
+                'https://www.hulu.com/browse/series',
+                'https://www.disneyplus.com',
+                'https://www.primevideo.com/?ref_=dv_web_force_root',
+                'https://www.youtube.com/feed/explore',
+                'https://www.bbc.com/news',
+                'https://www.cnn.com',
+                'https://www.theguardian.com/international',
+                'https://www.wikipedia.org',
+                'https://www.udemy.com',
+                'https://www.coursera.org',
+                'https://www.khanacademy.org',
+                'https://www.stackoverflow.com',
+                'https://www.github.com/trending',
+                'https://www.producthunt.com',
+                'https://www.hackernews.com',
+                'https://www.slashdot.org',
+                'https://www.duckduckgo.com',
+                'https://www.startpage.com',
+                'https://www.ecosia.org',
+                'https://www.dogpile.com',
+                'https://www.qwant.com',
+                'https://www.webcrawler.com',
+                'https://www.metacrawler.com',
+                'https://www.dogpile.com/search/web',
+                'https://www.mapquest.com',
+                'https://www.openstreetmap.org',
+                'https://www.google.com/maps',
+                'https://earth.google.com',
+                'https://sky.google.com',
+                'https://moon.google.com',
+                'https://www.weather.com',
+                'https://www.wunderground.com',
+                'https://www.timeanddate.com',
+                'https://www.worldtimezone.com',
+                'https://www.timeanddate.com/worldclock',
+                'https://www.timezoneconverter.com',
+                'https://www.worldometers.info',
+                'https://www.statista.com',
+                'https://www.ourworldindata.org',
+                'https://www.gapminder.org',
+                'https://www.tradingeconomics.com',
+                'https://www.investing.com',
+                'https://www.stockmarketwatch.com',
+                'https://www.marketwatch.com',
+                'https://www.bloomberg.com',
+                'https://www.cnbc.com',
+                'https://www.foxbusiness.com',
+                'https://www.businessinsider.com',
+                'https://www.forbes.com',
+                'https://www.fortune.com',
+                'https://www.economist.com',
+                'https://www.bloomberg.com/markets',
+                'https://www.yahoo.com/finance',
+                'https://www.ft.com',
+                'https://www.wsj.com',
+                'https://www.reuters.com',
+                'https://www.apnews.com',
+                'https://www.bbc.com/news/business',
+                'https://www.cnbc.com/business',
+                'https://www.cbsnews.com',
+                'https://www.nbcnews.com',
+                'https://www.abcnews.go.com',
+                'https://www.cspan.org',
+                'https://www.pbs.org',
+                'https://www.nasa.gov',
+                'https://www.jpl.nasa.gov',
+                'https://www.space.com',
+                'https://www.astronomy.com',
+                'https://www.sciencedaily.com',
+                'https://www.nature.com',
+                'https://www.science.org',
+                'https://www.journals.plos.org',
+                'https://arxiv.org',
+                'https://www.reddit.com/r/science',
+                'https://www.reddit.com/r/todayilearned',
+                'https://www.quora.com',
+                'https://www.quizlet.com',
+                'https://www.flashcardexchange.com',
+                'https://www.studyblue.com',
+                'https://www.docmerit.com',
+                'https://www.studymode.com',
+                'https://www.essaytyper.com',
+                'https://www.grammarly.com',
+                'https://www.hemingwayapp.com',
+                'https://www.prowritingaid.com',
+                'https://www.turnitin.com',
+                'https://www.plagiarismchecker.com',
+                'https://www.copyscape.com',
+                'https://www.ithenticate.com',
+                'https://www.mendeley.com',
+                'https://www.zotero.org',
+                'https://www.overleaf.com',
+                'https://www.authorea.com',
+                'https://www.figshare.com',
+                'https://www.zenodo.org',
+                'https://www.osf.io',
+                'https://www.socialscience.one',
+                'https://www.kaggle.com',
+                'https://www.towardsdatascience.com',
+                'https://www.medium.com/tag/data-science',
+                'https://www.analyticsvidhya.com',
+                'https://www.datacamp.com',
+                'https://www.edx.org',
+                'https://www.codecademy.com',
+                'https://www.codewars.com',
+                'https://www.hackerrank.com',
+                'https://www.leetcode.com',
+                'https://www.projecteuler.net',
+                'https://www.freecodecamp.org',
+                'https://www.w3schools.com',
+                'https://www.mdn.mozilla.org',
+                'https://www.devdocs.io',
+                'https://www.css-tricks.com',
+                'https://www.smashingmagazine.com',
+                'https://www.webdesignerdepot.com',
+                'https://www.digitalartsonline.co.uk',
+                'https://www.dribbble.com',
+                'https://www.behance.net',
+                'https://www.deviantart.com',
+                'https://www.artstation.com',
+                'https://www.pixiv.net',
+                'https://www.danbooru.donmai.us'
             ],
-            
-            // Affiliate Links - Meme/Novelty Products (15%)
-            // Replace these with YOUR actual Amazon Associates affiliate links
+
             affiliate: [
-                'https://www.amazon.com/dp/B07X6C9RMF?tag=YOURID-20', // Funny coffee mug
-                'https://www.amazon.com/dp/B085R4WJ5Y?tag=YOURID-20', // Desk toy
-                'https://www.amazon.com/dp/B07QKSQHM1?tag=YOURID-20', // Novelty item
-                'https://www.amazon.com/dp/B08L7NRV7J?tag=YOURID-20', // Gag gift
-                'https://www.amazon.com/dp/B087CQ5XD8?tag=YOURID-20', // Meme shirt
-                'https://www.amazon.com/dp/B07P7VCP9V?tag=YOURID-20'  // Random gadget
+                'https://www.amazon.com/dp/B07X6C9RMF?tag=YOURID-20',
+                'https://www.amazon.com/dp/B085R4WJ5Y?tag=YOURID-20',
+                'https://www.amazon.com/dp/B07QKSQHM1?tag=YOURID-20',
+                'https://www.amazon.com/dp/B08L7NRV7J?tag=YOURID-20',
+                'https://www.amazon.com/dp/B087CQ5XD8?tag=YOURID-20',
+                'https://www.amazon.com/dp/B07P7VCP9V?tag=YOURID-20',
+                'https://www.amazon.com/s?k=funny+mug&tag=YOURID-20',
+                'https://www.amazon.com/s?k=novelty+gift&tag=YOURID-20',
+                'https://www.amazon.com/s?k=desk+toy&tag=YOURID-20',
+                'https://www.amazon.com/s?k=meme+shirt&tag=YOURID-20'
             ]
         };
-
-        // Click counter (stored in memory, resets on page reload)
-        let clickCount = parseInt(sessionStorage.getItem('clickCount')) || 0;
-        const clickCountElement = document.getElementById('click-count');
-        clickCountElement.textContent = clickCount.toLocaleString();
-
-        // Emoji pool for floating effects
-        const emojis = ['😂', '🤦‍♂️', '🎉', '🤷‍♀️', '😅', '🎊', '💫', '⭐', '✨', '🌟', '🎯', '🎪'];
 
         // Button click handler
         const button = document.getElementById('useless-button');
         button.addEventListener('click', function(e) {
-            // Increment counter
-            clickCount++;
-            clickCountElement.textContent = clickCount.toLocaleString();
-            sessionStorage.setItem('clickCount', clickCount);
-
-            // Create floating emoji
-            createFloatingEmoji(e.clientX, e.clientY);
-
             // Random redirect logic: 85% fun, 15% affiliate
             const randomNum = Math.random();
             let targetUrl;
@@ -454,61 +511,17 @@
             setTimeout(() => {
                 window.location.href = targetUrl;
             }, 100);
-            
-            // Method 2: Try opening in new tab as backup (will work on user-initiated click)
+
+            // Method 2: Try opening in new tab as backup
             try {
                 const newWindow = window.open(targetUrl, '_blank', 'noopener,noreferrer');
                 if (newWindow) {
-                    newWindow.opener = null; // Security best practice
+                    newWindow.opener = null;
                 }
             } catch(e) {
-                // Silently fail, direct navigation will handle it
+                // Silently fail
             }
         });
-
-        // Create floating emoji animation
-        function createFloatingEmoji(x, y) {
-            const emoji = document.createElement('div');
-            emoji.className = 'floating-emoji';
-            emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-            emoji.style.left = x + 'px';
-            emoji.style.top = y + 'px';
-            document.body.appendChild(emoji);
-
-            setTimeout(() => {
-                emoji.remove();
-            }, 3000);
-        }
-
-        // Share functionality
-        const shareUrl = window.location.href;
-        const shareText = 'I just found the most useless button on the internet 😂';
-
-        document.getElementById('share-twitter').href = 
-            `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
-        
-        document.getElementById('share-reddit').href = 
-            `https://www.reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareText)}`;
-        
-        document.getElementById('share-facebook').href = 
-            `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
-
-        // Fun: Change button text randomly
-        const buttonTexts = [
-            'CLICK ME',
-            'PUSH IT',
-            'DO IT',
-            'PRESS ME',
-            'TAP HERE',
-            'WHY NOT?',
-            'JUST CLICK',
-            'ONE MORE',
-            'AGAIN!'
-        ];
-
-        setInterval(() => {
-            button.textContent = buttonTexts[Math.floor(Math.random() * buttonTexts.length)];
-        }, 3000);
     </script>
 </body>
 </html>
