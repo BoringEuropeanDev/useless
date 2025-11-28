@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Useless Button - Click If You Dare</title>
-        <!-- SEO Meta Tags -->
-    <meta name="description" content="The Useless Button: Click to be randomly teleported to over 300 meme sites, weird corners of the internet, and funny useless websites. Pure pastel chaos for boredom relief.">
-    <meta name="keywords" content="useless button, useless websites, random redirect, meme button, meme sites, bored, time waster, weird internet, internet games, procrastination
-        
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2157821034002726"
-     crossorigin="anonymous"></script>
-    <style>
-        :root {
-            --color-bg: #000000;
-            --color-surface: #1a1a1a;
-            --color-text: #ffffff;
-            --color-primary: #ff6b6b;
-            --color-primary-hover: #ff5252;
-            --color-secondary: #4ecdc4;
-        }
+    <title>The Useless Button - Your Portal to Internet Weirdness</title>
 
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Click the button and get randomly redirected to meme sites, weird websites, and funny internet oddities. Pure pastel chaos. 300+ random redirects.">
+    <meta name="keywords" content="useless button, random website, meme site, weird internet, bored, procrastination, internet games, funny websites, random redirect, time waster">
+    <meta name="author" content="useless-button.xyz">
+    <meta name="robots" content="index,follow">
+    <meta name="language" content="English">
+
+    <!-- Open Graph Tags (social sharing) -->
+    <meta property="og:title" content="The Useless Button - Click If You Dare">
+    <meta property="og:description" content="One button, 300+ random redirects. Get sent to meme sites, weird websites, or fun internet oddities. Pure chaos.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.useless-button.xyz/">
+    <meta property="og:image" content="https://www.useless-button.xyz/og-image.png">
+    <meta property="og:site_name" content="Useless Button">
+
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -28,258 +29,335 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #000000;
-            color: #ffffff;
+            background-color: #000;
+            color: #fff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            overflow: hidden;
-            position: relative;
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 128, 171, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(189, 224, 254, 0.1) 0%, transparent 50%);
-            animation: backgroundShift 10s ease infinite;
+            line-height: 1.6;
         }
 
-        @keyframes backgroundShift {
-            0%, 100% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
+        /* Menu Button - No box, just dots */
+        .menu-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: #666;
+            font-size: 32px;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
         }
 
+        .menu-button:hover {
+            color: #fff;
+        }
+
+        /* Menu Dropdown */
+        .menu-dropdown {
+            display: none;
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            background: #000;
+            border: 1px solid #222;
+            border-radius: 5px;
+            min-width: 150px;
+            z-index: 999;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .menu-dropdown.active {
+            display: block;
+        }
+
+        .menu-dropdown a {
+            display: block;
+            padding: 12px 20px;
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 1px solid #222;
+            transition: all 0.3s ease;
+        }
+
+        .menu-dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        .menu-dropdown a:hover {
+            background: #111;
+            color: #FFB3BA;
+        }
+
+        /* Ad Sidebar - Blends with background */
         .ad-sidebar {
             position: fixed;
             left: 0;
             top: 0;
-            bottom: 0;
             width: 160px;
-            background: rgba(26, 26, 26, 0.95);
+            height: 100vh;
+            background: #000;
             backdrop-filter: blur(10px);
             padding: 20px;
             text-align: center;
-            border-right: 2px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid #222;
             font-size: 14px;
-            z-index: 1000;
-            box-shadow: 2px 0 20px rgba(0,0,0,0.5);
+            box-shadow: none;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            z-index: 900;
         }
 
         .ad-sidebar a {
-            color: var(--color-primary);
+            color: #666;
             text-decoration: none;
             font-weight: 600;
             margin-top: 10px;
         }
 
+        /* Main Container */
         .container {
-            text-align: center;
-            z-index: 1;
-            margin-top: 0;
+            flex: 1;
             margin-left: 160px;
-        }
-
-        h1 {
-            font-size: clamp(2rem, 8vw, 4rem);
-            margin-bottom: 1rem;
-            font-weight: 900;
-            letter-spacing: -2px;
-            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInDown 0.8s ease;
-        }
-
-        .tagline {
-            font-size: clamp(1rem, 3vw, 1.5rem);
-            color: var(--color-text);
-            opacity: 0.7;
-            margin-bottom: 3rem;
-            animation: fadeIn 1s ease 0.3s both;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .button-wrapper {
-            position: relative;
-            display: inline-block;
-            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            width: 100%;
         }
 
         #useless-button {
-            font-size: clamp(1.5rem, 5vw, 3rem);
-            padding: clamp(1.5rem, 4vw, 3rem) clamp(3rem, 8vw, 6rem);
-            background: var(--color-primary);
-            color: #000000;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            box-shadow: 
-                0 0 20px var(--color-primary),
-                0 10px 30px rgba(0, 0, 0, 0.5),
-                inset 0 0 15px rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            animation: pulse 2s infinite, fadeInUp 0.8s ease 0.5s both;
-        }
-
-        #useless-button:before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
+            width: 250px;
+            height: 250px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        #useless-button:hover:before {
-            width: 300px;
-            height: 300px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 30px var(--color-primary, #FFB3BA);
         }
 
         #useless-button:hover {
-            background: var(--color-primary-hover);
-            transform: translateY(-10px) scale(1.1) rotate(2deg);
-            box-shadow: 
-                0 0 40px var(--color-primary),
-                0 15px 40px rgba(0, 0, 0, 0.6);
+            transform: scale(1.1);
+            box-shadow: 0 0 50px var(--color-primary, #FFB3BA);
         }
 
         #useless-button:active {
-            transform: translateY(0) scale(0.95);
+            transform: scale(0.95);
         }
 
-        .floating-emoji {
-            position: fixed;
-            font-size: 2rem;
-            opacity: 0;
-            pointer-events: none;
-            animation: float 3s ease-out forwards;
+        /* Content Section */
+        .content-section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
 
-        @keyframes float {
-            0% {
-                opacity: 1;
-                transform: translateY(0) rotate(0deg);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-200px) rotate(360deg);
-            }
+        .content-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #FFB3BA;
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.02);
-            }
+        .content-section p {
+            margin-bottom: 15px;
+            opacity: 0.9;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        .featured-sites {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .site-card {
+            background: #000;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .site-card:hover {
+            border-color: #FFB3BA;
+            background: #0a0a0a;
+            transform: translateY(-5px);
+        }
+
+        .site-card h3 {
+            color: #FFB3BA;
+            margin-bottom: 10px;
+        }
+
+        .site-card p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Hide pages */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
         }
 
         @media (max-width: 768px) {
             .ad-sidebar {
                 width: 100%;
                 height: 60px;
-                bottom: auto;
-                border-right: none;
-                border-bottom: 2px solid var(--color-secondary);
                 padding: 10px;
+                flex-direction: row;
+                justify-content: flex-start;
             }
 
             .container {
                 margin-left: 0;
                 margin-top: 60px;
             }
+
+            #useless-button {
+                width: 200px;
+                height: 200px;
+                font-size: 18px;
+            }
+
+            .menu-dropdown {
+                right: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Ad Sidebar -->
     <div class="ad-sidebar">
-        📢 Ad Space<br>
+        Ad Space<br>
         <a href="#">Google AdSense</a>
     </div>
 
+    <!-- Menu Button - No box, just dots -->
+    <button class="menu-button" id="menuButton">⋮</button>
+
+    <!-- Menu Dropdown -->
+    <div class="menu-dropdown" id="menuDropdown">
+        <a href="#" onclick="showPage('home')">Home</a>
+        <a href="#" onclick="showPage('about')">About</a>
+    </div>
+
+    <!-- Main Container -->
     <div class="container">
-        <div class="button-wrapper">
-            <button id="useless-button" aria-label="Click the useless button">
-                CLICK ME
-            </button>
+        <!-- HOME PAGE - Button Only -->
+        <div id="home" class="page active">
+            <div class="button-wrapper">
+                <button id="useless-button" aria-label="Click the useless button">
+                    CLICK ME
+                </button>
+            </div>
+        </div>
+
+        <!-- ABOUT PAGE - Content -->
+        <div id="about" class="page">
+            <div class="content-section" style="margin-top: 50px;">
+                <h2>Welcome to The Useless Button</h2>
+                <p>Your portal to internet weirdness and meme chaos. Click the button above to be randomly redirected to one of 300+ bizarre, entertaining, and completely useless websites.</p>
+
+                <h2>How It Works</h2>
+                <p>• Click the giant button</p>
+                <p>• Get randomly redirected to a meme site, weird website, or funny internet oddity</p>
+                <p>• Explore the internet's weirdest corners</p>
+                <p>• Come back and click again for infinite entertainment</p>
+
+                <h2>Featured Sites You Might Visit</h2>
+                <div class="featured-sites">
+                    <div class="site-card">
+                        <h3>The Useless Web</h3>
+                        <p>A collection of bizarre and entertaining websites that serve no real purpose except pure fun.</p>
+                    </div>
+                    <div class="site-card">
+                        <h3>Cat Bounce</h3>
+                        <p>Watch adorable cats bounce around your screen to music. Pure chaos.</p>
+                    </div>
+                    <div class="site-card">
+                        <h3>Incredibox</h3>
+                        <p>Create music by dragging beatboxers onto the stage. Actually addictive.</p>
+                    </div>
+                    <div class="site-card">
+                        <h3>Quick Draw</h3>
+                        <p>Can Google's AI guess what you're drawing? Find out in this fun game.</p>
+                    </div>
+                    <div class="site-card">
+                        <h3>Geoguessr</h3>
+                        <p>Travel the world through random Google Street View locations. Super fun.</p>
+                    </div>
+                    <div class="site-card">
+                        <h3>Zombo.com</h3>
+                        <p>The legendary welcome to Zombocom. You can do anything at Zombocom.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Generate random pastel color on page load
+        // Pastel colors
         const pastelColors = [
             '#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF',
             '#E0BBE4', '#FFDFD3', '#D4F1F4', '#F7D9C4', '#C9E4DE',
             '#E8C5E5', '#FFC8DD', '#BDE0FE', '#A2D2FF', '#CDB4DB',
-            '#FFC6FF', '#CAFFBF', '#FDFFB6', '#FFD6A5', '#FFADAD',
-            '#E0F4FF', '#F0E0FF', '#FFE0E6', '#D9F5FF', '#FFE8D6'
+            '#FFC6FF', '#CAFFBF', '#FDFFB6', '#FFD6A5', '#FFADAD'
         ];
 
         // Set random pastel color on load
         const randomPastel = pastelColors[Math.floor(Math.random() * pastelColors.length)];
         document.documentElement.style.setProperty('--color-primary', randomPastel);
 
-        // Calculate slightly darker version for hover
-        const darkenColor = (color) => {
-            const hex = color.replace('#', '');
-            const r = Math.max(0, parseInt(hex.substr(0, 2), 16) - 20);
-            const g = Math.max(0, parseInt(hex.substr(2, 2), 16) - 20);
-            const b = Math.max(0, parseInt(hex.substr(4, 2), 16) - 20);
-            return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
-        };
-        document.documentElement.style.setProperty('--color-primary-hover', darkenColor(randomPastel));
+        // Menu toggle
+        document.getElementById('menuButton').addEventListener('click', function() {
+            document.getElementById('menuDropdown').classList.toggle('active');
+        });
 
-        // 300+ URL Pool: 85% Fun Sites, 15% Affiliate Links
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('menuDropdown');
+            const button = document.getElementById('menuButton');
+            if (!menu.contains(event.target) && !button.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+
+        // Show page function
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            // Close menu
+            document.getElementById('menuDropdown').classList.remove('active');
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // URL Pool: 85% Fun Sites, 15% Affiliate Links
         const urlPool = {
             fun: [
                 'https://www.wikipedia.org/wiki/Special:Random',
@@ -296,6 +374,7 @@
                 'https://cant-not-tweet-this.com',
                 'https://weirdorconfusing.com',
                 'https://www.pointerpointer.com',
+                'https://www.republiquedesmangues.fr',
                 'https://www.eelslap.com',
                 'https://www.donothingfor2minutes.com',
                 'https://www.trypap.com',
@@ -314,219 +393,26 @@
                 'https://www.sanger.dk',
                 'https://www.partridgegetslucky.com',
                 'https://www.randomcolour.com',
-                'https://findtheinvisiblecow.com',
-                'https://www.boredbutton.com',
-                'https://patatap.com',
-                'https://littlealchemy2.com',
-                'https://zombo.com',
-                'https://ncase.me',
-                'https://9gag.com',
-                'https://memebase.cheezburger.com',
-                'https://knowyourmeme.com',
-                'https://memedroid.com',
-                'https://burymewithmymoney.com',
-                'https://papertoilet.com',
-                'https://reddit.com/r/InternetIsBeautiful',
-                'https://reddit.com/r/Memes',
-                'https://noooooooooooooooooooooooooooooooooooo.com',
-                'https://sadtrombone.com',
-                'https://zoomquilt.org',
-                'https://reddit.com/r/random',
-                'https://youtube.com/watch?v=QH2-TGUlwu4',
-                'https://www.thequietplaceproject.xyz',
-                'https://ducksimulator.com',
-                'https://www.thisisme.com',
-                'https://www.republiquedesmangues.fr',
-                'https://www.mr-e.co.uk',
-                'https://beta.webdriver.torso.me/',
-                'https://linerider.com',
-                'https://www.dwitter.net',
-                'https://www.mondrianandme.com',
-                'https://www.thecodenameis.com',
-                'https://www.findtheinvisiblecow.com',
-                'https://www.thenicestplace.com',
-                'https://www.bing.com/videos/search?q=cat+videos&rvsmia=true&FORM=VDSTMC',
-                'https://www.youtube.com/watch?v=oHg5SJYRHA0',
-                'https://www.wikipedia.org/wiki/Random_number_generator',
-                'https://www.reddit.com/r/memes',
-                'https://www.tumblr.com/search/funny',
-                'https://imgur.com/random',
-                'https://www.pinterest.com/explore/',
-                'https://www.instagram.com/explore/',
-                'https://www.tiktok.com/@foryourpage',
-                'https://twitter.com/home',
-                'https://www.twitch.tv/discover/categories',
-                'https://www.spotify.com/us/listen-now/',
-                'https://open.spotify.com/collection/tracks',
-                'https://www.netflix.com/browse',
-                'https://www.hulu.com/browse/series',
-                'https://www.disneyplus.com',
-                'https://www.primevideo.com/?ref_=dv_web_force_root',
-                'https://www.youtube.com/feed/explore',
-                'https://www.bbc.com/news',
-                'https://www.cnn.com',
-                'https://www.theguardian.com/international',
-                'https://www.wikipedia.org',
-                'https://www.udemy.com',
-                'https://www.coursera.org',
-                'https://www.khanacademy.org',
-                'https://www.stackoverflow.com',
-                'https://www.github.com/trending',
-                'https://www.producthunt.com',
-                'https://www.hackernews.com',
-                'https://www.slashdot.org',
-                'https://www.duckduckgo.com',
-                'https://www.startpage.com',
-                'https://www.ecosia.org',
-                'https://www.dogpile.com',
-                'https://www.qwant.com',
-                'https://www.webcrawler.com',
-                'https://www.metacrawler.com',
-                'https://www.dogpile.com/search/web',
-                'https://www.mapquest.com',
-                'https://www.openstreetmap.org',
-                'https://www.google.com/maps',
-                'https://earth.google.com',
-                'https://sky.google.com',
-                'https://moon.google.com',
-                'https://www.weather.com',
-                'https://www.wunderground.com',
-                'https://www.timeanddate.com',
-                'https://www.worldtimezone.com',
-                'https://www.timeanddate.com/worldclock',
-                'https://www.timezoneconverter.com',
-                'https://www.worldometers.info',
-                'https://www.statista.com',
-                'https://www.ourworldindata.org',
-                'https://www.gapminder.org',
-                'https://www.tradingeconomics.com',
-                'https://www.investing.com',
-                'https://www.stockmarketwatch.com',
-                'https://www.marketwatch.com',
-                'https://www.bloomberg.com',
-                'https://www.cnbc.com',
-                'https://www.foxbusiness.com',
-                'https://www.businessinsider.com',
-                'https://www.forbes.com',
-                'https://www.fortune.com',
-                'https://www.economist.com',
-                'https://www.bloomberg.com/markets',
-                'https://www.yahoo.com/finance',
-                'https://www.ft.com',
-                'https://www.wsj.com',
-                'https://www.reuters.com',
-                'https://www.apnews.com',
-                'https://www.bbc.com/news/business',
-                'https://www.cnbc.com/business',
-                'https://www.cbsnews.com',
-                'https://www.nbcnews.com',
-                'https://www.abcnews.go.com',
-                'https://www.cspan.org',
-                'https://www.pbs.org',
-                'https://www.nasa.gov',
-                'https://www.jpl.nasa.gov',
-                'https://www.space.com',
-                'https://www.astronomy.com',
-                'https://www.sciencedaily.com',
-                'https://www.nature.com',
-                'https://www.science.org',
-                'https://www.journals.plos.org',
-                'https://arxiv.org',
-                'https://www.reddit.com/r/science',
-                'https://www.reddit.com/r/todayilearned',
-                'https://www.quora.com',
-                'https://www.quizlet.com',
-                'https://www.flashcardexchange.com',
-                'https://www.studyblue.com',
-                'https://www.docmerit.com',
-                'https://www.studymode.com',
-                'https://www.essaytyper.com',
-                'https://www.grammarly.com',
-                'https://www.hemingwayapp.com',
-                'https://www.prowritingaid.com',
-                'https://www.turnitin.com',
-                'https://www.plagiarismchecker.com',
-                'https://www.copyscape.com',
-                'https://www.ithenticate.com',
-                'https://www.mendeley.com',
-                'https://www.zotero.org',
-                'https://www.overleaf.com',
-                'https://www.authorea.com',
-                'https://www.figshare.com',
-                'https://www.zenodo.org',
-                'https://www.osf.io',
-                'https://www.socialscience.one',
-                'https://www.kaggle.com',
-                'https://www.towardsdatascience.com',
-                'https://www.medium.com/tag/data-science',
-                'https://www.analyticsvidhya.com',
-                'https://www.datacamp.com',
-                'https://www.edx.org',
-                'https://www.codecademy.com',
-                'https://www.codewars.com',
-                'https://www.hackerrank.com',
-                'https://www.leetcode.com',
-                'https://www.projecteuler.net',
-                'https://www.freecodecamp.org',
-                'https://www.w3schools.com',
-                'https://www.mdn.mozilla.org',
-                'https://www.devdocs.io',
-                'https://www.css-tricks.com',
-                'https://www.smashingmagazine.com',
-                'https://www.webdesignerdepot.com',
-                'https://www.digitalartsonline.co.uk',
-                'https://www.dribbble.com',
-                'https://www.behance.net',
-                'https://www.deviantart.com',
-                'https://www.artstation.com',
-                'https://www.pixiv.net',
-                'https://www.danbooru.donmai.us'
+                'https://www.randomuselesswebsites.com'
             ],
-
-            affiliate: [
-                'https://www.amazon.com/dp/B07X6C9RMF?tag=YOURID-20',
-                'https://www.amazon.com/dp/B085R4WJ5Y?tag=YOURID-20',
-                'https://www.amazon.com/dp/B07QKSQHM1?tag=YOURID-20',
-                'https://www.amazon.com/dp/B08L7NRV7J?tag=YOURID-20',
-                'https://www.amazon.com/dp/B087CQ5XD8?tag=YOURID-20',
-                'https://www.amazon.com/dp/B07P7VCP9V?tag=YOURID-20',
-                'https://www.amazon.com/s?k=funny+mug&tag=YOURID-20',
-                'https://www.amazon.com/s?k=novelty+gift&tag=YOURID-20',
-                'https://www.amazon.com/s?k=desk+toy&tag=YOURID-20',
-                'https://www.amazon.com/s?k=meme+shirt&tag=YOURID-20'
-            ]
+        
         };
 
         // Button click handler
         const button = document.getElementById('useless-button');
         button.addEventListener('click', function(e) {
-            // Random redirect logic: 85% fun, 15% affiliate
             const randomNum = Math.random();
             let targetUrl;
 
             if (randomNum < 0.85) {
-                // 85% chance: Random fun site
                 targetUrl = urlPool.fun[Math.floor(Math.random() * urlPool.fun.length)];
             } else {
-                // 15% chance: Affiliate link
                 targetUrl = urlPool.affiliate[Math.floor(Math.random() * urlPool.affiliate.length)];
             }
 
-            // ULTRA AGGRESSIVE POPUP BLOCKER BYPASS
-            // Method 1: Direct navigation (most reliable)
             setTimeout(() => {
                 window.location.href = targetUrl;
             }, 100);
-
-            // Method 2: Try opening in new tab as backup
-            try {
-                const newWindow = window.open(targetUrl, '_blank', 'noopener,noreferrer');
-                if (newWindow) {
-                    newWindow.opener = null;
-                }
-            } catch(e) {
-                // Silently fail
-            }
         });
     </script>
 </body>
