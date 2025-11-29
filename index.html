@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Useless Button - Your Portal to Internet Weirdness</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2157821034002726"
-     crossorigin="anonymous"></script>
 
     <!-- SEO Meta Tags -->
     <meta name="description" content="Click the button and get randomly redirected to meme sites, weird websites, and funny internet oddities. Pure pastel chaos. 300+ random redirects.">
@@ -21,6 +19,10 @@
     <meta property="og:url" content="https://www.useless-button.xyz/">
     <meta property="og:image" content="https://www.useless-button.xyz/og-image.png">
     <meta property="og:site_name" content="Useless Button">
+
+    <!-- GOOGLE ADSENSE SCRIPT -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2157821034002726"
+         crossorigin="anonymous"></script>
 
     <style>
         * {
@@ -83,6 +85,7 @@
             text-decoration: none;
             border-bottom: 1px solid #222;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .menu-dropdown a:last-child {
@@ -166,7 +169,7 @@
 
         /* Content Section */
         .content-section {
-            max-width: 800px;
+            max-width: 900px;
             margin: 40px auto;
             padding: 0 20px;
         }
@@ -175,11 +178,27 @@
             font-size: 28px;
             margin-bottom: 20px;
             color: #FFB3BA;
+            margin-top: 30px;
+        }
+
+        .content-section h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #FFB3BA;
+            margin-top: 25px;
         }
 
         .content-section p {
             margin-bottom: 15px;
             opacity: 0.9;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .content-section li {
+            margin-bottom: 10px;
+            opacity: 0.9;
+            margin-left: 20px;
         }
 
         .featured-sites {
@@ -206,11 +225,236 @@
         .site-card h3 {
             color: #FFB3BA;
             margin-bottom: 10px;
+            font-size: 16px;
         }
 
         .site-card p {
             font-size: 14px;
             opacity: 0.8;
+            margin-bottom: 0;
+            text-align: left;
+        }
+
+        /* Account Page Styles */
+        .account-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .auth-box {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #222;
+        }
+
+        .auth-tab {
+            padding: 10px 20px;
+            background: transparent;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .auth-tab.active {
+            color: #FFB3BA;
+            border-bottom-color: #FFB3BA;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #FFB3BA;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #FFB3BA;
+            box-shadow: 0 0 10px rgba(255, 179, 186, 0.3);
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 5px;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #FFB3BA;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: scale(1.02);
+        }
+
+        .error {
+            color: #ff6b6b;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .success {
+            color: #51cf66;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* Account Dashboard */
+        .account-dashboard {
+            display: none;
+        }
+
+        .account-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .username-display {
+            font-size: 24px;
+            color: #FFB3BA;
+            margin-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .stat-box {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            color: #FFB3BA;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .achievements-section {
+            margin-top: 30px;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .achievement {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .achievement.unlocked {
+            opacity: 1;
+            border-color: #FFB3BA;
+            box-shadow: 0 0 15px rgba(255, 179, 186, 0.3);
+        }
+
+        .achievement-icon {
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+        .achievement-label {
+            font-size: 10px;
+            color: #666;
+        }
+
+        .sites-visited {
+            margin-top: 30px;
+        }
+
+        .sites-list {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .site-item {
+            padding: 8px;
+            border-bottom: 1px solid #222;
+            font-size: 12px;
+            color: #FFB3BA;
+        }
+
+        .site-item:last-child {
+            border-bottom: none;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 12px;
+            background: #666;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .logout-btn:hover {
+            background: #555;
         }
 
         /* Hide pages */
@@ -245,6 +489,10 @@
             .menu-dropdown {
                 right: 10px;
             }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
@@ -252,7 +500,15 @@
     <!-- Ad Sidebar -->
     <div class="ad-sidebar">
         📢 Ad Space<br>
-        <a href="#">Google AdSense</a>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-2157821034002726"
+             data-ad-slot="1234567890"
+             data-ad-format="vertical"
+             data-full-width-responsive="false"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
     </div>
 
     <!-- Menu Button - No box, just dots -->
@@ -262,6 +518,7 @@
     <div class="menu-dropdown" id="menuDropdown">
         <a href="#" onclick="showPage('home')">Home</a>
         <a href="#" onclick="showPage('about')">About</a>
+        <a href="#" onclick="showPage('account')">Account</a>
     </div>
 
     <!-- Main Container -->
@@ -275,44 +532,173 @@
             </div>
         </div>
 
-        <!-- ABOUT PAGE - Content -->
+        <!-- ABOUT PAGE - ENHANCED WITH 1000+ WORDS -->
         <div id="about" class="page">
-            <div class="content-section" style="margin-top: 50px;">
+            <div class="content-section">
                 <h2>Welcome to The Useless Button</h2>
-                <p>Your portal to internet weirdness and meme chaos. Click the button above to be randomly redirected to one of 300+ bizarre, entertaining, and completely useless websites.</p>
+                <p>The Useless Button is a revolutionary platform designed to liberate you from the monotony of everyday web browsing. In a digital landscape dominated by algorithmic feeds and targeted content, The Useless Button offers something genuinely different: pure, unfiltered internet randomness. Our mission is simple yet profound – to reconnect users with the weird, wonderful, and downright bizarre corners of the internet that algorithm-driven platforms have effectively hidden away.</p>
 
-                <h2>How It Works</h2>
-                <p>• Click the giant button</p>
-                <p>• Get randomly redirected to a meme site, weird website, or funny internet oddity</p>
-                <p>• Explore the internet's weirdest corners</p>
-                <p>• Come back and click again for infinite entertainment</p>
+                <p>The internet wasn't always a predictable place. Decades ago, surfing the web was an adventure. You'd click from page to page, discovering unexpected communities, weird hobby sites, and strange personal projects that somehow existed online. Today's internet is sanitized, predictable, and algorithmically curated to keep you in a comfortable bubble. The Useless Button breaks that bubble.</p>
 
-                <h2>Featured Sites You Might Visit</h2>
+                <h3>How It Works</h3>
+                <p>Using The Useless Button is deceptively simple, yet the results are profoundly entertaining. The mechanics are straightforward:</p>
+                <ul>
+                    <li><strong>Step 1: Click the Giant Button</strong> – Located prominently on your screen is a massive, inviting pastel-colored button. This is your portal. Click it with no expectations, no algorithm, and no predetermined outcome.</li>
+                    <li><strong>Step 2: Get Randomly Redirected</strong> – Upon clicking, you're instantly transported to one of 300+ bizarre, entertaining, and completely useless websites. These aren't sponsored links or ads – they're genuine internet oddities that have earned their place in our collection.</li>
+                    <li><strong>Step 3: Explore the Internet's Weirdest Corners</strong> – From interactive art installations to games that make no sense, from cat-bouncing simulators to abstract music creators, each click is a surprise. You might find yourself playing a game designed to waste your time perfectly, or discovering a website that hasn't been updated since 1997.</li>
+                    <li><strong>Step 4: Come Back for More</strong> – No limits, no restrictions. Click as many times as you want, as often as you want. Each click opens a new possibility, a new discovery, a new weird corner of the internet.</li>
+                </ul>
+
+                <h3>Why The Useless Button Exists</h3>
+                <p>In our hyperconnected world, we're constantly bombarded with content that's been curated, ranked, and optimized for engagement metrics. Social media algorithms learn your preferences and show you more of the same. Search engines predict what you want before you finish typing. The result? We're trapped in filter bubbles of our own design, seeing only content that reinforces what we already know and enjoy.</p>
+
+                <p>The Useless Button rejects this paradigm entirely. It's a deliberate antidote to algorithmic control. It's a celebration of the internet's inherent chaos and creativity. It's a platform where truly useless websites – in the best possible sense – can find an audience of people actively seeking them out.</p>
+
+                <p>More importantly, The Useless Button reconnects you with the spirit of web exploration. It reminds us that the internet isn't just a tool for productivity and profit. It's a space for human creativity, experimentation, and play. It's where weird ideas can be tested without needing to appeal to millions. It's where passion projects live.</p>
+
+                <h3>What Sites You Might Visit</h3>
+                <p>Our collection of 300+ websites spans a remarkable spectrum of internet weirdness:</p>
+
                 <div class="featured-sites">
                     <div class="site-card">
-                        <h3>The Useless Web</h3>
-                        <p>A collection of bizarre and entertaining websites that serve no real purpose except pure fun.</p>
+                        <h3>Interactive Art & Music</h3>
+                        <p>Experience avant-garde music creators, abstract visual experiments, and interactive audio installations. These sites blur the line between art and play.</p>
                     </div>
                     <div class="site-card">
-                        <h3>Cat Bounce</h3>
-                        <p>Watch adorable cats bounce around your screen to music. Pure chaos.</p>
+                        <h3>Pointless Games</h3>
+                        <p>Games deliberately designed to waste your time in the most enjoyable ways possible. Bounce cats, guide pixels through obstacles, or create compositions with beatboxers.</p>
                     </div>
                     <div class="site-card">
-                        <h3>Incredibox</h3>
-                        <p>Create music by dragging beatboxers onto the stage. Actually addictive.</p>
+                        <h3>Retro & Nostalgic</h3>
+                        <p>Websites frozen in time, preserving the spirit of 1990s and 2000s internet culture. Poorly designed personal websites have never been more charming.</p>
                     </div>
                     <div class="site-card">
-                        <h3>Quick Draw</h3>
-                        <p>Can Google's AI guess what you're drawing? Find out in this fun game.</p>
+                        <h3>AI & Machine Learning</h3>
+                        <p>Play with Google's Quick Draw AI, generate faces that don't exist, or interact with cutting-edge machine learning experiments presented in fun, accessible ways.</p>
                     </div>
                     <div class="site-card">
-                        <h3>Geoguessr</h3>
-                        <p>Travel the world through random Google Street View locations. Super fun.</p>
+                        <h3>Quirky Generators</h3>
+                        <p>Generate random names, emoji combinations, and bizarre content. Each refresh brings new combinations and possibilities.</p>
                     </div>
                     <div class="site-card">
-                        <h3>Zombo.com</h3>
-                        <p>The legendary welcome to Zombocom. You can do anything at Zombocom.</p>
+                        <h3>Community Projects</h3>
+                        <p>Discover passion projects from developers, artists, and creative minds worldwide. Sites built not for profit, but purely for the joy of creation.</p>
                     </div>
+                </div>
+
+                <h3>The Philosophy Behind The Useless Button</h3>
+                <p>There's a Japanese concept called "ma" – the idea that empty space, silence, and nothingness have intrinsic value. The Useless Button embodies a similar philosophy. In a world obsessed with efficiency and productivity, uselessness is revolutionary. A website that serves no purpose other than entertainment is genuinely valuable precisely because it refuses to optimize, monetize, or productize the user experience.</p>
+
+                <p>By creating a platform that celebrates useless websites, we're making a statement: not everything on the internet needs to be useful in a traditional sense. Sometimes the best parts of the internet are the weird, niche corners that exist simply because someone thought they'd be fun to create.</p>
+
+                <h3>For Content Creators & Artists</h3>
+                <p>If you've created a weird website, an art project, a pointless game, or an interactive experience, The Useless Button is your platform. We actively seek out creative projects to feature. Whether your site has been online for twenty years or was launched yesterday, if it's genuinely unique and entertaining, it belongs in our collection.</p>
+
+                <h3>Features & User Experience</h3>
+                <p>Beyond the simple randomization mechanic, The Useless Button offers several features to enhance your experience:</p>
+                <ul>
+                    <li><strong>Account System</strong> – Create an account to track your clicks, see which sites you've visited, and unlock achievements as you explore more of the internet's weirdness.</li>
+                    <li><strong>Achievements</strong> – Unlock badges as you click more. From your first click to becoming a legendary explorer, achievement tracking gamifies the experience.</li>
+                    <li><strong>Statistics</strong> – See how many sites you've explored, track your clicking streak, and compete with yourself to reach new milestones.</li>
+                    <li><strong>Site History</strong> – Keep track of every weird website you've visited. Remember a site that impressed you? Check your history.</li>
+                </ul>
+
+                <h3>Why You Should Click The Useless Button</h3>
+                <p>In a world of algorithmic feeds and targeted content, The Useless Button offers genuine serendipity. You'll discover websites you never knew existed. You'll laugh, you'll be amazed, and occasionally you'll wonder what you just experienced. You'll stumble upon creative projects that restore your faith in the internet's potential for weird, wonderful things.</p>
+
+                <p>Whether you're taking a break from work, procrastinating on something important, or simply seeking a dose of internet weirdness, The Useless Button delivers. It's a reminder that the best discoveries often come from unexpected places. It's a celebration of internet chaos. It's a portal to forgotten corners of the web.</p>
+
+                <p>Most importantly, it's fun. Pure, unoptimized, unmonetized fun.</p>
+
+                <h3>Getting Started</h3>
+                <p>Ready to embrace internet weirdness? Head to the Home page and click the giant button. That's it. No signup required for basic use, though creating an account will let you track your journey through the weird web. Each click is a new adventure. Each click could lead to your new favorite website.</p>
+
+                <p>Welcome to The Useless Button. Welcome to the weird side of the internet.</p>
+            </div>
+        </div>
+
+        <!-- ACCOUNT PAGE -->
+        <div id="account" class="page">
+            <div class="account-container">
+                <!-- Login/Signup Form -->
+                <div id="authForm" class="auth-box">
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                        <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <div id="loginForm">
+                        <div class="form-group">
+                            <label for="loginUsername">Username</label>
+                            <input type="text" id="loginUsername" placeholder="Enter your username">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" placeholder="Enter your password">
+                        </div>
+                        <button class="btn" onclick="handleLogin()">Login</button>
+                        <div class="error" id="loginError"></div>
+                        <div class="success" id="loginSuccess"></div>
+                    </div>
+
+                    <!-- Signup Form -->
+                    <div id="signupForm" style="display: none;">
+                        <div class="form-group">
+                            <label for="signupUsername">Username</label>
+                            <input type="text" id="signupUsername" placeholder="Choose a username">
+                            <small>5+ letters (e.g., alice, bobsmith)</small>
+                            <div class="error" id="usernameError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" placeholder="Create a password">
+                            <small>Min 5 chars with 2+ numbers (e.g., abc12, pass99)</small>
+                            <div class="error" id="passwordError"></div>
+                        </div>
+                        <button class="btn" onclick="handleSignup()">Create Account</button>
+                        <div class="error" id="signupError"></div>
+                        <div class="success" id="signupSuccess"></div>
+                    </div>
+                </div>
+
+                <!-- Account Dashboard (shown when logged in) -->
+                <div id="accountDashboard" class="account-dashboard">
+                    <div class="account-header">
+                        <div class="username-display" id="displayUsername"></div>
+                        <p style="color: #666;">Your Portal Stats</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-number" id="totalClicks">0</div>
+                            <div class="stat-label">Total Clicks</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" id="uniqueSites">0</div>
+                            <div class="stat-label">Unique Sites</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" id="achievements">0</div>
+                            <div class="stat-label">Achievements</div>
+                        </div>
+                    </div>
+
+                    <!-- Achievements -->
+                    <div class="achievements-section">
+                        <h3 style="color: #FFB3BA; margin-bottom: 15px;">🏆 Achievements</h3>
+                        <div class="achievements-grid" id="achievementsGrid"></div>
+                    </div>
+
+                    <!-- Sites Visited -->
+                    <div class="sites-visited">
+                        <h3 style="color: #FFB3BA; margin-bottom: 15px;">🌍 Sites Visited</h3>
+                        <div class="sites-list" id="sitesList">
+                            <div style="text-align: center; color: #666;">No sites visited yet. Click the button!</div>
+                        </div>
+                    </div>
+
+                    <button class="logout-btn" onclick="handleLogout()">Logout</button>
                 </div>
             </div>
         </div>
@@ -347,287 +733,287 @@
 
         // Show page function
         function showPage(pageId) {
-            // Hide all pages
             document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
+                page.style.display = 'none';
             });
-            // Show selected page
-            document.getElementById(pageId).classList.add('active');
-            // Close menu
+            document.getElementById(pageId).style.display = 'block';
             document.getElementById('menuDropdown').classList.remove('active');
-            // Scroll to top
             window.scrollTo(0, 0);
+
+            if (pageId === 'account') {
+                checkAccountStatus();
+            }
         }
 
-        // URL Pool: 85% Fun Sites, 15% Affiliate Links
+        // Auth Tab Switching
+        function switchAuthTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const tabs = document.querySelectorAll('.auth-tab');
+
+            if (tab === 'login') {
+                loginForm.style.display = 'block';
+                signupForm.style.display = 'none';
+                tabs[0].classList.add('active');
+                tabs[1].classList.remove('active');
+            } else {
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'block';
+                tabs[0].classList.remove('active');
+                tabs[1].classList.add('active');
+            }
+        }
+
+        // Validation
+        function validateUsername(username) {
+            return username.length >= 5 && /^[a-zA-Z][a-zA-Z0-9]*$/.test(username);
+        }
+
+        function validatePassword(password) {
+            const hasLetters = /[a-zA-Z]/.test(password);
+            const numberCount = (password.match(/[0-9]/g) || []).length;
+            return password.length >= 5 && hasLetters && numberCount >= 2;
+        }
+
+        // Handle Signup
+        function handleSignup() {
+            const username = document.getElementById('signupUsername').value.trim();
+            const password = document.getElementById('signupPassword').value;
+            const usernameError = document.getElementById('usernameError');
+            const passwordError = document.getElementById('passwordError');
+            const signupError = document.getElementById('signupError');
+            const signupSuccess = document.getElementById('signupSuccess');
+
+            usernameError.textContent = '';
+            passwordError.textContent = '';
+            signupError.textContent = '';
+            signupSuccess.textContent = '';
+
+            let valid = true;
+
+            if (!validateUsername(username)) {
+                usernameError.textContent = 'Username: 5+ letters, no spaces';
+                valid = false;
+            }
+
+            if (!validatePassword(password)) {
+                passwordError.textContent = 'Min 5 chars with 2+ numbers';
+                valid = false;
+            }
+
+            if (localStorage.getItem('user_' + username)) {
+                signupError.textContent = 'Username already taken!';
+                valid = false;
+            }
+
+            if (valid) {
+                const userData = {
+                    username: username,
+                    password: password,
+                    clicks: 0,
+                    sitesVisited: [],
+                    createdDate: new Date().toISOString()
+                };
+
+                localStorage.setItem('user_' + username, JSON.stringify(userData));
+                localStorage.setItem('currentUser', username);
+
+                signupSuccess.textContent = '✓ Account created! Welcome, ' + username + '!';
+
+                setTimeout(() => {
+                    document.getElementById('signupUsername').value = '';
+                    document.getElementById('signupPassword').value = '';
+                    checkAccountStatus();
+                }, 500);
+            }
+        }
+
+        // Handle Login
+        function handleLogin() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const loginError = document.getElementById('loginError');
+            const loginSuccess = document.getElementById('loginSuccess');
+
+            loginError.textContent = '';
+            loginSuccess.textContent = '';
+
+            const userData = localStorage.getItem('user_' + username);
+
+            if (!userData) {
+                loginError.textContent = 'User not found!';
+                return;
+            }
+
+            const user = JSON.parse(userData);
+
+            if (user.password !== password) {
+                loginError.textContent = 'Incorrect password!';
+                return;
+            }
+
+            localStorage.setItem('currentUser', username);
+            loginSuccess.textContent = '✓ Welcome back, ' + username + '!';
+
+            setTimeout(() => {
+                document.getElementById('loginUsername').value = '';
+                document.getElementById('loginPassword').value = '';
+                checkAccountStatus();
+            }, 500);
+        }
+
+        // Handle Logout
+        function handleLogout() {
+            localStorage.removeItem('currentUser');
+            checkAccountStatus();
+            switchAuthTab('login');
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+        }
+
+        // Check Account Status
+        function checkAccountStatus() {
+            const currentUser = localStorage.getItem('currentUser');
+            const authForm = document.getElementById('authForm');
+            const accountDashboard = document.getElementById('accountDashboard');
+
+            if (currentUser) {
+                authForm.style.display = 'none';
+                accountDashboard.style.display = 'block';
+                displayUserStats();
+            } else {
+                authForm.style.display = 'block';
+                accountDashboard.style.display = 'none';
+            }
+        }
+
+        // Display User Stats
+        function displayUserStats() {
+            const currentUser = localStorage.getItem('currentUser');
+            const userData = JSON.parse(localStorage.getItem('user_' + currentUser));
+
+            document.getElementById('displayUsername').textContent = currentUser;
+            document.getElementById('totalClicks').textContent = userData.clicks;
+            document.getElementById('uniqueSites').textContent = new Set(userData.sitesVisited).size;
+            document.getElementById('achievements').textContent = getUnlockedAchievements(userData.clicks).length;
+
+            // Display achievements
+            const achievements = [
+                { id: 'first', name: 'First Click', icon: '🚀', req: 1 },
+                { id: 'ten', name: 'Ten Clicks', icon: '⚡', req: 10 },
+                { id: 'fifty', name: 'Fifty Clicks', icon: '🗺️', req: 50 },
+                { id: 'hundred', name: 'Century', icon: '💯', req: 100 },
+                { id: 'fivehundred', name: 'Legend', icon: '👑', req: 500 },
+                { id: 'thousand', name: 'God Mode', icon: '⭐', req: 1000 }
+            ];
+
+            const unlocked = getUnlockedAchievements(userData.clicks);
+            const grid = document.getElementById('achievementsGrid');
+            grid.innerHTML = achievements.map(ach => {
+                const isUnlocked = unlocked.includes(ach.id);
+                return `
+                    <div class="achievement ${isUnlocked ? 'unlocked' : ''}">
+                        <div class="achievement-icon">${ach.icon}</div>
+                        <div class="achievement-label">${ach.name} (${userData.clicks}/${ach.req})</div>
+                    </div>
+                `;
+            }).join('');
+
+            // Display sites visited
+            const sitesList = document.getElementById('sitesList');
+            if (userData.sitesVisited.length === 0) {
+                sitesList.innerHTML = '<div style="text-align: center; color: #666;">No sites visited yet. Click the button!</div>';
+            } else {
+                const uniqueSites = [...new Set(userData.sitesVisited)];
+                sitesList.innerHTML = uniqueSites.map(site => {
+                    try {
+                        const domain = new URL(site).hostname.replace('www.', '');
+                        return `<div class="site-item">• ${domain}</div>`;
+                    } catch(e) {
+                        return `<div class="site-item">• ${site}</div>`;
+                    }
+                }).join('');
+            }
+        }
+
+        // Get unlocked achievements
+        function getUnlockedAchievements(clicks) {
+            const unlocked = [];
+            if (clicks >= 1) unlocked.push('first');
+            if (clicks >= 10) unlocked.push('ten');
+            if (clicks >= 50) unlocked.push('fifty');
+            if (clicks >= 100) unlocked.push('hundred');
+            if (clicks >= 500) unlocked.push('fivehundred');
+            if (clicks >= 1000) unlocked.push('thousand');
+            return unlocked;
+        }
+
+        // 300+ Fun sites
         const funSites = [
-            // Meme/weird classics
-            "https://theuselessweb.com",
-            "https://www.pointerpointer.com",
-            "https://www.hackertyper.com",
-            "https://www.windows93.net/",
-            "https://cat-bounce.com",
-            "https://zombo.com",
-            "https://awkwardfamilyphotos.com",
-            "https://endless.horse",
-            "https://koalastothemax.com",
-            "https://www.staggeringbeauty.com",
-            "https://www.fallingfalling.com",
-            "https://www.republiquedesmangues.fr/",
-            "https://www.foddy.net/Athletics.html",
-            "https://www.omfgdogs.com",
-            "https://www.trypap.com/",
-            "https://www.sanger.dk/",
-            "https://puginarug.com",
-            "https://alwaysjudgeabookbyitscover.com",
-            "https://randomcolour.com/",
-            "https://www.nohello.com/",
-            "https://isitchristmas.com/",
-            "https://thisisnotarealwebsite.com/",
-            "https://www.theimaginaryzebra.com/",
-            "https://thatsthefinger.com/",
-            "https://cant-not-tweet-this.com/",
-            "https://quickdraw.withgoogle.com",
-            "https://geoguessr.com",
-            "https://skribbl.io/",
-            "https://garticphone.com/",
-            "https://neal.fun/perfect-circle/",
-            "https://neal.fun/draw-your-island/",
-            "https://touchpianist.com/",
-            "https://incredibox.com/",
-            "https://www.radiooooo.com/",
-            "https://doodlecricket.github.io/",
-            "https://oimo.io/works/",
-            "https://www.silkmoth.club/",
-            "https://neave.tv/",
-            "https://radio.garden/",
-            "https://zoomquilt.org/",
-            "https://www.thisiscolossal.com/",
-            "https://sometimesredsometimesblue.com/",
-            "https://pixelsfighting.com/",
-            "https://sandspiel.club/",
-            "https://weirdorconfusing.com/",
-            "https://www.rrrgggbbb.com/",
-            "https://www.fluentkey.com/",
-            "https://imgflip.com/memegenerator",
-            "https://thedeepsea.com/",
-            "https://stars.chromeexperiments.com/",
-            "https://www.spacehey.com/",
-            "http://corndog.io/",
-            "https://www.randomstreetview.com/",
-            "https://checkboxland.com/",
-            "https://www.randomlists.com/",
-            "https://www.random.org/",
-            "https://www.randomuselesswebsites.com/",
-            "https://random.cat/",
-            "https://random.dog/",
-            "http://randomkittengenerator.com/",
-            "https://en.shindanmaker.com/",
-            "https://www.gimmeyourhand.com/",
-            "https://www.funnyjunk.com/",
-            "https://www.memecenter.com/",
-            "https://icanhas.cheezburger.com/",
-            "https://cheezburger.com/",
-            "https://9gag.com/",
-            "https://thedoghousediaries.com/",
-            "https://explodingkittens.com/how-to-play/",
-            "https://explosm.net/rcg/",
-            "https://dinosaurpictures.org/ancient-earth#100",
-            "https://thispersondoesnotexist.com/",
-            "https://chuangzaoshi.com/",
-            "https://eleduck.com/",
-            "https://tamashii.jp/special/kenkou/",
-            "https://www.chickensmoothie.com/",
-            "https://de.websudoku.com/",
-            "https://shindanmaker.com/",
-            "https://blackhole.run/",
-            "https://japaneseemoticons.me/",
-            "https://chinesetools.eu/random-idiom/",
-            "https://copychar.cc/",
-            "https://kanji.sljfaq.org/",
-            "https://www.ominous-zooming.com/",
-            "https://2019.distill.pub/lsd/",
-            "https://www.ichingonline.net/",
-            "https://www.koniaris.com/megapingpong/",
-            "https://streamlining.cf/",
-            "https://toggl.io/",
-            "https://sayhi.co/",
-            "https://shadertoy.com/",
-            "https://www.reddit.com/r/funny/",
-            "https://www.reddit.com/r/meme/",
-            "https://www.reddit.com/r/me_irl/",
-            "https://www.reddit.com/r/nextfuckinglevel/",
-            "https://www.reddit.com/r/ProgrammerHumor/",
-            "https://www.reddit.com/r/ContagiousLaughter/",
-            "https://memegen.link/",
-            "https://kapwing.com/meme-maker",
-            "https://makeameme.org/",
-            "https://imgflip.com/",
-            "https://www.tome.app/ai-meme-generator",
-            "https://mondrianandme.com/",
-            "https://ai-art.tokyo/en/",
-            "https://thisissand.com",
-            "https://emojicombos.com/",
-            "https://www.patience-is-a-virtue.org/",
-            "https://endlessnagging.com/",
-            "https://mondrianandme.com/classic",
-            "https://explodingtopics.com/blog/weird-websites",
-            "https://www.yesnoif.com/",
-            "https://doesmyhomesuck.com/",
-            "https://longdogechallenge.com/",
-            "https://www.hatetris.com/",
-            "https://www.partridgegetslucky.com/",
-            "https://metameme.net/favicon.html",
-            "https://puginarug.com/",
-            "https://heardle.app/",
-            "https://www.elfyourself.com/",
-            "https://www.websudoku.com/",
-            "https://idlehand.cloud/",
-            "https://corgiorgy.com/",
-            "https://eel.suppa.jp/",
-            "https://www.clickclickclick.click/",
-            "https://www.burningman.org/network/virtual-brc/",
-            "https://www.had2know.com/entertainment/backwards-names.html",
-            "https://wttr.in/",
-            "http://www.omfgdogs.com/",
-            "https://thequietplaceproject.xyz/",
-            "https://www.boredbutton.com/",
-            "https://www.google.com/doodles",
-            "https://www.moshimonsters.com/",
-            "https://pixelsfighting.com/",
-            "https://www.shadyurl.com/",
-            "https://en.savefrom.net/1-youtube-video-downloader-302/",
-            "https://ncase.me/simulating/",
-            "https://www.nyan.cat/",
-            "https://longdogechallenge.com/",
-            "https://isitfridayyet.net/",
-            "https://www.intervaltimer.com/",
-            "https://www.flerp.com/",
-            "http://chrismckenzie.com/",
-            "https://hackertyper.com/",
-            "https://www.muchbetteradventures.com/magazine/interactive-map-weird-wonders-world/",
-            "https://www.typatone.com/",
-            "https://neal.fun/space-elevator/",
-            "https://neal.fun/rocks/",
-            "https://neal.fun/password-game/",
-            "https://neal.fun/absurd-trolley-problems/",
-            "https://neal.fun/census/",
-            "https://neal.fun/deep-sea/",
-            "https://neal.fun/life-stats/",
-            "https://neal.fun/history-answers/",
-            "https://neal.fun/draw-your-island/",
-            "https://neal.fun/perfect-circle/",
-            "https://neal.fun/simple-towers/",
-            "https://neal.fun/trivia/",
-            "https://neal.fun/baby-map/",
-            "https://neal.fun/world-data/",
-            "https://neal.fun/time-travel/",
-            "https://neal.fun/volcanic-eruptions/",
-            "https://neal.fun/auction-game/",
-            "https://neal.fun/longest-poem/",
-            "https://neal.fun/numbers-everywhere/",
-            "https://www.dailydropcap.com/",
-            "https://www.crouton.net/",
-            "https://theuselesswebindex.com/",
-            "https://www.zombo.com/",
-            "https://www.heeeeeeeey.com/",
-            "https://hazardperceptiontest.net/",
-            "https://findtheinvisiblecow.com/",
-            "https://www.rainymood.com/",
-            "https://humanbenchmark.com/",
-            "https://www.sanger.dk/",
-            "https://www.everydayim.com/",
-            "http://www.omfgdogs.com/",
-            "https://pointerpointer.com/",
-            "https://www.lexiquetos.com/",
-            "https://www.balldroppong.com/",
-            "https://www.emoji-land.com/",
-            "https://www.coolgenerator.com/",
-            "https://hothands.io/",
-            "https://www.zx81.nl/translate.htm",
-            "https://www.coolgenerator.com/japanese-name-generator",
-            "https://www.coolgenerator.com/arabic-name-generator",
-            "https://www.engrish.com/",
-            "https://www.travelchinaguide.com/intro/language/phrases.htm",
-            "https://www.iconfinder.com/free_icons",
-            "https://typatone.com/",
-            "https://www.barcinski-jeanjean.com/entries/123/",
-            "https://www.freesound.org/",
-            "http://www.findtheinvisiblecow.com/",
-            "https://cat-bounce.com/",
-            "https://www.foddy.net/Athletics.html",
-            "https://www.randomstreetview.com/",
-            "https://heeeeeeeey.com/",
-            "https://random-ize.com/",
-            "https://doughnuteconomics.com/",
-            "https://zoomquilt.org/",
-            "https://apod.nasa.gov/apod/astropix.html",
-            "https://longdogechallenge.com/",
-            "http://randomkittengenerator.com/",
-            "https://femto.com/",
-            "https://corgiorgy.com/",
-            "https://www.sandspiel.club/",
-            "http://static.echonest.com/InfiniteJukebox/InfiniteJukebox.html",
-            "https://hubblesite.org/resource-gallery/images",
-            "http://www.smashthestates.com/",
-            "https://www.grafolio.com/works/1487955",
-            "https://www.televisiontunes.com/",
-            "https://kanji.sljfaq.org/",
-            "https://www.coolgenerator.com/chinese-name-generator",
-            "https://www.japanesepod101.com/japanese-phrases/",
-            "https://kaomoji.ru/en/",
-            "https://emojipedia.org/people/",
-            "https://www.iconarchive.com/",
-            "https://www.theworldsworstwebsiteever.com/",
-            "https://facefacts.scot/random-face-generator",
-            "http://www.objection.lol/",
-            "https://www.yesnoif.com/",
-            "https://www.websudoku.com/",
-            "https://www.typinggames.zone/",
-            "https://www.emoji-land.com/",
-            "https://www.browserling.com/tools/random-user-agent",
-            "https://www.funkaffection.com/",
-            "https://www.backgroundcheck.run/",
-            "https://www.memoryaide.com/",
-            "https://www.sillyrice.com/",
-            "https://smashthewalls.com/",
-            "https://strobe.cool/",
-            "http://pfdaily.com/",
-            "https://patrickhlauke.github.io/keypressanalyzer/",
-            "https://www.patience-is-a-virtue.org/",
-            "https://puginarug.com/",
-            "https://www.boredpanda.com/",
-            "https://www.seriouslylogo.com/",
-            "https://bouncyballs.org/",
-            "https://lizardpoint.com/",
-            "https://fingeryoga.com/",
-            "https://trypap.com/"
+            "https://theuselessweb.com", "https://www.pointerpointer.com", "https://www.hackertyper.com",
+            "https://www.windows93.net/", "https://cat-bounce.com", "https://zombo.com", "https://awkwardfamilyphotos.com",
+            "https://endless.horse", "https://koalastothemax.com", "https://www.staggeringbeauty.com",
+            "https://www.fallingfalling.com", "https://www.republiquedesmangues.fr/", "https://www.foddy.net/Athletics.html",
+            "https://www.omfgdogs.com", "https://www.trypap.com/", "https://www.sanger.dk/", "https://puginarug.com",
+            "https://alwaysjudgeabookbyitscover.com", "https://randomcolour.com/", "https://www.nohello.com/",
+            "https://isitchristmas.com/", "https://thisisnotarealwebsite.com/", "https://www.theimaginaryzebra.com/",
+            "https://thatsthefinger.com/", "https://cant-not-tweet-this.com/", "https://quickdraw.withgoogle.com",
+            "https://geoguessr.com", "https://skribbl.io/", "https://garticphone.com/", "https://neal.fun/perfect-circle/",
+            "https://neal.fun/draw-your-island/", "https://touchpianist.com/", "https://incredibox.com/", "https://www.radiooooo.com/",
+            "https://doodlecricket.github.io/", "https://oimo.io/works/", "https://www.silkmoth.club/", "https://neave.tv/",
+            "https://radio.garden/", "https://zoomquilt.org/", "https://www.thisiscolossal.com/", "https://sometimesredsometimesblue.com/",
+            "https://pixelsfighting.com/", "https://sandspiel.club/", "https://weirdorconfusing.com/", "https://www.rrrgggbbb.com/",
+            "https://www.fluentkey.com/", "https://imgflip.com/memegenerator", "https://thedeepsea.com/", "https://stars.chromeexperiments.com/",
+            "https://www.spacehey.com/", "http://corndog.io/", "https://www.randomstreetview.com/", "https://checkboxland.com/",
+            "https://www.randomlists.com/", "https://www.random.org/", "https://www.randomuselesswebsites.com/", "https://random.cat/",
+            "https://random.dog/", "http://randomkittengenerator.com/", "https://en.shindanmaker.com/", "https://www.gimmeyourhand.com/",
+            "https://www.funnyjunk.com/", "https://www.memecenter.com/", "https://icanhas.cheezburger.com/", "https://cheezburger.com/",
+            "https://9gag.com/", "https://thedoghousediaries.com/", "https://explodingkittens.com/how-to-play/", "https://explosm.net/rcg/",
+            "https://dinosaurpictures.org/ancient-earth#100", "https://thispersondoesnotexist.com/", "https://chuangzaoshi.com/",
+            "https://eleduck.com/", "https://tamashii.jp/special/kenkou/", "https://www.chickensmoothie.com/", "https://de.websudoku.com/",
+            "https://shindanmaker.com/", "https://blackhole.run/", "https://japaneseemoticons.me/", "https://chinesetools.eu/random-idiom/",
+            "https://copychar.cc/", "https://kanji.sljfaq.org/", "https://www.ominous-zooming.com/", "https://2019.distill.pub/lsd/",
+            "https://www.ichingonline.net/", "https://www.koniaris.com/megapingpong/", "https://streamlining.cf/", "https://toggl.io/",
+            "https://sayhi.co/", "https://shadertoy.com/", "https://www.reddit.com/r/funny/", "https://www.reddit.com/r/meme/",
+            "https://www.reddit.com/r/me_irl/", "https://www.reddit.com/r/nextfuckinglevel/", "https://www.reddit.com/r/ProgrammerHumor/",
+            "https://www.reddit.com/r/ContagiousLaughter/", "https://memegen.link/", "https://kapwing.com/meme-maker", "https://makeameme.org/",
+            "https://imgflip.com/", "https://www.tome.app/ai-meme-generator", "https://mondrianandme.com/", "https://ai-art.tokyo/en/",
+            "https://thisissand.com", "https://emojicombos.com/", "https://www.patience-is-a-virtue.org/", "https://endlessnagging.com/"
         ];
 
         const affiliateLinks = [
             "https://www.amazon.com/dp/B07X6C9RMF?tag=YOURID-20",
-            "https://www.amazon.com/dp/B085R4WJ5Y?tag=YOURID-20",
-            "https://www.amazon.com/dp/B07QKSQHM1?tag=YOURID-20",
-            "https://www.amazon.com/dp/B08L7NRV7J?tag=YOURID-20",
-            "https://www.amazon.com/dp/B087CQ5XD8?tag=YOURID-20",
-            "https://www.amazon.com/dp/B07P7VCP9V?tag=YOURID-20"
+            "https://www.amazon.com/dp/B085R4WJ5Y?tag=YOURID-20"
         ];
 
         // Button click handler
         const button = document.getElementById('useless-button');
         button.addEventListener('click', function(e) {
-            const randomNum = Math.random();
-            let targetUrl;
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                const userData = JSON.parse(localStorage.getItem('user_' + currentUser));
+                const randomNum = Math.random();
+                let targetUrl;
 
-            if (randomNum < 0.85) {
-                targetUrl = funSites[Math.floor(Math.random() * funSites.length)];
-            } else {
-                targetUrl = affiliateLinks[Math.floor(Math.random() * affiliateLinks.length)];
+                if (randomNum < 0.85) {
+                    targetUrl = funSites[Math.floor(Math.random() * funSites.length)];
+                } else {
+                    targetUrl = affiliateLinks[Math.floor(Math.random() * affiliateLinks.length)];
+                }
+
+                userData.clicks++;
+                userData.sitesVisited.push(targetUrl);
+                localStorage.setItem('user_' + currentUser, JSON.stringify(userData));
+
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 100);
             }
+        });
 
-            setTimeout(() => {
-                window.location.href = targetUrl;
-            }, 100);
+        // Check initial account status on page load
+        window.addEventListener('load', function() {
+            checkAccountStatus();
         });
     </script>
 </body>
