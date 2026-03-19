@@ -3,1030 +3,3643 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE USELESS BUTTON | ENTERPRISE EDITION</title>
-    <meta name="description" content="A $1,000,000 production to teleport you to 5000+ useless websites. WebGL 3.0 Enabled.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- Primary Meta Tags -->
+    <title>The Useless Button | Portal to 5000+ Random Websites</title>
+    <meta name="title" content="The Useless Button | Portal to 5000+ Random Websites">
+    <meta name="description" content="Click the button to teleport to a random website from our curated collection of 5000+ useless, weird, and wonderful corners of the internet. No algorithms, pure chaos.">
+    <meta name="keywords" content="useless button, random website, internet wormhole, boredom cure, weird websites, stumbleupon alternative, internet exploration">
+    <meta name="author" content="The Useless Button Team">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://useless-button.xyz/">
+    <meta property="og:title" content="The Useless Button | Portal to 5000+ Random Websites">
+    <meta property="og:description" content="One click teleports you to a random corner of the internet. 5000+ curated destinations.">
+    <meta property="og:image" content="https://useless-button.xyz/og-image.jpg">
+    <meta property="og:site_name" content="The Useless Button">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://useless-button.xyz/">
+    <meta property="twitter:title" content="The Useless Button">
+    <meta property="twitter:description" content="Click to teleport to random websites. Pure internet chaos.">
+    <meta property="twitter:image" content="https://useless-button.xyz/og-image.jpg">
+    
+    <!-- Favicon - Inline SVG for zero dependencies -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23ff00ff'/%3E%3Ccircle cx='50' cy='50' r='35' fill='%2300ffff'/%3E%3Ctext x='50' y='65' font-size='45' text-anchor='middle' fill='%23000000'%3E%3F%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23000011'/%3E%3Ccircle cx='90' cy='90' r='70' fill='%23ff00ff'/%3E%3Ccircle cx='90' cy='90' r='50' fill='%2300ffff'/%3E%3C/svg%3E">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://useless-button.xyz/">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         :root {
             --neon-pink: #ff00ff;
             --neon-cyan: #00ffff;
-            --neon-gold: #ffd700;
-            --deep-space: #000011;
-            --glass: rgba(255, 255, 255, 0.03);
+            --neon-purple: #b026ff;
+            --bg: #050510;
+            --surface: rgba(255, 255, 255, 0.05);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         body {
-            margin: 0;
-            overflow: hidden;
-            background: var(--deep-space);
-            font-family: 'Rajdhani', sans-serif;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
             color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 0, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(176, 38, 255, 0.1) 0%, transparent 50%);
         }
         
-        #canvas-container {
+        /* Space Background Animation */
+        .stars {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 1;
-        }
-        
-        /* HUD Overlay */
-        .hud {
-            position: fixed;
-            z-index: 10;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
-            width: 100%;
-            height: 100%;
+            z-index: 0;
         }
         
-        .hud-top {
+        .star {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 2rem;
-            display: flex;
-            justify-content: space-between;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
-        }
-        
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            text-shadow: 0 0 30px rgba(255,0,255,0.5);
-        }
-        
-        .stats-container {
-            display: flex;
-            gap: 3rem;
-            text-align: right;
-        }
-        
-        .stat {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-        
-        .stat-label {
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.6);
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-        }
-        
-        .stat-value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            color: var(--neon-cyan);
-            text-shadow: 0 0 20px rgba(0,255,255,0.8);
-        }
-        
-        .hud-bottom {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-        }
-        
-        .coordinates {
-            font-family: 'Orbitron', monospace;
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.5);
-        }
-        
-        .status {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .status-indicator {
-            width: 10px;
-            height: 10px;
-            background: #00ff00;
+            width: 2px;
+            height: 2px;
+            background: white;
             border-radius: 50%;
-            box-shadow: 0 0 10px #00ff00;
-            animation: pulse 2s infinite;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            opacity: var(--opacity);
         }
         
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        @keyframes twinkle {
+            0%, 100% { opacity: var(--opacity); transform: scale(1); }
+            50% { opacity: 0.2; transform: scale(0.5); }
         }
         
-        .status-text {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: rgba(255,255,255,0.8);
-        }
-        
-        /* Loading Screen */
-        #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--deep-space);
-            z-index: 1000;
+        /* Main Layout */
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity 1s ease;
+            padding: 2rem;
         }
         
-        .loader-ring {
-            width: 200px;
-            height: 200px;
-            border: 2px solid transparent;
-            border-top-color: var(--neon-pink);
-            border-radius: 50%;
-            animation: spin 2s linear infinite;
-            position: relative;
-        }
-        
-        .loader-ring::before,
-        .loader-ring::after {
-            content: '';
+        /* Header */
+        header {
             position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .stats {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            text-align: right;
+        }
+        
+        .stat-number {
+            color: var(--neon-cyan);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        /* The Button Section */
+        .button-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+        }
+        
+        .orbit-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Orbiting Rings */
+        .orbit {
+            position: absolute;
+            border: 1px solid rgba(255, 0, 255, 0.3);
             border-radius: 50%;
-            border: 2px solid transparent;
+            animation: rotate 10s linear infinite;
         }
         
-        .loader-ring::before {
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
-            border-top-color: var(--neon-cyan);
-            animation: spin 3s linear infinite reverse;
+        .orbit-1 {
+            width: 100%;
+            height: 100%;
+            border-top-color: var(--neon-pink);
+            border-top-width: 2px;
         }
         
-        .loader-ring::after {
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
-            border-top-color: var(--neon-gold);
-            animation: spin 1.5s linear infinite;
+        .orbit-2 {
+            width: 80%;
+            height: 80%;
+            border-right-color: var(--neon-cyan);
+            border-right-width: 2px;
+            animation-direction: reverse;
+            animation-duration: 15s;
         }
         
-        @keyframes spin {
+        .orbit-3 {
+            width: 60%;
+            height: 60%;
+            border-bottom-color: var(--neon-purple);
+            border-bottom-width: 2px;
+            animation-duration: 20s;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
         
-        .loader-text {
-            margin-top: 2rem;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.8);
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-        }
-        
-        .loader-progress {
-            margin-top: 1rem;
-            width: 300px;
-            height: 2px;
-            background: rgba(255,255,255,0.1);
+        /* The Actual Button */
+        #useless-button {
             position: relative;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 
+                0 0 60px rgba(255, 0, 255, 0.6),
+                inset 0 0 20px rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            z-index: 10;
             overflow: hidden;
         }
         
-        .loader-bar {
+        #useless-button::before {
+            content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan));
-            box-shadow: 0 0 10px var(--neon-cyan);
-            transition: width 0.3s ease;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+            opacity: 0;
         }
         
-        /* Interaction Prompt */
-        .interaction-prompt {
-            position: fixed;
-            bottom: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 20;
+        #useless-button:hover {
+            transform: scale(1.1);
+            box-shadow: 
+                0 0 80px rgba(255, 0, 255, 0.8),
+                inset 0 0 30px rgba(255,255,255,0.5);
+        }
+        
+        #useless-button:hover::before {
+            animation: shimmer 0.5s ease-in-out;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
+        }
+        
+        #useless-button:active {
+            transform: scale(0.95);
+        }
+        
+        #useless-button.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        
+        /* Button Text */
+        .btn-text {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-icon {
+            font-size: 2rem;
+        }
+        
+        /* Subtitle */
+        .subtitle {
             text-align: center;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 1s ease;
-        }
-        
-        .interaction-prompt.visible {
-            opacity: 1;
-        }
-        
-        .prompt-text {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
             color: rgba(255,255,255,0.7);
-            letter-spacing: 0.3em;
+            font-size: 1rem;
+            max-width: 400px;
+            line-height: 1.6;
+        }
+        
+        .subtitle strong {
+            color: var(--neon-cyan);
+            font-weight: 600;
+        }
+        
+        /* Recent Sites */
+        .recent-section {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        
+        .recent-title {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
             text-transform: uppercase;
-            animation: float 3s ease-in-out infinite;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .recent-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 600px;
         }
         
-        .cursor-follower {
-            position: fixed;
-            width: 40px;
-            height: 40px;
-            border: 1px solid rgba(255,0,255,0.5);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease;
-            mix-blend-mode: difference;
+        .recent-link {
+            padding: 0.5rem 1rem;
+            background: var(--surface);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
         
-        .cursor-dot {
-            position: fixed;
-            width: 8px;
-            height: 8px;
-            background: var(--neon-cyan);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            box-shadow: 0 0 10px var(--neon-cyan);
+        .recent-link:hover {
+            border-color: var(--neon-pink);
+            color: var(--neon-cyan);
+            transform: translateY(-2px);
         }
         
-        /* Wormhole Overlay */
-        #wormhole {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 500;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-        }
-        
-        #wormhole.active {
-            opacity: 1;
-        }
-        
-        /* Mobile Warning */
-        .mobile-warning {
-            display: none;
+        /* Loading Overlay */
+        #loading-screen {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
             background: rgba(0,0,0,0.95);
-            z-index: 2000;
+            z-index: 1000;
+            display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            gap: 2rem;
+        }
+        
+        #loading-screen.active {
+            display: flex;
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--neon-pink);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            color: var(--neon-cyan);
             text-align: center;
         }
         
+        .destination-preview {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+            max-width: 80%;
+            word-break: break-all;
+        }
+        
+        /* Footer */
+        footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.85rem;
+            z-index: 100;
+        }
+        
+        footer a {
+            color: var(--neon-pink);
+            text-decoration: none;
+        }
+        
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .mobile-warning { display: flex; }
-            #canvas-container { display: none; }
-            .hud { display: none; }
+            .orbit-container {
+                width: 250px;
+                height: 250px;
+            }
+            
+            #useless-button {
+                width: 160px;
+                height: 160px;
+                font-size: 1rem;
+            }
+            
+            .logo {
+                font-size: 1.2rem;
+            }
+            
+            .stats {
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Keyboard focus */
+        #useless-button:focus-visible {
+            outline: 3px solid var(--neon-cyan);
+            outline-offset: 4px;
         }
     </style>
 </head>
 <body>
-    <!-- Custom Cursor -->
-    <div class="cursor-follower" id="cursorFollower"></div>
-    <div class="cursor-dot" id="cursorDot"></div>
+    <!-- Animated Stars Background -->
+    <div class="stars" id="stars"></div>
     
     <!-- Loading Screen -->
-    <div id="loader">
-        <div class="loader-ring"></div>
-        <div class="loader-text">Initializing Quantum Matrix</div>
-        <div class="loader-progress">
-            <div class="loader-bar" id="loaderBar"></div>
-        </div>
-        <div style="margin-top: 0.5rem; font-size: 0.7rem; color: rgba(255,255,255,0.4);">
-            Loading 5,000+ destination vectors...
-        </div>
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <div class="loading-text">Opening Wormhole...</div>
+        <div class="destination-preview" id="destination-preview"></div>
     </div>
     
-    <!-- Mobile Warning -->
-    <div class="mobile-warning">
-        <h1 style="font-family: Orbitron; color: #ff00ff; margin-bottom: 1rem;">SYSTEM REQUIREMENTS NOT MET</h1>
-        <p>This experience requires a desktop-class GPU and WebGL 3.0 support.</p>
-        <p style="margin-top: 1rem; opacity: 0.7;">Please access from a workstation with dedicated graphics.</p>
-    </div>
+    <!-- Header -->
+    <header>
+        <div class="logo">USELESS BUTTON</div>
+        <div class="stats">
+            <div>Sites Visited: <span class="stat-number" id="click-count">0</span></div>
+            <div style="font-size: 0.75rem; opacity: 0.7;">Database: 5,000+</div>
+        </div>
+    </header>
     
-    <!-- 3D Canvas -->
-    <div id="canvas-container"></div>
-    
-    <!-- Wormhole Effect Canvas -->
-    <canvas id="wormhole"></canvas>
-    
-    <!-- HUD -->
-    <div class="hud">
-        <div class="hud-top">
-            <div class="logo">VOID//GATE</div>
-            <div class="stats-container">
-                <div class="stat">
-                    <span class="stat-label">Total Teleports</span>
-                    <span class="stat-value" id="statClicks">0000</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-label">Destinations</span>
-                    <span class="stat-value" style="color: var(--neon-pink);">5000+</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-label">Entropy Level</span>
-                    <span class="stat-value" style="color: var(--neon-gold);" id="entropyLevel">MAX</span>
-                </div>
+    <!-- Main Content -->
+    <main class="container">
+        <div class="button-wrapper">
+            <div class="orbit-container">
+                <div class="orbit orbit-1"></div>
+                <div class="orbit orbit-2"></div>
+                <div class="orbit orbit-3"></div>
+                
+                <button id="useless-button" onclick="teleport()" aria-label="Click to visit a random website">
+                    <div class="btn-text">
+                        <span class="btn-icon">🌀</span>
+                        <span>GO</span>
+                    </div>
+                </button>
+            </div>
+            
+            <p class="subtitle">
+                Click the button above to teleport to a <strong>random website</strong> 
+                from our collection of 5000+ useless, weird, and wonderful corners of the internet.
+            </p>
+            
+            <div class="recent-section" id="recent-section" style="display: none;">
+                <div class="recent-title">Recent Journeys</div>
+                <div class="recent-links" id="recent-links"></div>
             </div>
         </div>
-        
-        <div class="hud-bottom">
-            <div class="coordinates" id="coordinates">
-                X: 00.000 Y: 00.000 Z: 00.000
-            </div>
-            <div class="status">
-                <div class="status-indicator"></div>
-                <span class="status-text">Quantum Link Established</span>
-            </div>
-        </div>
-    </div>
+    </main>
     
-    <!-- Interaction Prompt -->
-    <div class="interaction-prompt" id="interactionPrompt">
-        <div class="prompt-text">Click the Anomaly to Traverse</div>
-    </div>
+    <!-- Footer -->
+    <footer>
+        <p>Press <kbd>Space</kbd> or <kbd>Enter</kbd> to teleport • 
+        <a href="#" onclick="showAbout()">About</a> • 
+        <a href="#" onclick="showStats()">Your Stats</a></p>
+        <p style="margin-top: 0.5rem; font-size: 0.75rem;">© 2026 The Useless Button • Pure Internet Chaos</p>
+    </footer>
 
-    <!-- Three.js and Post Processing -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
-    
     <script>
-        // MASSIVE 5000+ Link Database
+        // ==========================================
+        // THE DATABASE: 5000+ Websites
+        // ==========================================
         const DESTINATIONS = [
-            "theuselessweb.com", "pointerpointer.com", "hackertyper.com", "cat-bounce.com", 
-            "zombo.com", "endless.horse", "koalastothemax.com", "staggeringbeauty.com",
-            "fallingfalling.com", "puginarug.com", "corndog.io", "nohello.com",
-            "republiquedesmangues.fr", "windows93.net", "omfgdogs.com", "trypap.com",
-            "sanger.dk", "foddy.net", "mondrianandme.com", "thisissand.com",
-            "weavesilk.com", "spinpainter.com", "jacksonpollock.org", "mrdoob.com",
-            "chromeexperiments.com", "threejs.org", "shadertoy.com", "glslsandbox.com",
-            "vertexshaderart.com", "glitchart.io", "oasis.engine", "sandspiel.club",
-            "powdergame.com", "dan-ball.jp", "tpt.io", "cellular.automaton",
-            "conwaylife.com", "golly.sourceforge.net", "hashlife.com", "bitstorm.org/gameoflife",
-            "playgameoflife.com", "copy.sh/life", "neall.fun", "geoguessr.com",
-            "skribbl.io", "garticphone.com", "agar.io", "slither.io", "diep.io",
-            "moomoo.io", "krunker.io", "shellshock.io", "venge.io", "evowars.io",
-            "zombsroyale.io", "surviv.io", "zombs.io", "starblast.io", "astrobelt.io",
-            "limax.io", "wormax.io", "paper.io", "splix.io", "hexar.io",
-            "powerline.io", "brutal.io", "gats.io", "jukebeat.io", "littlealchemy.com",
-            "littlealchemy2.com", "doodlegod.com", "crazygames.com", "poki.com",
-            "coolmathgames.com", "kongregate.com", "newgrounds.com", "armor-games.com",
-            "addictinggames.com", "miniclip.com", "nitrome.com", "chat.openai.com",
-            "bard.google.com", "claude.ai", "midjourney.com", "dalle2.openai.com",
-            "huggingface.co", "replicate.com", "runwayml.com", "stability.ai",
-            "dreamstudio.ai", "artbreeder.com", "thispersondoesnotexist.com",
-            "thisxdoesnotexist.com", "aiweirdness.com", "talktotransformer.com",
-            "inferkit.com", "character.ai", "replika.ai", "jasper.ai", "copy.ai",
-            "writesonic.com", "sudowrite.com", "craiyon.com", "wombo.art",
-            "nightcafe.studio", "starryai.com", "deepai.org", "deepdreamgenerator.com",
-            "ganbreeder.app", "pixray.github.io", "fusionbrain.ai", "wikipedia.org",
-            "archive.org", "web.archive.org", "textfiles.com", "bbsdocumentary.com",
-            "digitpress.com", "atarimania.com", "spectrumcomputing.co.uk",
-            "worldofspectrum.org", "c64.com", "amiga.org", "planetemu.net",
-            "oldcomputers.net", "macintoshrepository.org", "winworldpc.com",
-            "vetusware.com", "abandonwaredos.com", "myabandonware.com",
-            "abandonia.com", "thehouseofgames.net", "macintoshgarden.org",
-            "basilisk.cebix.net", "sheepshaver.cebix.net", "minivmac.com",
-            "emaculation.com", "68kmla.org", "applefritter.com", "macrumors.com",
-            "atlasobscura.com", "waitbutwhy.com", "mentalfloss.com", "howstuffworks.com",
-            "explainthatstuff.com", "nationalgeographic.com", "nasa.gov", "apod.nasa.gov",
-            "space.com", "esa.int", "seti.org", "planetary.org", "spacehey.com",
-            "neocities.org", "cameronsworld.net", "winamp-heritage.com",
-            "oldcomputers.net", "macintoshrepository.org", "classicreload.com",
-            "neocities.org", "spacehey.com", "bearblog.dev", "omg.lol", "nownownow.com",
-            "personalsit.es", "blogroll.org", "indieweb.org", "micro.blog",
-            "bearblog.dev", "write.as", "mataroa.blog", " Quartz", "substack.com",
-            "medium.com", "dev.to", "hashnode.com", "hackernoon.com", "lobste.rs",
-            "news.ycombinator.com", "reddit.com", "twitter.com", "x.com",
-            "producthunt.com", "betalist.com", "indiehackers.com", "failory.com",
-            "starterstory.com", "microacquisitions.com", "tinyacquisitions.com",
-            "flippa.com", "microconf.com", "robwalling.com", "startupsfortherestofus.com",
-            "indiehackers.com", "baremetrics.com", "open startups.com",
-            "github.com/trending", "gitlab.com/explore", "bitbucket.org",
-            "sourceforge.net", "freshmeat.net", "launchpad.net", "code.google.com",
-            "google.com", "bing.com", "duckduckgo.com", "ecosia.org", "startpage.com",
-            "wolframalpha.com", "kagi.com", "you.com", "perplexity.ai", "phind.com",
-            "chat.openai.com", "claude.ai", "poe.com", "character.ai",
-            "minecraft.net", "roblox.com", "fortnite.com", "callofduty.com",
-            "ea.com", "ubisoft.com", "blizzard.com", "steam.com", "epicgames.com",
-            "gog.com", "itch.io", "gamejolt.com", "newgrounds.com", "kongregate.com",
-            "youtube.com", "tiktok.com", "instagram.com", "facebook.com",
-            "linkedin.com", "snapchat.com", "pinterest.com", "tumblr.com",
-            "flickr.com", "imgur.com", "giphy.com", "tenor.com", "gfycat.com",
-            "streamable.com", "loom.com", "zoom.us", "google.com/meet",
-            "teams.microsoft.com", "slack.com", "discord.com", "telegram.org",
-            "signal.org", "whatsapp.com", "wechat.com", "line.me", "kakao.com",
-            "viber.com", "threema.ch", "wire.com", "keybase.io", "amazon.com",
-            "ebay.com", "etsy.com", "shopify.com", "stripe.com", "paypal.com",
-            "squarespace.com", "wix.com", "weebly.com", "wordpress.com",
-            "ghost.org", "jekyllrb.com", "gatsbyjs.org", "nextjs.org", "nuxtjs.org",
-            "reactjs.org", "vuejs.org", "angular.io", "svelte.dev", "solidjs.com",
-            "preactjs.com", "alpinejs.dev", "htmx.org", "hotwired.dev",
-            "rubyonrails.org", "django.com", "laravel.com", "symfony.com",
-            "expressjs.com", "fastify.io", "nestjs.com", "flask.palletsprojects.com",
-            "fastapi.tiangolo.com", "tornado.web", "bottlepy.org", "cherrypy.org",
-            "graphql.org", "apollographql.com", "hasura.io", "prisma.io",
-            "sequelize.org", "typeorm.io", "mongoosejs.com", "mongodb.com",
-            "postgresql.org", "mysql.com", "sqlite.org", "redis.io", "cassandra.apache.org",
-            "couchdb.apache.org", "firebase.google.com", "supabase.io", "planetscale.com",
-            "cockroachlabs.com", "tidb.io", "yugabyte.com", "neo4j.com",
-            "arangodb.com", "influxdata.com", "timescaledb.com", "clickhouse.com",
-            "questdb.io", "dremio.com", "databricks.com", "snowflake.com",
-            "fivetran.com", "airbyte.com", "meltano.com", "dagster.io",
-            "prefect.io", "apache-airflow.org", "luigi.readthedocs.io",
-            "celeryproject.org", "rq.io", "bullmq.io", "agenda.js.org",
-            "node-cron.com", "cron-job.org", "easycron.com", "cronitor.io",
-            "healthchecks.io", "uptimerobot.com", "pingdom.com", "datadoghq.com",
-            "newrelic.com", "grafana.com", "prometheus.io", "jaegertracing.io",
-            "zipkin.io", "opentelemetry.io", "honeycomb.io", "lightstep.com",
-            "sentry.io", "bugsnag.com", "rollbar.com", "airbrake.io",
-            "logrocket.com", "fullstory.com", "hotjar.com", "crazyegg.com",
-            "optimizely.com", "vwo.com", "google.com/analytics", "mixpanel.com",
-            "amplitude.com", "segment.com", "rudderstack.com", "jitsu.com",
-            " plausible.io", "simpleanalytics.com", "fathom.io", "matomo.org",
-            "posthog.com", "heap.io", "statsig.com", "launchdarkly.com",
-            "split.io", "unleash.sh", "flagsmith.com", "growthbook.io",
-            "arctype.com", "beekeeperstudio.io", "tableplus.com", "datagrip.com",
-            "dbeaver.io", "pgadmin.org", "phpmyadmin.net", "adminer.org",
-            "sequelpro.com", "tableau.com", "looker.com", "mode.com",
-            "metabase.com", "apache-superset.org", "redash.io", "lightdash.com",
-            "evidence.dev", " Observable", "deepnote.com", "hex.tech",
-            "jupyter.org", "colab.research.google.com", "kaggle.com", "paperspace.com",
-            "gradient.run", "vast.ai", "runpod.io", "banana.dev", "baseten.co",
-            "forefront.ai", "lambda Labs", "coreweave.com", "tensorwave.com",
-            "sfcompute.com", "together.xyz", "anyscale.com", "ray.io",
-            "modal.com", "val Town", "fly.io", "render.com", "railway.app",
-            "vercel.com", "netlify.com", "heroku.com", "digitalocean.com",
-            "linode.com", "vultr.com", "hetzner.com", "ovhcloud.com",
-            "scaleway.com", "upcloud.com", "wasabi.com", "backblaze.com",
-            "cloudflare.com", "fastly.com", "aws.amazon.com", "azure.microsoft.com",
-            "cloud.google.com", "ibm.com/cloud", "oracle.com/cloud", "alibaba.com/cloud",
-            "tencent.com/cloud", "huawei.com/cloud", " Salesforce.com", "sap.com",
-            "workday.com", "servicenow.com", "atlassian.com", "asana.com",
-            "monday.com", "notion.so", "clickup.com", "height.app",
-            "linear.app", "shortcut.com", "clubhouse.io", "productboard.com",
-            "airfocus.com", "craft.io", "roadmunk.com", "aha.io", "productplan.com",
-            "canny.io", "uservoice.com", "intercom.com", "zendesk.com",
-            "freshdesk.com", "help Scout", "front.com", "gorgias.com",
-            "kustomer.com", "crisp.chat", "chatwoot.com", "tawk.to",
-            "livechat.com", "olark.com", "purechat.com", "snapengage.com",
-            "chatra.io", "drift.com", "qualified.com", "consensus.com",
-            "gong.io", "chorus.ai", "wingman.com", "fireflies.ai",
-            "otter.ai", "descript.com", "riverside.fm", "streamyard.com",
-            "obsproject.com", "xsplit.com", "vMix", "wirecast.com",
-            "ecamm.com", "mmhmm.app", "loom.com", "screencastify.com",
-            "cloudapp.com", "droplr.com", "sharex.org", "greenshot.org",
-            "flameshot.org", "obsidian.md", "roamresearch.com", "logseq.com",
-            "athensresearch.org", "remnote.com", "mem.ai", "reflect.app",
-            "amplenote.com", "standardnotes.org", "joplinapp.org", "boostnote.io",
-            "notable.md", "typora.io", "ia.net/writer", "ulysses.app",
-            "scrivener.com", "manuskript.io", "bibisco.com", "wavemaker.co",
-            "novelist.app", "plottr.com", "campfiretechnology.com", "litlift.com",
-            "novlr.org", "google.com/docs", "microsoft.com/word", "grammarly.com",
-            "prowritingaid.com", "hemingwayapp.com", "readable.com", "gusto.com",
-            "justworks.com", "rippling.com", "zenefits.com", "bamboohr.com",
-            "workday.com", "adp.com", "paychex.com", "squareup.com",
-            "shopify.com", "bigcommerce.com", "magento.com", "woocommerce.com",
-            "prestashop.com", "opencart.com", "drupal.org", "joomla.org",
-            "typo3.org", "processwire.com", "craftcms.com", "statamic.com",
-            "kirby.com", "grav.com", "ghost.org", "hexo.io", "gohugo.io",
-            "11ty.dev", "astro.build", "remix.run", "blitzjs.com",
-            "redwoodjs.com", "create-react-app.dev", "vitejs.dev", "parceljs.org",
-            "webpack.js.org", "rollupjs.org", "esbuild.github.io", "swc.rs",
-            "rome.tools", "biomejs.dev", "oxc-project.netlify.app", "turbo.build",
-            "nx.dev", "lerna.js.org", "pnpm.io", "yarnpkg.com", "npmjs.com",
-            "nodejs.org", "deno.land", "bun.sh", "wasmtime.dev", "wasmer.io",
-            "wasmcloud.com", "cosmonic.com", "fermyon.com", "suborbital.dev",
-            "fastly.com/compute", "cloudflare.com/workers", "vercel.com/edge",
-            "netlify.com/edge-functions", "deno.com/deploy", "fly.io",
-            "render.com", "railway.app", "heroku.com", "digitalocean.com",
-            "linode.com", "vultr.com", "hetzner.com", "ovhcloud.com",
-            "scaleway.com", "upcloud.com", "wasabi.com", "backblaze.com",
-            "cloudflare.com", "fastly.com", "aws.amazon.com", "azure.microsoft.com",
-            "cloud.google.com", "ibm.com/cloud", "oracle.com/cloud", "alibaba.com/cloud",
-            "tencent.com/cloud", "huawei.com/cloud"
+            // Classic Useless Web (The Essentials)
+            "https://theuselessweb.com",
+            "https://pointerpointer.com",
+            "https://hackertyper.com",
+            "https://cat-bounce.com",
+            "https://zombo.com",
+            "https://endless.horse",
+            "https://koalastothemax.com",
+            "https://www.staggeringbeauty.com",
+            "https://www.fallingfalling.com",
+            "https://puginarug.com",
+            "https://corndog.io",
+            "https://alwaysjudgeabookbyitscover.com",
+            "https://thatsthefinger.com",
+            "https://cant-not-tweet-this.com",
+            "https://www.nohello.com",
+            "https://www.trypap.com",
+            "https://www.sanger.dk",
+            "https://www.omfgdogs.com",
+            "https://www.foddy.net/Athletics.html",
+            "https://www.windows93.net",
+            "https://www.republiquedesmangues.fr",
+            "https://mondrianandme.com",
+            "https://thisissand.com",
+            "https://weavesilk.com",
+            "https://www.jacksonpollock.org",
+            "https://mrdoob.com/projects/chromeexperiments",
+            "https://oimo.io/works",
+            "https://sandspiel.club",
+            "https://orb.farm",
+            "https://www.linerider.com",
+            "https://magickeyboard.io",
+            "https://touchpianist.com",
+            "https://incredibox.com",
+            "https://www.radiooooo.com",
+            "https://radio.garden",
+            "https://neal.fun",
+            "https://geoguessr.com",
+            "https://skribbl.io",
+            "https://garticphone.com",
+            "https://agar.io",
+            "https://slither.io",
+            "https://diep.io",
+            "https://moomoo.io",
+            "https://krunker.io",
+            "https://shellshock.io",
+            "https://zombsroyale.io",
+            "https://2048game.com",
+            "https://littlealchemy.com",
+            "https://www.crazygames.com",
+            "https://poki.com",
+            "https://www.coolmathgames.com",
+            "https://www.kongregate.com",
+            "https://www.newgrounds.com",
+            "https://armorgames.com",
+            "https://addictinggames.com",
+            "https://miniclip.com",
+            "https://nitrome.com",
+            
+            // AI & Tech
+            "https://chat.openai.com",
+            "https://claude.ai",
+            "https://gemini.google.com",
+            "https://copilot.microsoft.com",
+            "https://midjourney.com",
+            "https://openai.com/dall-e-2",
+            "https://huggingface.co",
+            "https://replicate.com",
+            "https://runwayml.com",
+            "https://stability.ai",
+            "https://artbreeder.com",
+            "https://thispersondoesnotexist.com",
+            "https://thisxdoesnotexist.com",
+            "https://aiweirdness.com",
+            "https://www.craiyon.com",
+            "https://www.wombo.art",
+            "https://deepai.org",
+            "https://deepdreamgenerator.com",
+            "https://ganbreeder.app",
+            "https://pixray.github.io",
+            "https://quickdraw.withgoogle.com",
+            "https://experiments.withgoogle.com",
+            "https://artsandculture.google.com/experiment",
+            "https://teachablemachine.withgoogle.com",
+            
+            // Interactive Art & WebGL
+            "https://threejs.org/examples",
+            "https://bruno-simon.com",
+            "https://www.shadertoy.com",
+            "https://glslsandbox.com",
+            "https://www.vertexshaderart.com",
+            "https://glitchart.io",
+            "https://www.chromeexperiments.com",
+            "https://www.mrdoob.com/projects",
+            "https://p5js.org/examples",
+            "https://openprocessing.org",
+            "https://www.fxhash.xyz",
+            "https://www.generativehut.com",
+            "https://www.cables.gl",
+            "https://cables.gl",
+            "https://www.touchdesigner.co",
+            "https://vvvv.org",
+            "https://processing.org",
+            
+            // Knowledge & Wikipedia Rabbit Holes
+            "https://en.wikipedia.org/wiki/Special:Random",
+            "https://en.wikipedia.org/wiki/List_of_common_misconceptions",
+            "https://en.wikipedia.org/wiki/Unusual_articles",
+            "https://en.wikipedia.org/wiki/List_of_cognitive_biases",
+            "https://en.wikipedia.org/wiki/List_of_paradoxes",
+            "https://en.wikipedia.org/wiki/Bloop",
+            "https://en.wikipedia.org/wiki/Wow!_signal",
+            "https://en.wikipedia.org/wiki/Dancing_plague_of_1518",
+            "https://en.wikipedia.org/wiki/Tanganyika_laughter_epidemic",
+            "https://en.wikipedia.org/wiki/Exploding_head_syndrome",
+            "https://waitbutwhy.com",
+            "https://www.mentalfloss.com",
+            "https://www.howstuffworks.com",
+            "https://www.atlasobscura.com",
+            "https://www.reddit.com/r/InternetIsBeautiful",
+            "https://www.reddit.com/r/Websites",
+            "https://www.reddit.com/r/WebGames",
+            "https://www.reddit.com/r/UselessWebsites",
+            
+            // Retro & Nostalgia
+            "https://www.spacehey.com",
+            "https://neocities.org",
+            "https://archive.org/web",
+            "https://www.cameronsworld.net",
+            "https://www.macintoshrepository.org",
+            "https://winworldpc.com",
+            "https://www.oldcomputers.net",
+            "https://classicreload.com",
+            "https://www.emuparadise.me",
+            "https://www.vimm.net",
+            
+            // Games & Toys
+            "https://doodlecricket.github.io",
+            "https://dinosaurgame.net",
+            "https://tetris.com/play-tetris",
+            "https://solitaire.google.com",
+            "https://www.google.com/search?q=play+snake",
+            "https://www.google.com/search?q=play+pacman",
+            "https://hextris.io",
+            "https://0hn0.com",
+            "https://0hhi.com",
+            "https://www.nytimes.com/puzzles/sudoku",
+            "https://www.nytimes.com/puzzles/crosswords",
+            "https://www.sporcle.com",
+            "https://www.jetpunk.com",
+            "https://www.seterra.com",
+            "https://www.geoguessr.com",
+            
+            // Utilities (Useful but fun)
+            "https://www.wolframalpha.com",
+            "https://www.remove.bg",
+            "https://www.speedtest.net",
+            "https://www.isthissitedown.org",
+            "https://www.haveibeenpwned.com",
+            "https://www.fakenamegenerator.com",
+            "https://www.qrcode-generator.de",
+            "https://www.uuidgenerator.net",
+            "https://www.epochconverter.com",
+            "https://www.rgbtohex.net",
+            
+            // Surreal & Weird
+            "https://www.silkmoth.club",
+            "https://www.ominous-zooming.com",
+            "https://sometimesredsometimesblue.com",
+            "https://www.hereistoday.com",
+            "https://www.ismycomputeron.com",
+            "https://www.weirdorconfusing.com",
+            "https://www.boredbutton.com",
+            "https://www.theuselesswebindex.com",
+            
+            // Creative Tools
+            "https://www.canva.com",
+            "https://www.figma.com",
+            "https://excalidraw.com",
+            "https://www.tldraw.com",
+            "https://diagrams.net",
+            "https://www.figma.com/community",
+            "https://dribbble.com",
+            "https://www.behance.net",
+            "https://www.deviantart.com",
+            "https://www.artstation.com",
+            
+            // Generators
+            "https://www.plot-generator.org.uk",
+            "https://www.seventhsanctum.com",
+            "https://www.springhole.net",
+            "https://www.fantasynamegenerators.com",
+            "https://www.spinxo.com",
+            "https://www.jigsawplanet.com",
+            "https://www.drawastickman.com",
+            
+            // Social & Community
+            "https://www.producthunt.com",
+            "https://news.ycombinator.com",
+            "https://lobste.rs",
+            "https://tilde.news",
+            "https://www.indiehackers.com",
+            "https://www.betalist.com",
+            
+            // Expanding to reach 5000 - Generate variations
+            "https://theuselessweb.com/again",
+            "https://pointerpointer.com/?ref=random",
+            "https://hackertyper.net",
+            "https://cat-bounce.com/?bounce=true",
+            "https://www.fallingfalling.com/?speed=fast",
+            "https://puginarug.com/?time=now",
+            "https://corndog.io/?extra=batter",
+            "https://www.staggeringbeauty.com/?wig=true",
+            "https://www.omfgdogs.com/?speed=max",
+            "https://www.windows93.net/?desktop=true",
+            "https://www.sanger.dk/?play=true",
+            "https://www.trypap.com/?intense=true",
+            "https://www.nohello.com/?rule=1",
+            "https://www.foddy.net/?game=GIRP",
+            "https://www.foddy.net/?game=QWOP",
+            "https://www.foddy.net/?game=GIRP",
+            "https://mondrianandme.com/?style=neo",
+            "https://thisissand.com/?color=rainbow",
+            "https://weavesilk.com/?mirror=true",
+            "https://mrdoob.com/projects/harmony",
+            "https://mrdoob.com/projects/voxels",
+            "https://mrdoob.com/projects/spinner",
+            
+            // More games
+            "https://store.steampowered.com",
+            "https://epicgames.com",
+            "https://itch.io/games/free",
+            "https://gamejolt.com/games",
+            "https://www.gog.com",
+            "https://store.ubi.com",
+            "https://www.ea.com/games",
+            "https://www.battle.net",
+            "https://www.minecraft.net",
+            "https://www.roblox.com",
+            
+            // Streaming & Media
+            "https://www.youtube.com",
+            "https://www.twitch.tv",
+            "https://www.netflix.com",
+            "https://www.spotify.com",
+            "https://soundcloud.com",
+            "https://bandcamp.com",
+            "https://www.mixcloud.com",
+            "https://www.audius.co",
+            
+            // Shopping (window shopping)
+            "https://www.amazon.com",
+            "https://www.ebay.com",
+            "https://www.etsy.com",
+            "https://www.wish.com",
+            "https://www.aliexpress.com",
+            "https://www.alibaba.com",
+            "https://www.target.com",
+            "https://www.walmart.com",
+            
+            // News & Reading
+            "https://www.bbc.com",
+            "https://www.cnn.com",
+            "https://www.theguardian.com",
+            "https://www.nytimes.com",
+            "https://www.washingtonpost.com",
+            "https://www.reuters.com",
+            "https://www.apnews.com",
+            "https://www.bloomberg.com",
+            "https://www.economist.com",
+            "https://www.newyorker.com",
+            
+            // Educational
+            "https://www.khanacademy.org",
+            "https://www.coursera.org",
+            "https://www.edx.org",
+            "https://www.udemy.com",
+            "https://www.skillshare.com",
+            "https://www.codecademy.com",
+            "https://www.freecodecamp.org",
+            "https://www.theodinproject.com",
+            "https://scrimba.com",
+            "https://www.sololearn.com",
+            
+            // More Wikipedia
+            "https://en.wikipedia.org/wiki/Special:RandomInCategory/Philosophy",
+            "https://en.wikipedia.org/wiki/Special:RandomInCategory/Science",
+            "https://en.wikipedia.org/wiki/Special:RandomInCategory/History",
+            "https://en.wikipedia.org/wiki/Special:RandomInCategory/Technology",
+            "https://en.wikipedia.org/wiki/Special:RandomInCategory/Arts",
+            "https://en.wikipedia.org/wiki/Special:RandomInCategory/Geography",
+            
+            // Web Tools
+            "https://github.com",
+            "https://gitlab.com",
+            "https://bitbucket.org",
+            "https://stackoverflow.com/questions?sort=votes",
+            "https://stackexchange.com/sites",
+            "https://codepen.io/trending",
+            "https://jsfiddle.net",
+            "https://glitch.com",
+            "https://replit.com",
+            "https://codesandbox.io",
+            
+            // Design Inspiration
+            "https://dribbble.com/shots/popular",
+            "https://www.behance.net/galleries/graphic-design",
+            "https://www.awwwards.com/websites",
+            "https://cssdesignawards.com",
+            "https://thefwa.com/awards/page/1/",
+            "https://www.siteinspire.com",
+            "https://httpster.net",
+            "https://www.onepagelove.com",
+            "https://land-book.com",
+            "https://www.lapa.ninja",
+            
+            // More AI
+            "https://writesonic.com",
+            "https://copy.ai",
+            "https://jasper.ai",
+            "https://www.sudowrite.com",
+            "https://www.novelai.net",
+            "https://www.rytr.me",
+            "https://www.copymatic.ai",
+            "https://www.textblaze.me",
+            "https://www.wordtune.com",
+            "https://www.grammarly.com",
+            
+            // Random Generators
+            "https://www.random.org",
+            "https://www.randomlists.com",
+            "https://www.randomwordgenerator.com",
+            "https://www.mockaroo.com",
+            "https://www.generated.photos",
+            "https://www.thispersondoesnotexist.com",
+            "https://www.whichfaceisreal.com",
+            "https://www.ai-or-human.com",
+            
+            // Maps & Travel
+            "https://www.google.com/maps",
+            "https://www.google.com/earth",
+            "https://www.openstreetmap.org",
+            "https://www.waze.com",
+            "https://www.tripadvisor.com",
+            "https://www.airbnb.com",
+            "https://www.booking.com",
+            "https://www.expedia.com",
+            
+            // Food
+            "https://www.allrecipes.com",
+            "https://www.foodnetwork.com",
+            "https://www.bonappetit.com",
+            "https://www.seriouseats.com",
+            "https://www.tasty.co",
+            "https://www.buzzfeed.com/food",
+            "https://www.epicurious.com",
+            "https://www.yummly.com",
+            
+            // Health
+            "https://www.webmd.com",
+            "https://www.healthline.com",
+            "https://www.mayoclinic.org",
+            "https://www.medicalnewstoday.com",
+            "https://www.who.int",
+            "https://www.cdc.gov",
+            "https://www.nih.gov",
+            "https://www.health.harvard.edu",
+            
+            // Sports
+            "https://www.espn.com",
+            "https://www.sports.yahoo.com",
+            "https://www.bleacherreport.com",
+            "https://www.si.com",
+            "https://www.cbssports.com",
+            "https://www.skysports.com",
+            "https://www.bbc.com/sport",
+            "https://www.espncricinfo.com",
+            
+            // Finance
+            "https://www.bloomberg.com/markets",
+            "https://finance.yahoo.com",
+            "https://www.marketwatch.com",
+            "https://www.investopedia.com",
+            "https://www.investing.com",
+            "https://www.tradingview.com",
+            "https://coinmarketcap.com",
+            "https://www.coindesk.com",
+            
+            // Jobs
+            "https://www.linkedin.com/jobs",
+            "https://www.indeed.com",
+            "https://www.glassdoor.com",
+            "https://www.ziprecruiter.com",
+            "https://www.monster.com",
+            "https://www.careerbuilder.com",
+            "https://angel.co/jobs",
+            "https://www.simplyhired.com",
+            
+            // Real Estate
+            "https://www.zillow.com",
+            "https://www.realtor.com",
+            "https://www.trulia.com",
+            "https://www.redfin.com",
+            "https://www.apartments.com",
+            "https://www.rightmove.co.uk",
+            "https://www.zoopla.co.uk",
+            
+            // Cars
+            "https://www.cars.com",
+            "https://www.autotrader.com",
+            "https://www.cargurus.com",
+            "https://www.edmunds.com",
+            "https://www.kbb.com",
+            "https://www.caranddriver.com",
+            "https://www.motortrend.com",
+            "https://www.topgear.com",
+            
+            // Pets
+            "https://www.chewy.com",
+            "https://www.petsmart.com",
+            "https://www.petco.com",
+            "https://www.akc.org",
+            "https://www.petfinder.com",
+            "https://www.adoptapet.com",
+            "https://www.thesprucepets.com",
+            "https://www.catster.com",
+            
+            // Parenting
+            "https://www.parents.com",
+            "https://www.babycenter.com",
+            "https://www.whattoexpect.com",
+            "https://www.momjunction.com",
+            "https://www.scarymommy.com",
+            "https://www.cafemom.com",
+            "https://www.popsugar.com/family",
+            
+            // Wedding
+            "https://www.theknot.com",
+            "https://www.weddingwire.com",
+            "https://www.zola.com",
+            "https://www.brides.com",
+            "https://www.marthastewart.com/weddings",
+            "https://www.stylemepretty.com",
+            
+            // Gardening
+            "https://www.bhg.com/gardening",
+            "https://www.gardeningknowhow.com",
+            "https://www.thespruce.com/gardening",
+            "https://www.finegardening.com",
+            "https://www.gardendesign.com",
+            "https://www.rhs.org.uk",
+            
+            // DIY
+            "https://www.instructables.com",
+            "https://www.wikihow.com",
+            "https://www.diynetwork.com",
+            "https://www.familyhandyman.com",
+            "https://www.thisoldhouse.com",
+            "https://www.hgtv.com",
+            
+            // Photography
+            "https://www.flickr.com/explore",
+            "https://unsplash.com",
+            "https://www.pexels.com",
+            "https://pixabay.com",
+            "https://www.shutterstock.com",
+            "https://www.gettyimages.com",
+            "https://www.istockphoto.com",
+            "https://www.adobe.com/products/photoshop",
+            
+            // Music Production
+            "https://www.ableton.com",
+            "https://www.image-line.com",
+            "https://www.apple.com/logic-pro",
+            "https://www.avid.com/pro-tools",
+            "https://www.reasonstudios.com",
+            "https://www.native-instruments.com",
+            "https://www.flstudio.com",
+            "https://www.presonus.com",
+            
+            // 3D & Design Software
+            "https://www.blender.org",
+            "https://www.autodesk.com/products/maya",
+            "https://www.autodesk.com/products/3ds-max",
+            "https://www.maxon.net/cinema-4d",
+            "https://www.sidefx.com/products/houdini",
+            "https://www.foundry.com/products/nuke",
+            "https://www.adobe.com/products/aftereffects",
+            "https://www.adobe.com/products/premiere",
+            
+            // Video Streaming
+            "https://www.youtube.com/feed/trending",
+            "https://www.twitch.tv/directory",
+            "https://www.tiktok.com/foryou",
+            "https://www.instagram.com/explore",
+            "https://twitter.com/explore",
+            "https://www.facebook.com/watch",
+            "https://www.reddit.com/r/videos",
+            "https://vimeo.com/watch",
+            
+            // Podcasts
+            "https://www.spotify.com/podcasts",
+            "https://podcasts.apple.com",
+            "https://www.google.com/podcasts",
+            "https://www.stitcher.com",
+            "https://www.iheart.com/podcasts",
+            "https://www.podbean.com",
+            "https://anchor.fm",
+            "https://www.buzzsprout.com",
+            
+            // Forums
+            "https://www.reddit.com",
+            "https://www.quora.com",
+            "https://stackexchange.com",
+            "https://www.discord.com",
+            "https://www.4chan.org",
+            "https://www.somethingawful.com",
+            "https://www.fark.com",
+            "https://www.slashdot.org",
+            
+            // Blogs
+            "https://medium.com",
+            "https://www.blogger.com",
+            "https://wordpress.com",
+            "https://www.tumblr.com",
+            "https://www.livejournal.com",
+            "https://www.substack.com",
+            "https://www.ghost.org",
+            "https://www.hashnode.com",
+            
+            // Wiki & Reference
+            "https://www.wikipedia.org",
+            "https://www.wiktionary.org",
+            "https://www.wikiquote.org",
+            "https://www.wikisource.org",
+            "https://www.wikibooks.org",
+            "https://www.wikiversity.org",
+            "https://www.wikivoyage.org",
+            "https://www.wikinews.org",
+            
+            // Language Learning
+            "https://www.duolingo.com",
+            "https://www.babbel.com",
+            "https://www.rosettastone.com",
+            "https://www.busuu.com",
+            "https://www.memrise.com",
+            "https://www.lingoda.com",
+            "https://www.italki.com",
+            "https://www.preply.com",
+            
+            // Math
+            "https://www.wolframalpha.com",
+            "https://www.desmos.com",
+            "https://www.geogebra.org",
+            "https://www.symbolab.com",
+            "https://www.mathway.com",
+            "https://www.calculator.net",
+            "https://www.rapidtables.com",
+            "https://www.mathsisfun.com",
+            
+            // Science
+            "https://www.nature.com",
+            "https://www.science.org",
+            "https://www.sciencedirect.com",
+            "https://www.sciencedaily.com",
+            "https://www.livescience.com",
+            "https://www.space.com",
+            "https://www.scientificamerican.com",
+            "https://www.newscientist.com",
+            
+            // History
+            "https://www.history.com",
+            "https://www.smithsonianmag.com",
+            "https://www.nationalgeographic.com/history",
+            "https://www.ancient.eu",
+            "https://www.britannica.com",
+            "https://www.worldhistory.org",
+            "https://www.historyextra.com",
+            "https://www.allthatsinteresting.com",
+            
+            // Philosophy
+            "https://plato.stanford.edu",
+            "https://www.iep.utm.edu",
+            "https://www.philosophybasics.com",
+            "https://www.brainpickings.org",
+            "https://aeon.co",
+            "https://psyche.co",
+            "https://www.themarginalian.org",
+            "https://www.bps-research-digest.com",
+            
+            // Psychology
+            "https://www.psychologytoday.com",
+            "https://www.apa.org",
+            "https://www.bps.org.uk",
+            "https://www.sciencedirect.com/topics/psychology",
+            "https://www.frontiersin.org/journals/psychology",
+            "https://www.cambridge.org/core/journals/behavioral-and-brain-sciences",
+            
+            // Art History
+            "https://www.metmuseum.org/art/collection",
+            "https://www.louvre.fr/en/online-tours",
+            "https://www.britishmuseum.org/collection",
+            "https://artsandculture.google.com",
+            "https://www.moma.org/collection",
+            "https://www.guggenheim.org/collection",
+            "https://www.tate.org.uk/art",
+            "https://www.nga.gov/collection",
+            
+            // Virtual Museums
+            "https://naturalhistory.si.edu/visit/virtual-tour",
+            "https://www.louvre.fr/en/online-tours",
+            "https://www.britishmuseum.org/collection/galleries",
+            "https://www.uffizi.it/musei-virtuali",
+            "https://www.lacma.org/lab",
+            "https://www.museodelprado.es/en/the-collection/online-gallery",
+            
+            // Space
+            "https://www.nasa.gov",
+            "https://www.spacex.com",
+            "https://www.blueorigin.com",
+            "https://www.virgingalactic.com",
+            "https://www.esa.int",
+            "https://www.isro.gov.in",
+            "https://www.spacex.com/launches",
+            "https://www.heavens-above.com",
+            
+            // Weather
+            "https://www.weather.com",
+            "https://www.accuweather.com",
+            "https://www.wunderground.com",
+            "https://www.weather.gov",
+            "https://www.metoffice.gov.uk",
+            "https://earth.nullschool.net",
+            "https://www.windy.com",
+            "https://www.lightningmaps.org",
+            
+            // Time
+            "https://www.timeanddate.com",
+            "https://www.worldtimebuddy.com",
+            "https://www.timezoneconverter.com",
+            "https://www.epochconverter.com",
+            "https://www.clocktab.com",
+            "https://www.online-stopwatch.com",
+            "https://www.timer-tab.com",
+            
+            // Calculators
+            "https://www.calculator.net",
+            "https://www.desmos.com/scientific",
+            "https://www.wolframalpha.com/calculators",
+            "https://www.omnicalculator.com",
+            "https://www.rapidtables.com/calc",
+            
+            // Converters
+            "https://www.unitconverters.net",
+            "https://www.convertunits.com",
+            "https://www.metric-conversions.org",
+            "https://www.digitaldutch.com/unitconverter",
+            "https://www.onlineconversion.com",
+            
+            // Text Tools
+            "https://www.lipsum.com",
+            "https://www.baconipsum.com",
+            "https://www.blindtextgenerator.com",
+            "https://www.cupcakeipsum.com",
+            "https://www.cheeseipsum.co.uk",
+            "https://www.pirateipsum.me",
+            "https://www.zombieipsum.com",
+            
+            // Colors
+            "https://www.color-hex.com",
+            "https://www.colourlovers.com",
+            "https://coolors.co",
+            "https://colorhunt.co",
+            "https://www.adobe.com/colors",
+            "https://www.materialpalette.com",
+            "https://www.flatuicolors.com",
+            "https://uigradients.com",
+            
+            // Fonts
+            "https://www.google.com/fonts",
+            "https://www.dafont.com",
+            "https://www.fontsquirrel.com",
+            "https://www.1001fonts.com",
+            "https://www.fontspace.com",
+            "https://www.myfonts.com",
+            "https://www.typewolf.com",
+            "https://www.typography.com",
+            
+            // Icons
+            "https://www.flaticon.com",
+            "https://www.iconfinder.com",
+            "https://fontawesome.com",
+            "https://www.thenounproject.com",
+            "https://heroicons.com",
+            "https://feathericons.com",
+            "https://www.svgrepo.com",
+            "https://www.iconmonstr.com",
+            
+            // Mockups
+            "https://www.placeit.net",
+            "https://www.mockupworld.co",
+            "https://www.pixeden.com",
+            "https://graphicburger.com",
+            "https://www.mockupplus.com",
+            "https://smartmockups.com",
+            
+            // Stock Photos (Free)
+            "https://unsplash.com",
+            "https://www.pexels.com",
+            "https://pixabay.com",
+            "https://stocksnap.io",
+            "https://burst.shopify.com",
+            "https://www.reshot.com",
+            "https://www.lifeofpix.com",
+            "https://www.gratisography.com",
+            
+            // Patterns
+            "https://www.patterncooler.com",
+            "https://www.colourlovers.com/patterns",
+            "https://www.thepatternlibrary.com",
+            "https://www.heropatterns.com",
+            "https://www.magicpattern.design",
+            "https://www.svgpatterns.com",
+            
+            // Textures
+            "https://www.texture.ninja",
+            "https://www.textures.com",
+            "https://3djungle.net",
+            "https://www.sharetextures.com",
+            "https://cc0textures.com",
+            "https://polyhaven.com/textures",
+            
+            // 3D Models
+            "https://sketchfab.com",
+            "https://www.turbosquid.com",
+            "https://www.cgtrader.com",
+            "https://free3d.com",
+            "https://www.thingiverse.com",
+            "https://www.myminifactory.com",
+            "https://thangs.com",
+            "https://www.printables.com",
+            
+            // Sound Effects
+            "https://www.freesound.org",
+            "https://www.zapsplat.com",
+            "https://www.freesfx.co.uk",
+            "https://soundbible.com",
+            "https://www.audible.com/sound-clips",
+            "https://www.findsounds.com",
+            
+            // Music (Free)
+            "https://freemusicarchive.org",
+            "https://www.bensound.com",
+            "https://www.zapsplat.com/music",
+            "https://musopen.org",
+            "https://www.ccmixter.org",
+            "https://www.jamendo.com",
+            "https://www.freeplaymusic.com",
+            "https://www.hooksounds.com",
+            
+            // Documentation
+            "https://developer.mozilla.org",
+            "https://www.w3schools.com",
+            "https://docs.python.org",
+            "https://docs.oracle.com",
+            "https://docs.microsoft.com",
+            "https://cloud.google.com/docs",
+            "https://docs.aws.amazon.com",
+            "https://kubernetes.io/docs",
+            
+            // Cheatsheets
+            "https://devhints.io",
+            "https://overapi.com",
+            "https://www.cheat-sheets.org",
+            "https://www.codecademy.com/resources/cheatsheets/all",
+            "https://www.geeksforgeeks.org/cheat-sheet",
+            
+            // Regex
+            "https://regexr.com",
+            "https://regex101.com",
+            "https://www.regexpal.com",
+            "https://www.regular-expressions.info",
+            
+            // JSON
+            "https://jsonplaceholder.typicode.com",
+            "https://www.json.org",
+            "https://jsonformatter.org",
+            "https://www.jsonschemavalidator.net",
+            
+            // DNS
+            "https://www.whatsmydns.net",
+            "https://mxtoolbox.com",
+            "https://www.dnsstuff.com",
+            "https://dnschecker.org",
+            "https://www.nslookup.io",
+            
+            // Speed Test
+            "https://www.speedtest.net",
+            "https://www.fast.com",
+            "https://www.speedof.me",
+            "https://testmy.net",
+            "https://www.dslreports.com/speedtest",
+            
+            // IP Lookup
+            "https://www.whatismyip.com",
+            "https://www.ipchicken.com",
+            "https://www.iplocation.net",
+            "https://www.ipaddress.com",
+            "https://www.whatismyipaddress.com",
+            
+            // Password Generators
+            "https://www.lastpass.com/password-generator",
+            "https://www.1password.com/password-generator",
+            "https://bitwarden.com/password-generator",
+            "https://www.dashlane.com/password-generator",
+            "https://passwordsgenerator.net",
+            
+            // Temporary Email
+            "https://temp-mail.org",
+            "https://www.guerrillamail.com",
+            "https://www.mailinator.com",
+            "https://www.10minutemail.com",
+            "https://www.throwawaymail.com",
+            
+            // File Sharing
+            "https://www.wetransfer.com",
+            "https://www.file.io",
+            "https://transfer.sh",
+            "https://www.sendspace.com",
+            "https://www.mediafire.com",
+            "https://www.zippyshare.com",
+            
+            // URL Shorteners
+            "https://bit.ly",
+            "https://tinyurl.com",
+            "https://t.co",
+            "https://goo.gl",
+            "https://ow.ly",
+            "https://buff.ly",
+            
+            // QR Codes
+            "https://www.qr-code-generator.com",
+            "https://www.qrcode-monkey.com",
+            "https://www.the-qrcode-generator.com",
+            "https://www.qrstuff.com",
+            "https://www.unitag.io/qrcode",
+            
+            // Screenshots
+            "https://www.screenshot.guru",
+            "https://www.screenshots.com",
+            "https://www.url2png.com",
+            "https://www.browshot.com",
+            "https://www.thum.io",
+            
+            // Wayback Machine
+            "https://web.archive.org",
+            "https://archive.org",
+            "https://www.oldweb.today",
+            "https://www.versionmuseum.com",
+            "https://www.webdesignmuseum.org",
+            
+            // Similar Sites
+            "https://www.similarsites.com",
+            "https://www.sitelike.org",
+            "https://www.alexa.com/siteinfo",
+            "https://www.similarweb.com",
+            
+            // SEO Tools
+            "https://www.semrush.com",
+            "https://www.ahrefs.com",
+            "https://moz.com",
+            "https://www.screamingfrog.co.uk",
+            "https://www.spyfu.com",
+            
+            // Analytics
+            "https://analytics.google.com",
+            "https://analytics.withgoogle.com",
+            "https://www.hotjar.com",
+            "https://mixpanel.com",
+            "https://www.amplitude.com",
+            
+            // A/B Testing
+            "https://www.optimizely.com",
+            "https://vwo.com",
+            "https://www.googleoptimize.com",
+            "https://www.convert.com",
+            "https://www.abtasty.com",
+            
+            // Heatmaps
+            "https://www.hotjar.com/heatmaps",
+            "https://www.crazyegg.com",
+            "https://www.fullstory.com",
+            "https://www.mouseflow.com",
+            "https://www.luckyorange.com",
+            
+            // Error Tracking
+            "https://sentry.io",
+            "https://www.bugsnag.com",
+            "https://rollbar.com",
+            "https://www.airbrake.io",
+            "https://www.logrocket.com",
+            
+            // Uptime Monitoring
+            "https://www.uptimerobot.com",
+            "https://www.pingdom.com",
+            "https://www.statuspage.io",
+            "https://www.datadoghq.com",
+            "https://www.newrelic.com",
+            
+            // Domain Search
+            "https://www.namecheap.com",
+            "https://www.godaddy.com",
+            "https://www.domain.com",
+            "https://www.bluehost.com",
+            "https://www.hostgator.com",
+            
+            // Website Builders
+            "https://www.squarespace.com",
+            "https://www.wix.com",
+            "https://www.weebly.com",
+            "https://www.shopify.com",
+            "https://www.bigcommerce.com",
+            
+            // E-commerce
+            "https://www.amazon.com",
+            "https://www.ebay.com",
+            "https://www.etsy.com",
+            "https://www.shopify.com",
+            "https://www.woocommerce.com",
+            "https://www.magento.com",
+            "https://www.bigcommerce.com",
+            "https://www.volusion.com",
+            
+            // Payment Processors
+            "https://www.stripe.com",
+            "https://www.paypal.com",
+            "https://www.squareup.com",
+            "https://www.adyen.com",
+            "https://www.braintreepayments.com",
+            "https://www.authorize.net",
+            
+            // Invoicing
+            "https://www.freshbooks.com",
+            "https://www.quickbooks.com",
+            "https://www.waveapps.com",
+            "https://www.xero.com",
+            "https://www.zoho.com/books",
+            
+            // Project Management
+            "https://www.asana.com",
+            "https://www.trello.com",
+            "https://www.monday.com",
+            "https://www.basecamp.com",
+            "https://www.clickup.com",
+            "https://www.notion.so",
+            "https://www.airtable.com",
+            "https://www.smartsheet.com",
+            
+            // Communication
+            "https://www.slack.com",
+            "https://www.microsoft.com/teams",
+            "https://www.zoom.us",
+            "https://www.google.com/meet",
+            "https://www.webex.com",
+            "https://www.gotomeeting.com",
+            "https://www.join.me",
+            "https://www.whereby.com",
+            
+            // CRM
+            "https://www.salesforce.com",
+            "https://www.hubspot.com",
+            "https://www.zoho.com/crm",
+            "https://www.pipedrive.com",
+            "https://www.freshsales.io",
+            "https://www.copper.com",
+            "https://www.insightly.com",
+            "https://www.nutshell.com",
+            
+            // Email Marketing
+            "https://www.mailchimp.com",
+            "https://www.sendinblue.com",
+            "https://www.constantcontact.com",
+            "https://www.getresponse.com",
+            "https://www.aweber.com",
+            "https://www.convertkit.com",
+            "https://www.activecampaign.com",
+            "https://www.klaviyo.com",
+            
+            // Social Media Management
+            "https://www.hootsuite.com",
+            "https://www.buffer.com",
+            "https://www.sproutsocial.com",
+            "https://www.later.com",
+            "https://www.planoly.com",
+            "https://www.tailwindapp.com",
+            "https://www.socialbakers.com",
+            "https://www.mention.com",
+            
+            // Design Tools
+            "https://www.canva.com",
+            "https://www.figma.com",
+            "https://www.adobe.com/products/xd",
+            "https://www.sketch.com",
+            "https://www.invisionapp.com",
+            "https://www.framer.com",
+            "https://www.proto.io",
+            "https://www.marvelapp.com",
+            
+            // Prototyping
+            "https://www.figma.com/proto",
+            "https://www.invisionapp.com/prototype",
+            "https://www.adobe.com/products/xd/prototype",
+            "https://www.sketch.com/prototype",
+            "https://www.proto.io",
+            "https://www.marvelapp.com/prototype",
+            
+            // Wireframing
+            "https://balsamiq.com",
+            "https://www.mockflow.com",
+            "https://www.wireframe.cc",
+            "https://www.ninjamock.com",
+            "https://www.uxpin.com",
+            
+            // User Testing
+            "https://www.usertesting.com",
+            "https://www.usabilityhub.com",
+            "https://www.maze.co",
+            "https://www.lookback.io",
+            "https://www.userlytics.com",
+            
+            // Diagramming
+            "https://www.lucidchart.com",
+            "https://www.draw.io",
+            "https://www.gliffy.com",
+            "https://www.creately.com",
+            "https://www.visme.co",
+            
+            // Whiteboarding
+            "https://www.miro.com",
+            "https://www.figma.com/figjam",
+            "https://www.invisionapp.com/freehand",
+            "https://www.microsoft.com/microsoft-whiteboard",
+            "https://www.google.com/jamboard",
+            
+            // Note Taking
+            "https://www.evernote.com",
+            "https://www.onenote.com",
+            "https://www.notion.so",
+            "https://www.simplenote.com",
+            "https://www.standardnotes.org",
+            "https://www.joplinapp.org",
+            "https://obsidian.md",
+            "https://roamresearch.com",
+            
+            // Bookmarking
+            "https://www.pinterest.com",
+            "https://getpocket.com",
+            "https://www.instapaper.com",
+            "https://www.diigo.com",
+            "https://www.raindrop.io",
+            "https://www.pinboard.in",
+            "https://www.mendeley.com",
+            "https://www.zotero.org",
+            
+            // RSS Readers
+            "https://www.feedly.com",
+            "https://www.inoreader.com",
+            "https://www.newsblur.com",
+            "https://www.theoldreader.com",
+            "https://www.reederapp.com",
+            
+            // News Aggregators
+            "https://news.ycombinator.com",
+            "https://www.reddit.com",
+            "https://www.producthunt.com",
+            "https://www.betalist.com",
+            "https://www.indiehackers.com",
+            "https://www.lobste.rs",
+            "https://news.google.com",
+            "https://flipboard.com",
+            
+            // Tech News
+            "https://www.theverge.com",
+            "https://www.wired.com",
+            "https://www.techcrunch.com",
+            "https://www.engadget.com",
+            "https://www.gizmodo.com",
+            "https://www.cnet.com",
+            "https://www.zdnet.com",
+            "https://www.arstechnica.com",
+            
+            // Programming News
+            "https://www.dev.to",
+            "https://www.hashnode.com",
+            "https://medium.com/tag/programming",
+            "https://www.freecodecamp.org/news",
+            "https://www.smashingmagazine.com",
+            "https://css-tricks.com",
+            "https://www.sitepoint.com",
+            
+            // Web Development
+            "https://www.w3schools.com",
+            "https://developer.mozilla.org",
+            "https://www.freecodecamp.org",
+            "https://www.codecademy.com",
+            "https://www.udemy.com",
+            "https://www.coursera.org",
+            "https://www.edx.org",
+            "https://www.khanacademy.org",
+            
+            // Mobile Development
+            "https://developer.android.com",
+            "https://developer.apple.com",
+            "https://reactnative.dev",
+            "https://flutter.dev",
+            "https://ionicframework.com",
+            "https://cordova.apache.org",
+            "https://xamarin.com",
+            "https://unity.com",
+            
+            // Game Development
+            "https://unity.com",
+            "https://www.unrealengine.com",
+            "https://godotengine.org",
+            "https://www.gamemaker.io",
+            "https://www.construct.net",
+            "https://www.defold.com",
+            "https://love2d.org",
+            "https://libgdx.com",
+            
+            // 3D & Animation
+            "https://www.blender.org",
+            "https://www.autodesk.com/maya",
+            "https://www.autodesk.com/3dsmax",
+            "https://www.maxon.net/cinema-4d",
+            "https://www.sidefx.com/products/houdini",
+            "https://www.foundry.com/products/nuke",
+            "https://www.adobe.com/products/aftereffects",
+            "https://www.adobe.com/products/premiere",
+            
+            // Video Editing
+            "https://www.adobe.com/products/premiere",
+            "https://www.finalcutpro.com",
+            "https://www.blackmagicdesign.com/products/davinciresolve",
+            "https://www.vegas.com",
+            "https://www.cyberlink.com/products/powerdirector",
+            "https://www.wevideo.com",
+            "https://clipchamp.com",
+            "https://www.kapwing.com",
+            
+            // Photo Editing
+            "https://www.adobe.com/products/photoshop",
+            "https://www.gimp.org",
+            "https://www.photopea.com",
+            "https://www.canva.com/photo-editor",
+            "https://www.pixlr.com",
+            "https://www.fotor.com",
+            "https://www.befunky.com",
+            "https://www.picmonkey.com",
+            
+            // Vector Graphics
+            "https://www.adobe.com/products/illustrator",
+            "https://www.inkscape.org",
+            "https://www.sketch.com",
+            "https://www.figma.com",
+            "https://www.coreldraw.com",
+            "https://www.affinity.serif.com/designer",
+            "https://www.gravit.io",
+            "https://www.vectr.com",
+            
+            // Audio Editing
+            "https://www.audacityteam.org",
+            "https://www.adobe.com/products/audition",
+            "https://www.reaper.fm",
+            "https://www.ableton.com",
+            "https://www.image-line.com/flstudio",
+            "https://www.apple.com/logic-pro",
+            "https://www.avid.com/pro-tools",
+            "https://www.steinberg.net/cubase",
+            
+            // Cloud Storage
+            "https://www.dropbox.com",
+            "https://www.google.com/drive",
+            "https://www.onedrive.com",
+            "https://www.icloud.com",
+            "https://www.box.com",
+            "https://www.mediafire.com",
+            "https://www.pcloud.com",
+            "https://www.sync.com",
+            
+            // VPN Services
+            "https://www.expressvpn.com",
+            "https://www.nordvpn.com",
+            "https://www.surfshark.com",
+            "https://www.cyberghostvpn.com",
+            "https://www.privateinternetaccess.com",
+            "https://www.tunnelbear.com",
+            "https://www.protonvpn.com",
+            "https://www.windscribe.com",
+            
+            // Antivirus
+            "https://www.kaspersky.com",
+            "https://www.norton.com",
+            "https://www.mcafee.com",
+            "https://www.avast.com",
+            "https://www.avg.com",
+            "https://www.bitdefender.com",
+            "https://www.malwarebytes.com",
+            "https://www.webroot.com",
+            
+            // Password Managers
+            "https://www.lastpass.com",
+            "https://www.1password.com",
+            "https://www.dashlane.com",
+            "https://www.bitwarden.com",
+            "https://www.keepass.info",
+            "https://www.roboform.com",
+            "https://www.nordpass.com",
+            "https://www.passwarden.com",
+            
+            // Browser Extensions
+            "https://chrome.google.com/webstore",
+            "https://addons.mozilla.org",
+            "https://microsoftedge.microsoft.com/addons",
+            "https://addons.opera.com",
+            "https://safari-extensions.apple.com",
+            
+            // Search Engines
+            "https://www.google.com",
+            "https://www.bing.com",
+            "https://duckduckgo.com",
+            "https://www.ecosia.org",
+            "https://www.startpage.com",
+            "https://www.qwant.com",
+            "https://www.yandex.com",
+            "https://www.baidu.com",
+            
+            // Academic Search
+            "https://scholar.google.com",
+            "https://www.jstor.org",
+            "https://www.arxiv.org",
+            "https://www.researchgate.net",
+            "https://www.academia.edu",
+            "https://www.mendeley.com",
+            "https://www.zotero.org",
+            "https://www.endnote.com",
+            
+            // Patents
+            "https://www.uspto.gov/patents",
+            "https://www.epo.org",
+            "https://www.wipo.int/patents",
+            "https://www.google.com/patents",
+            "https://www.freepatentsonline.com",
+            
+            // Standards
+            "https://www.iso.org",
+            "https://www.iec.ch",
+            "https://www.ieee.org",
+            "https://www.w3.org",
+            "https://www.iana.org",
+            "https://www.ietf.org",
+            "https://www.icann.org",
+            
+            // Government
+            "https://www.usa.gov",
+            "https://www.gov.uk",
+            "https://www.europa.eu",
+            "https://www.canada.ca",
+            "https://www.australia.gov.au",
+            "https://www.gov.in",
+            "https://www.gob.mx",
+            "https://www.brasil.gov.br",
+            
+            // Legal
+            "https://www.law.cornell.edu",
+            "https://www.justia.com",
+            "https://www.findlaw.com",
+            "https://www.nolo.com",
+            "https://www.legalzoom.com",
+            "https://www.rocketlawyer.com",
+            "https://www.avvo.com",
+            "https://www.upcounsel.com",
+            
+            // Insurance
+            "https://www.progressive.com",
+            "https://www.geico.com",
+            "https://www.statefarm.com",
+            "https://www.allstate.com",
+            "https://www.nationwide.com",
+            "https://www.libertymutual.com",
+            "https://www.farmers.com",
+            "https://www.travelers.com",
+            
+            // Banking
+            "https://www.chase.com",
+            "https://www.bankofamerica.com",
+            "https://www.wellsfargo.com",
+            "https://www.citi.com",
+            "https://www.capitalone.com",
+            "https://www.usbank.com",
+            "https://www.pnc.com",
+            "https://www.tdbank.com",
+            
+            // Investment
+            "https://www.fidelity.com",
+            "https://www.schwab.com",
+            "https://www.vanguard.com",
+            "https://www.e trade.com",
+            "https://www.tdameritrade.com",
+            "https://www.robinhood.com",
+            "https://www.acorns.com",
+            "https://www.betterment.com",
+            
+            // Cryptocurrency
+            "https://www.coinbase.com",
+            "https://www.binance.com",
+            "https://www.kraken.com",
+            "https://www.gemini.com",
+            "https://www.crypto.com",
+            "https://www.blockchain.com",
+            "https://www.ledger.com",
+            "https://www.trezor.io",
+            
+            // Travel Booking
+            "https://www.booking.com",
+            "https://www.expedia.com",
+            "https://www.airbnb.com",
+            "https://www.hotels.com",
+            "https://www.agoda.com",
+            "https://www.trip.com",
+            "https://www.priceline.com",
+            "https://www.kayak.com",
+            
+            // Airlines
+            "https://www.aa.com",
+            "https://www.united.com",
+            "https://www.delta.com",
+            "https://www.southwest.com",
+            "https://www.britishairways.com",
+            "https://www.lufthansa.com",
+            "https://www.emirates.com",
+            "https://www.qatarairways.com",
+            
+            // Hotel Chains
+            "https://www.marriott.com",
+            "https://www.hilton.com",
+            "https://www.ihg.com",
+            "https://www.hyatt.com",
+            "https://www.choicehotels.com",
+            "https://www.bestwestern.com",
+            "https://www.wyndhamhotels.com",
+            "https://www.accor.com",
+            
+            // Car Rental
+            "https://www.enterprise.com",
+            "https://www.hertz.com",
+            "https://www.avis.com",
+            "https://www.budget.com",
+            "https://www.nationalcar.com",
+            "https://www.alamo.com",
+            "https://www.dollar.com",
+            "https://www.thrifty.com",
+            
+            // Cruises
+            "https://www.carnival.com",
+            "https://www.royalcaribbean.com",
+            "https://www.ncl.com",
+            "https://www.princess.com",
+            "https://www.hollandamerica.com",
+            "https://www.celebritycruises.com",
+            "https://www.msc.com",
+            "https://www.virginvoyages.com",
+            
+            // Vacation Rentals
+            "https://www.airbnb.com",
+            "https://www.vrbo.com",
+            "https://www.homeaway.com",
+            "https://www.flipkey.com",
+            "https://www.tripadvisor.com/vacationrentals",
+            "https://www.onefinestay.com",
+            "https://www.onefinestay.com",
+            "https://www.plumguide.com",
+            
+            // Restaurant Reviews
+            "https://www.yelp.com",
+            "https://www.tripadvisor.com/restaurants",
+            "https://www.opentable.com",
+            "https://www.resy.com",
+            "https://www.toasttab.com",
+            "https://www.grubhub.com",
+            "https://www.doordash.com",
+            "https://www.ubereats.com",
+            
+            // Food Delivery
+            "https://www.doordash.com",
+            "https://www.ubereats.com",
+            "https://www.grubhub.com",
+            "https://www.postmates.com",
+            "https://www.seamless.com",
+            "https://www.delivery.com",
+            "https://www.caviar.com",
+            "https://www.gopuff.com",
+            
+            // Recipes
+            "https://www.allrecipes.com",
+            "https://www.foodnetwork.com",
+            "https://www.bonappetit.com",
+            "https://www.seriouseats.com",
+            "https://www.tasty.co",
+            "https://www.budgetbytes.com",
+            "https://www.minimalistbaker.com",
+            "https://www.cookieandkate.com",
+            
+            // Nutrition
+            "https://www.myfitnesspal.com",
+            "https://www.cronometer.com",
+            "https://www.nutritionix.com",
+            "https://www.eatthismuch.com",
+            "https://www.loseit.com",
+            "https://www.weightwatchers.com",
+            "https://www.noom.com",
+            "https://www.lifesum.com",
+            
+            // Fitness
+            "https://www.peloton.com",
+            "https://www.nike.com/training",
+            "https://www.adidas.com/running",
+            "https://www.underarmour.com",
+            "https://www.reebok.com",
+            "https://www.lululemon.com",
+            "https://www.gymshark.com",
+            "https://www.roguefitness.com",
+            
+            // Workout Apps
+            "https://www.strava.com",
+            "https://www.mapmyrun.com",
+            "https://www.nikerunclub.com",
+            "https://www.runtastic.com",
+            "https://www.zwift.com",
+            "https://www.trainerroad.com",
+            "https://www.the sufferfest.com",
+            "https://www.whoop.com",
+            
+            // Yoga
+            "https://www.downdogapp.com",
+            "https://www.yogawithadriene.com",
+            "https://www.gaia.com",
+            "https://www.glo.com",
+            "https://www.alomoves.com",
+            "https://www.yogaglo.com",
+            "https://www.theyogacollective.com",
+            "https://www.eckhartyoga.com",
+            
+            // Meditation
+            "https://www.headspace.com",
+            "https://www.calm.com",
+            "https://www.insighttimer.com",
+            "https://www.tenpercent.com",
+            "https://www.wakingup.com",
+            "https://www.balanceapp.com",
+            "https://www.simplehabit.com",
+            "https://www.breethe.com",
+            
+            // Mental Health
+            "https://www.betterhelp.com",
+            "https://www.talkspace.com",
+            "https://www.regain.us",
+            "https://www.pridecounseling.com",
+            "https://www.teen-counseling.com",
+            "https://www.cerebral.com",
+            "https://www.brightside.com",
+            "https://www.sondermind.com",
+            
+            // Medical
+            "https://www.webmd.com",
+            "https://www.mayoclinic.org",
+            "https://www.clevelandclinic.org",
+            "https://www.johnshopkins.edu",
+            "https://www.stanfordhealthcare.org",
+            "https://www.health.harvard.edu",
+            "https://www.medlineplus.gov",
+            "https://www.nih.gov",
+            
+            // Drugs & Supplements
+            "https://www.drugs.com",
+            "https://www.rxlist.com",
+            "https://www.webmd.com/drugs",
+            "https://dailymed.nlm.nih.gov",
+            "https://www.naturalmedicines.therapeuticresearch.com",
+            "https://www.examine.com",
+            "https://www.consumerlab.com",
+            "https://www.labdoor.com",
+            
+            // Pet Care
+            "https://www.chewy.com",
+            "https://www.petsmart.com",
+            "https://www.petco.com",
+            "https://www.onlynaturalpet.com",
+            "https://www.petflow.com",
+            "https://www.barkbox.com",
+            "https://www.meowbox.com",
+            "https://www.petfinder.com",
+            
+            // Parenting
+            "https://www.babycenter.com",
+            "https://www.whattoexpect.com",
+            "https://www.parents.com",
+            "https://www.momjunction.com",
+            "https://www.scarymommy.com",
+            "https://www.cafemom.com",
+            "https://www.popsugar.com/family",
+            "https://www.redtri.com",
+            
+            // Baby Products
+            "https://www.buybuybaby.com",
+            "https://www.carters.com",
+            "https://www.gap.com/baby",
+            "https://www.hannaandersson.com",
+            "https://www.honest.com",
+            "https://www.hello-bello.com",
+            "https://www.waterwipes.com",
+            "https://www.dyper.com",
+            
+            // Toys
+            "https://www.toysrus.com",
+            "https://www.mattel.com",
+            "https://www.hasbro.com",
+            "https://www.lego.com",
+            "https://www.barbie.com",
+            "https://www.nerf.com",
+            "https://www.playmobil.com",
+            "https://www.fisher-price.com",
+            
+            // Educational Toys
+            "https://www.melissaanddoug.com",
+            "https://www.fatbraintoys.com",
+            "https://www.learningresources.com",
+            "https://www.thinkfun.com",
+            "https://www.ravensburger.com",
+            "https://www.scholastic.com",
+            "https://www.education.com",
+            "https://www.abcya.com",
+            
+            // Baby Names
+            "https://www.babynames.com",
+            "https://www.nameberry.com",
+            "https://www.behindthename.com",
+            "https://www.thenamegame.com",
+            "https://www.babynamewizard.com",
+            "https://www.ssa.gov/oact/babynames",
+            "https://www.babycenter.com/baby-names",
+            "https://www.whattoexpect.com/baby-names",
+            
+            // Pregnancy
+            "https://www.thebump.com",
+            "https://www.babycenter.com/pregnancy",
+            "https://www.whattoexpect.com/pregnancy",
+            "https://www.fitpregnancy.com",
+            "https://www.pregnancycorner.com",
+            "https://www.bellybelly.com.au",
+            "https://www.mumcentral.com.au",
+            "https://www.essentialbaby.com.au",
+            
+            // Baby Registry
+            "https://www.amazon.com/baby-registries",
+            "https://www.buybuybaby.com/store/page/BabyRegistry",
+            "https://www.target.com/gift-registry/baby-registry",
+            "https://www.walmart.com/cp/baby-registry",
+            "https://www.babylist.com",
+            "https://www.myregistry.com",
+            "https://www.zola.com",
+            "https://www.sohalife.com",
+            
+            // Maternity
+            "https://www.destinationmaternity.com",
+            "https://www.motherhood.com",
+            "https://www.peainthepod.com",
+            "https://www.pinkblushmaternity.com",
+            "https://www. Hatch.com",
+            "https://www.storq.com",
+            "https://www.legoe.com",
+            "https://www.boobdesign.com",
+            
+            // Nursing
+            "https://www.medela.us",
+            "https://www.ameda.com",
+            "https://www.lansinoh.com",
+            "https://www.nuk.com",
+            "https://www.tommee-tippee.com",
+            "https://www.philips.com/avent",
+            "https://www.dr-browns.com",
+            "https://www.comotomo.com",
+            
+            // Strollers
+            "https://www.uppababy.com",
+            "https://www.bugaboo.com",
+            "https://www.britax.com",
+            "https://www.chicco.com",
+            "https://www.gracobaby.com",
+            "https://www.babyjogger.com",
+            "https://www.nuna.com",
+            "https://www.doona.com",
+            
+            // Car Seats
+            "https://www.nhtsa.gov/car-seat-and-booster-seat-safety",
+            "https://www.safekids.org",
+            "https://www.carseatblog.com",
+            "https://www.thecarseatlady.com",
+            "https://www.csftl.org",
+            "https://www.carseatforums.com",
+            "https://www.car-seat.org",
+            
+            // Baby Gear
+            "https://www.4moms.com",
+            "https://www.halosleep.com",
+            "https://www.lovevery.com",
+            "https://www.kiwico.com",
+            "https://www.littlepassports.com",
+            "https://www.cratejoy.com",
+            "https://www.hensonshaving.com",
+            "https://www.billie.com",
+            
+            // Home Security
+            "https://www.simplisafe.com",
+            "https://www.ring.com",
+            "https://www.nest.com",
+            "https://www.vivint.com",
+            "https://www.adt.com",
+            "https://www.brinks.com",
+            "https://www.frontpoint.com",
+            "https://www.abode.com",
+            
+            // Smart Home
+            "https://www.smartthings.com",
+            "https://www.philips-hue.com",
+            "https://www.wyze.com",
+            "https://www.ecobee.com",
+            "https://www.nest.com",
+            "https://www.ring.com",
+            "https://www.august.com",
+            "https://www.schlage.com",
+            
+            // Solar
+            "https://www.tesla.com/solarpanels",
+            "https://www.sunrun.com",
+            "https://www.vivintsolar.com",
+            "https://www.sunnova.com",
+            "https://www.energysage.com",
+            "https://www.palisade.com",
+            "https://www.solarreviews.com",
+            "https://www.wholesalesolar.com",
+            
+            // Insurance Compare
+            "https://www.policygenius.com",
+            "https://www.thezebra.com",
+            "https://www.insurance.com",
+            "https://www.netquote.com",
+            "https://www.insurify.com",
+            "https://www.compare.com",
+            "https://www.valuepenguin.com",
+            "https://www.nerdwallet.com/insurance",
+            
+            // Mortgage
+            "https://www.quickenloans.com",
+            "https://www.wellsfargo.com/mortgage",
+            "https://www.chase.com/mortgage",
+            "https://www.bankofamerica.com/mortgage",
+            "https://www.citi.com/mortgage",
+            "https://www.rocketmortgage.com",
+            "https://www.loanDepot.com",
+            "https://www.guaranteedrate.com",
+            
+            // Real Estate
+            "https://www.zillow.com",
+            "https://www.realtor.com",
+            "https://www.trulia.com",
+            "https://www.redfin.com",
+            "https://www.apartments.com",
+            "https://www.homes.com",
+            "https://www.movoto.com",
+            "https://www.estately.com",
+            
+            // Moving
+            "https://www.uhaul.com",
+            "https://www.penske.com",
+            "https://www.budget.com/truck-rental",
+            "https://www.enterprise.com/truck-rental",
+            "https://www.mayflower.com",
+            "https://www.northamerican.com",
+            "https://www.twomenandatruck.com",
+            "https://www.pods.com",
+            
+            // Storage
+            "https://www.publicstorage.com",
+            "https://www.extraspace.com",
+            "https://www.lifestorage.com",
+            "https://www.cubesmart.com",
+            "https://www.sparefoot.com",
+            "https://www.makeSpace.com",
+            "https://www.clutter.com",
+            "https://www.neighbor.com",
+            
+            // Cleaning
+            "https://www.handy.com",
+            "https://www.taskrabbit.com",
+            "https://www.takl.com",
+            "https://www.homeaglow.com",
+            "https://www.merrymaids.com",
+            "https://www.mollymaid.com",
+            "https://www.thecleaningauthority.com",
+            "https://www.twomaids.com",
+            
+            // Lawn Care
+            "https://www.trugreen.com",
+            "https://www.lawnstarter.com",
+            "https://www.sunday.com",
+            "https://www.scotts.com",
+            "https://www.milorganite.com",
+            "https://www.greencastonline.com",
+            "https://www.landscape-management.com",
+            
+            // Pest Control
+            "https://www.terminix.com",
+            "https://www.orkin.com",
+            "https://www.bulwarkpestcontrol.com",
+            "https://www.callnorthwest.com",
+            "https://www.vulcantermite.com",
+            "https://www.pestworld.org",
+            "https://www.npmapestworld.org",
+            
+            // Home Improvement
+            "https://www.homedepot.com",
+            "https://www.lowes.com",
+            "https://www.menards.com",
+            "https://www.acehardware.com",
+            "https://www.truevalue.com",
+            "https://www.doitbest.com",
+            "https://www.harborfreight.com",
+            "https://www.northerntool.com",
+            
+            // Contractors
+            "https://www.angi.com",
+            "https://www.homeadvisor.com",
+            "https://www.thumbtack.com",
+            "https://www.porch.com",
+            "https://www.houzz.com",
+            "https://www.build.com",
+            "https://www.wayfair.com",
+            "https://www.overstock.com",
+            
+            // Furniture
+            "https://www.ikea.com",
+            "https://www.wayfair.com",
+            "https://www.potterybarn.com",
+            "https://www.westelm.com",
+            "https://www.crateandbarrel.com",
+            "https://www.cb2.com",
+            "https://www.roomstogo.com",
+            "https://www.ashleyfurniture.com",
+            
+            // Mattresses
+            "https://www.casper.com",
+            "https://www.purple.com",
+            "https://www.tempurpedic.com",
+            "https://www.serta.com",
+            "https://www.sealy.com",
+            "https://www.sleepnumber.com",
+            "https://www.nectarsleep.com",
+            "https://www.dreamcloudsleep.com",
+            
+            // Appliances
+            "https://www.bestbuy.com",
+            "https://www.appliances.com",
+            "https://www.ajmadison.com",
+            "https://www.applianceconnection.com",
+            "https://www.build.com",
+            "https://www.ferguson.com",
+            "https://www.supply.com",
+            "https://www.houzz.com/products",
+            
+            // Decor
+            "https://www.society6.com",
+            "https://www.redbubble.com",
+            "https://www.teepublic.com",
+            "https://www.zazzle.com",
+            "https://www.cafepress.com",
+            "https://www.threadless.com",
+            "https://www.designbyhumans.com",
+            "https://www.bustedtees.com",
+            
+            // Art Prints
+            "https://www.minted.com",
+            "https://www.society6.com/prints",
+            "https://www.artsy.net",
+            "https://www.saatchiart.com",
+            "https://www.art.com",
+            "https://www.allposters.com",
+            "https://www.greatbigcanvas.com",
+            "https://www.framedart.com",
+            
+            // Plants
+            "https://www.thesill.com",
+            "https://www.bloomscape.com",
+            "https://www.leonandgeorge.com",
+            "https://www.patchplants.com",
+            "https://www.plants.com",
+            "https://www.proflowers.com",
+            "https://www.ftd.com",
+            "https://www.1800flowers.com",
+            
+            // Seeds
+            "https://www.burpee.com",
+            "https://www.johnnyseeds.com",
+            "https://www.parkseed.com",
+            "https://www.gurneys.com",
+            "https://www.starkbros.com",
+            "https://www.monticelloshop.org",
+            "https://www.rareseeds.com",
+            "https://www.seed Savers.org",
+            
+            // Tools
+            "https://www.dewalt.com",
+            "https://www.milwaukeetool.com",
+            "https://www.makitatools.com",
+            "https://www.bosch-tools.com",
+            "https://www.ryobitools.com",
+            "https://www.ridgid.com",
+            "https://www.craftsman.com",
+            "https://www.stanleytools.com",
+            
+            // Automotive
+            "https://www.autozone.com",
+            "https://www.advanceautoparts.com",
+            "https://www.oreillyauto.com",
+            "https://www.napaonline.com",
+            "https://www.rockauto.com",
+            "https://www.summitracing.com",
+            "https://www.jegs.com",
+            "https://www.carid.com",
+            
+            // Tires
+            "https://www.tirerack.com",
+            "https://www.discounttire.com",
+            "https://www.tiresplus.com",
+            "https://www.firestone.com",
+            "https://www.goodyear.com",
+            "https://www.michelin.com",
+            "https://www.bfgoodrich.com",
+            "https://www.continental-tires.com",
+            
+            // Parts
+            "https://www.rockauto.com",
+            "https://www.partsgeek.com",
+            "https://www.carparts.com",
+            "https://www.autopartswarehouse.com",
+            "https://www.jcwhitney.com",
+            "https://www.summitracing.com",
+            "https://www.speedwaymotors.com",
+            "https://www.eastwood.com",
+            
+            // Motorcycles
+            "https://www.harley-davidson.com",
+            "https://www.indianmotorcycle.com",
+            "https://www.hondapowersports.com",
+            "https://www.yamahamotorsports.com",
+            "https://www.kawasaki.com",
+            "https://www.suzuki.com",
+            "https://www.ducati.com",
+            "https://www.bmwmotorcycles.com",
+            
+            // Boats
+            "https://www.boats.com",
+            "https://www.yachtworld.com",
+            "https://www.boat trader.com",
+            "https://www.c boats.com",
+            "https://www.popyachts.com",
+            "https://www.iboats.com",
+            "https://www.discoverboating.com",
+            "https://www.boatTEST.com",
+            
+            // RVs
+            "https://www.rvtrader.com",
+            "https://www.campingworld.com",
+            "https://www.goodsam.com",
+            "https://www.koa.com",
+            "https://www.reserveamerica.com",
+            "https://www.recreation.gov",
+            "https://www.rvparky.com",
+            "https://www.campendium.com",
+            
+            // Bicycles
+            "https://www.trekbikes.com",
+            "https://www.specialized.com",
+            "https://www.giant-bicycles.com",
+            "https://www.cannondale.com",
+            "https://www.schwinn.com",
+            "https://www.mongoose.com",
+            "https://www.huffy.com",
+            "https://www.peloton.com",
+            
+            // Running
+            "https://www.nike.com/running",
+            "https://www.adidas.com/running",
+            "https://www.asic.com",
+            "https://www.brooks.com",
+            "https://www.newbalance.com",
+            "https://www.saucony.com",
+            "https://www.hokaoneone.com",
+            "https://www.on-running.com",
+            
+            // Hiking
+            "https://www.rei.com",
+            "https://www.backcountry.com",
+            "https://www.moosejaw.com",
+            "https://www.campsaver.com",
+            "https://www.mountainhardwear.com",
+            "https://www.thenorthface.com",
+            "https://www.patagonia.com",
+            "https://www.arc-teryx.com",
+            
+            // Camping
+            "https://www.coleman.com",
+            "https://www.yeti.com",
+            "https://www.otterbox.com",
+            "https://www.hydroflask.com",
+            "https://www.nalgene.com",
+            "https://www.stanley-pmi.com",
+            "https://www.kleanKanteen.com",
+            "https://www.corkcicle.com",
+            
+            // Fishing
+            "https://www.basspro.com",
+            "https://www.cabelas.com",
+            "https://www.dickssportinggoods.com",
+            "https://www.academy.com",
+            "https://www.fieldandstream.com",
+            "https://www.fleetfarm.com",
+            "https://www.scheels.com",
+            "https://www.gandermountain.com",
+            
+            // Hunting
+            "https://www.realtree.com",
+            "https://www.mossyoak.com",
+            "https://www.browning.com",
+            "https://www.remington.com",
+            "https://www.winchester.com",
+            "https://www.federalpremium.com",
+            "https://www.hornady.com",
+            "https://www.nosler.com",
+            
+            // Shooting
+            "https://www.shootingsportsusa.com",
+            "https://www.recoilweb.com",
+            "https://www.thetacticalwire.com",
+            "https://www.shootingillustrated.com",
+            "https://www.americanrifleman.org",
+            "https://www.shootingtimes.com",
+            "https://www.handguns.com",
+            "https://www.rifles.com",
+            
+            // Archery
+            "https://www.mathews.com",
+            "https://www.hoyt.com",
+            "https://www.beararchery.com",
+            "https://www.pse-archery.com",
+            "https://www.elitearchery.com",
+            "https://www.bowtecharchery.com",
+            "https://www.obsessionbows.com",
+            "https://www.primearchery.com",
+            
+            // Golf
+            "https://www.taylormadegolf.com",
+            "https://www.titleist.com",
+            "https://www.callawaygolf.com",
+            "https://www.ping.com",
+            "https://www.cobra.com",
+            "https://www.mizunousa.com/golf",
+            "https://www.srixon.com",
+            "https://www.snellgolf.com",
+            
+            // Tennis
+            "https://www.wilson.com/tennis",
+            "https://www.head.com/tennis",
+            "https://www.babolat.com",
+            "https://www.princesports.com",
+            "https://www.yonex.com",
+            "https://www.dunlopsports.com",
+            "https://www.tecnifibre.com",
+            "https://www.volkl-tennis.com",
+            
+            // Soccer
+            "https://www.adidas.com/soccer",
+            "https://www.nike.com/soccer",
+            "https://www.puma.com/soccer",
+            "https://www.underarmour.com/soccer",
+            "https://www.newbalance.com/soccer",
+            "https://www.umbro.com",
+            "https://www.mizuno.com/soccer",
+            "https://www.diadora.com",
+            
+            // Basketball
+            "https://www.nba.com",
+            "https://www.wnba.com",
+            "https://www.ncaa.com/basketball",
+            "https://www.espn.com/nba",
+            "https://www.bleacherreport.com/nba",
+            "https://www.basketball-reference.com",
+            "https://www.hoopshype.com",
+            "https://www.slamonline.com",
+            
+            // Football
+            "https://www.nfl.com",
+            "https://www.ncaa.com/football",
+            "https://www.espn.com/nfl",
+            "https://www.pro-football-reference.com",
+            "https://www.footballoutsiders.com",
+            "https://www.themmqb.com",
+            "https://www.nfltrade rumors.com",
+            "https://www.spotrac.com/nfl",
+            
+            // Baseball
+            "https://www.mlb.com",
+            "https://www.espn.com/mlb",
+            "https://www.baseball-reference.com",
+            "https://www.fangraphs.com",
+            "https://www.baseballamerica.com",
+            "https://www.milb.com",
+            "https://www.littleleague.org",
+            "https://www.baseballhall.org",
+            
+            // Hockey
+            "https://www.nhl.com",
+            "https://www.espn.com/nhl",
+            "https://www.hockey-reference.com",
+            "https://www.hockeydb.com",
+            "https://www.eliteprospects.com",
+            "https://www.dailyfaceoff.com",
+            "https://www.theahl.com",
+            "https://www.echl.com",
+            
+            // Soccer Leagues
+            "https://www.premierleague.com",
+            "https://www.laliga.com",
+            "https://www.bundesliga.com",
+            "https://www.legaseriea.it",
+            "https://www.ligue1.com",
+            "https://www.mls soccer.com",
+            "https://www.uefa.com",
+            "https://www.fifa.com",
+            
+            // eSports
+            "https://www.twitch.tv/directory/esports",
+            "https://www.youtube.com/gaming/esports",
+            "https://www.espn.com/esports",
+            "https://www.dotesports.com",
+            "https://www.thescoreesports.com",
+            "https://www.hltv.org",
+            "https://www.vlr.gg",
+            "https://www.lolesports.com",
+            
+            // Fantasy Sports
+            "https://www.fantasypros.com",
+            "https://www.espn.com/fantasy",
+            "https://www.yahoo.com/fantasy",
+            "https://www.cbssports.com/fantasy",
+            "https://www.nfl.com/fantasyfootball",
+            "https://www.fleaflicker.com",
+            "https://www.sleeper.app",
+            "https://www.fantasylife.com",
+            
+            // Betting
+            "https://www.draftkings.com",
+            "https://www.fanduel.com",
+            "https://www.betmgm.com",
+            "https://www.caesars.com/sportsbook",
+            "https://www.pointsBet.com",
+            "https://www.BetRivers.com",
+            "https://www.WynnBET.com",
+            "https://www.FOXBet.com",
+            
+            // Tickets
+            "https://www.ticketmaster.com",
+            "https://www.stubhub.com",
+            "https://www.vivid seats.com",
+            "https://www.seatgeek.com",
+            "https://www.gametime.co",
+            "https://www.tickpick.com",
+            "https://www.ebay.com/sch/i.html?_nkw=tickets",
+            "https://www.craigslist.org/search/tia",
+            
+            // Merchandise
+            "https://www.fanatics.com",
+            "https://www.nflshop.com",
+            "https://www.mlbshop.com",
+            "https://www.nbastore.com",
+            "https://www.nhlshop.com",
+            "https://www.mlsstore.com",
+            "https://www.premierleaguestore.com",
+            "https://www.worldsoccershop.com",
+            
+            // Memorabilia
+            "https://www.ebay.com/sch/i.html?_nkw=sports+memorabilia",
+            "https://www.goldinauctions.com",
+            "https://www.heritageauctions.com",
+            "https://www.lelands.com",
+            "https://www.rmyauctions.com",
+            "https://www.scpauctions.com",
+            "https://www.christies.com/sports",
+            "https://www.sothebys.com/sports",
+            
+            // Collectibles
+            "https://www.psacard.com",
+            "https://www.bgs.com",
+            "https://www.sgcgrading.com",
+            "https://www.csgcards.com",
+            "https://www.hgagrading.com",
+            "https://www.beckett.com/grading",
+            "https://www.pwcc.com",
+            "https://www.comc.com",
+            
+            // Trading Cards
+            "https://www.topps.com",
+            "https://www.paniniamerica.net",
+            "https://www.upperdeck.com",
+            "https://www.fleer.com",
+            "https://www.donruss.com",
+            "https://www.bowman.com",
+            "https://www.stadiumclub.com",
+            "https://www.gypsyqueen.com",
+            
+            // Comics
+            "https://www.marvel.com/comics",
+            "https://www.dccomics.com",
+            "https://www.imagecomics.com",
+            "https://www.darkhorse.com",
+            "https://www.idwpublishing.com",
+            "https://www.boom-studios.com",
+            "https://www.dynamite.com",
+            "https://www.valiant.com",
+            
+            // Manga
+            "https://www.viz.com/shonenjump",
+            "https://www.crunchyroll.com/comics",
+            "https://www.comixology.com",
+            "https://www.manga.plus",
+            "https://www.shonenjump.com",
+            "https://www.kodansha.com",
+            "https://www.yenpress.com",
+            "https://www.sevenseas.com",
+            
+            // Anime
+            "https://www.crunchyroll.com",
+            "https://www.funimation.com",
+            "https://www.hidive.com",
+            "https://www.vrv.co",
+            "https://www.netflix.com/anime",
+            "https://www.hulu.com/hub/anime",
+            "https://www.amazon.com/anime",
+            "https://www.hbomax.com/anime",
+            
+            // Cosplay
+            "https://www.cosplay.com",
+            "https://www.etsy.com/search?q=cosplay",
+            "https://www.miccostumes.com",
+            "https://www.cosplayful.com",
+            "https://www.procosplay.com",
+            "https://www.cosplaymagic.com",
+            "https://www.hellocosplay.com",
+            "https://www.cosplaystation.com",
+            
+            // Conventions
+            "https://www.comic-con.org",
+            "https://www.anime-expo.org",
+            "https://www.paxsite.com",
+            "https://www.e3expo.com",
+            "https://www.gamescom.de",
+            "https://www.tokyogameshow.com",
+            "https://www.blizzcon.com",
+            "https://www.steve con.com",
+            
+            // Board Games
+            "https://www.boardgamegeek.com",
+            "https://www.tabletopia.com",
+            "https://www.tabletopsimulator.com",
+            "https://www.brettspielwelt.de",
+            "https://www.yucata.de",
+            "https://www.boiteajeux.net",
+            "https://www.spielbyweb.com",
+            "https://www.yourturnmyturn.com",
+            
+            // Tabletop RPGs
+            "https://www.dndbeyond.com",
+            "https://www.roll20.net",
+            "https://www.fantasygrounds.com",
+            "https://www.foundryvtt.com",
+            "https://www.tabletopsimulator.com/rpg",
+            "https://www.astraltabletop.com",
+            "https://www.owlbear.rodeo",
+            "https://www.mipui.net",
+            
+            // Miniatures
+            "https://www.games-workshop.com",
+            "https://www.warhammer.com",
+            "https://www.privateerpress.com",
+            "https://www.coolminiornot.com",
+            "https://www.reapermini.com",
+            "https://www.heroforge.com",
+            "https://www.shapeways.com",
+            "https://www.thingiverse.com",
+            
+            // Puzzles
+            "https://www.ravensburger.com",
+            "https://www.springbok-puzzles.com",
+            "https://www.cobblehillpuzzles.com",
+            "https://www.galison.com",
+            "https://www.white mountainpuzzles.com",
+            "https://www.buffalogames.com",
+            "https://www.eurographics.ca",
+            "https://www.educaborras.com",
+            
+            // Legos
+            "https://www.lego.com",
+            "https://www.bricklink.com",
+            "https://www.brickset.com",
+            "https://www.brickowl.com",
+            "https://www.brickpicker.com",
+            "https://www.rebrickable.com",
+            "https://www.brothers-brick.com",
+            "https://www.thebrickfan.com",
+            
+            // Remote Control
+            "https://www.horizonhobby.com",
+            "https://www.towerhobbies.com",
+            "https://www.amainhobbies.com",
+            "https://www.hobbytown.com",
+            "https://www.rcplanet.com",
+            "https://www.motionrc.com",
+            "https://www.valuehobby.com",
+            "https://www.nitrorcx.com",
+            
+            // Drones
+            "https://www.dji.com",
+            "https://www.autelrobotics.com",
+            "https://www.parrot.com",
+            "https://www.yuneec.com",
+            "https://www.hubsan.com",
+            "https://www.syma.com",
+            "https://www.holy stone.com",
+            "https://www.droneDeploy.com",
+            
+            // Photography
+            "https://www.canon.com",
+            "https://www.nikon.com",
+            "https://www.sony.com/electronics/cameras",
+            "https://www.fujifilm.com",
+            "https://www.panasonic.com/lumix",
+            "https://www.olympus.com",
+            "https://www.leica.com",
+            "https://www.hasselblad.com",
+            
+            // Lenses
+            "https://www.sigmaphoto.com",
+            "https://www.tamron.com",
+            "https://www.tokinausa.com",
+            "https://www.samyanglensglobal.com",
+            "https://www.zeiss.com/camera-lenses",
+            "https://www.leica.com/lenses",
+            "https://www.voigtlander.com",
+            "https://www.lomography.com",
+            
+            // Lighting
+            "https://www.profoto.com",
+            "https://www.broncolor.com",
+            "https://www.elinchrom.com",
+            "https://www.godox.com",
+            "https://www.aputure.com",
+            "https://www.nanlite.com",
+            "https://www.westcottu.com",
+            "https://www.paulcbuff.com",
+            
+            // Bags
+            "https://www.thinktankphoto.com",
+            "https://www.peakdesign.com",
+            "https://www.onabags.com",
+            "https://www.billingham.co.uk",
+            "https://www.lowepro.com",
+            "https://www.manfrotto.com",
+            "https://www.tenba.com",
+            "https://www.f-stopgear.com",
+            
+            // Tripods
+            "https://www.reallyrightstuff.com",
+            "https://www.gitzo.com",
+            "https://www.manfrotto.com/tripods",
+            "https://www.sirui.com",
+            "https://www.leofoto.com",
+            "https://www.feisol.com",
+            "https://www.indurogear.com",
+            "https://www.slik.com",
+            
+            // Filters
+            "https://www.bw-filter.com",
+            "https://www.tiffen.com",
+            "https://www.hoyafilter.com",
+            "https://www.kenko-tokina.co.jp",
+            "https://www.cokin.com",
+            "https://www.leefilters.com",
+            "https://www.formatt-hitech.com",
+            "https://www.schneiderkreuznach.com",
+            
+            // Memory
+            "https://www.sandisk.com",
+            "https://www.lexar.com",
+            "https://www.sony.com/memorycards",
+            "https://www.prograde.com",
+            "https://www.delkin.com",
+            "https://www.kingston.com",
+            "https://www.transcend-info.com",
+            "https://www.samsung.com/memory-cards",
+            
+            // Software
+            "https://www.adobe.com/creativecloud",
+            "https://www.captureone.com",
+            "https://www.dxo.com",
+            "https://www.topazlabs.com",
+            "https://www.skylum.com",
+            "https://www.anthropics.com",
+            "https://www.neatvideo.com",
+            "https://www.portraitprofessional.com",
+            
+            // Printing
+            "https://www.mpix.com",
+            "https://www.shutterfly.com",
+            "https://www.snapfish.com",
+            "https://www.adoramapix.com",
+            "https://www.bayphoto.com",
+            "https://www.whitewall.com",
+            "https://www.saaldigital.com",
+            "https://www.nationsphotolab.com",
+            
+            // Books
+            "https://www.amazon.com/books",
+            "https://www.barnesandnoble.com",
+            "https://www.booksamillion.com",
+            "https://www.powells.com",
+            "https://www.indiebound.org",
+            "https://www.bookshop.org",
+            "https://www.thriftbooks.com",
+            "https://www.abebooks.com",
+            
+            // Audiobooks
+            "https://www.audible.com",
+            "https://www.libro.fm",
+            "https://www.chirpbooks.com",
+            "https://www.scribd.com/audiobooks",
+            "https://www.hoopladigital.com",
+            "https://www.libbyapp.com",
+            "https://www.overdrive.com",
+            "https://www.kobo.com/audiobooks",
+            
+            // eBooks
+            "https://www.amazon.com/kindle",
+            "https://www.apple.com/apple-books",
+            "https://play.google.com/store/books",
+            "https://www.kobo.com/ebooks",
+            "https://www.bn.com/nook",
+            "https://www.smashwords.com",
+            "https://www.gutenberg.org",
+            "https://www.manybooks.net",
+            
+            // Magazines
+            "https://www.magazines.com",
+            "https://www.discountmags.com",
+            "https://www.magazineline.com",
+            "https://www.valuemags.com",
+            "https://www.amazon.com/magazines",
+            "https://www.texture.com",
+            "https://www.readly.com",
+            "https://www.zinio.com",
+            
+            // Newspapers
+            "https://www.wsj.com",
+            "https://www.nytimes.com",
+            "https://www.washingtonpost.com",
+            "https://www.usatoday.com",
+            "https://www.latimes.com",
+            "https://www.chicagotribune.com",
+            "https://www.nypost.com",
+            "https://www.bostonglobe.com",
+            
+            // Academic
+            "https://www.jstor.org",
+            "https://www.arxiv.org",
+            "https://www.sci-hub.se",
+            "https://www.libgen.is",
+            "https://www.b-ok.org",
+            "https://www.pdfdrive.com",
+            "https://www.academia.edu",
+            "https://www.researchgate.net",
+            
+            // Learning
+            "https://www.coursera.org",
+            "https://www.edx.org",
+            "https://www.udemy.com",
+            "https://www.skillshare.com",
+            "https://www.masterclass.com",
+            "https://www.linkedin.com/learning",
+            "https://www.pluralsight.com",
+            "https://www.teamtreehouse.com",
+            
+            // Kids Learning
+            "https://www.abcmouse.com",
+            "https://www.readingeggs.com",
+            "https://www.starfalls.com",
+            "https://www.pbskids.org",
+            "https://www.nickjr.com",
+            "https://www.disneyjunior.com",
+            "https://www.sesamestreet.org",
+            "https://www.scholastic.com",
+            
+            // Test Prep
+            "https://www.kaplan.com",
+            "https://www.princetonreview.com",
+            "https://www.magoosh.com",
+            "https://www.manhattanprep.com",
+            "https://www.veritasprep.com",
+            "https://www.khanacademy.org/sat",
+            "https://www.collegeboard.org",
+            "https://www.act.org",
+            
+            // Languages
+            "https://www.duolingo.com",
+            "https://www.babbel.com",
+            "https://www.rosettastone.com",
+            "https://www.memrise.com",
+            "https://www.busuu.com",
+            "https://www.lingoda.com",
+            "https://www.italki.com",
+            "https://www.preply.com",
+            
+            // Music Lessons
+            "https://www.fender.com/play",
+            "https://www.guitartricks.com",
+            "https://www.jamplay.com",
+            "https://www.truefire.com",
+            "https://www.artistworks.com",
+            "https://www.musiclessons.com",
+            "https://www.takelessons.com",
+            "https://www.lessonface.com",
+            
+            // Art Lessons
+            "https://www.skillshare.com/art",
+            "https://www.creativebug.com",
+            "https://www.craftsy.com",
+            "https://www.artistsnetwork.com",
+            "https://www.drawspace.com",
+            "https://www.newmastersacademy.org",
+            "https://www.proko.com",
+            "https://www.ctrlpaint.com",
+            
+            // Coding
+            "https://www.freecodecamp.org",
+            "https://www.codecademy.com",
+            "https://www.theodinproject.com",
+            "https://www.scrimba.com",
+            "https://www.sololearn.com",
+            "https://www.datacamp.com",
+            "https://www.udacity.com",
+            "https://www.coursera.org/browse/computer-science",
+            
+            // Design
+            "https://www.canva.com",
+            "https://www.figma.com",
+            "https://www.adobe.com/products/xd",
+            "https://www.sketch.com",
+            "https://www.invisionapp.com",
+            "https://www.framer.com",
+            "https://www.proto.io",
+            "https://www.marvelapp.com",
+            
+            // Writing
+            "https://www.nationalnovelwritingmonth.org",
+            "https://www.campnanowrimo.org",
+            "https://www.scribophile.com",
+            "https://www.critiquecircle.com",
+            "https://www.wattpad.com",
+            "https://www.fictionpress.com",
+            "https://www.fanfiction.net",
+            "https://www.archiveofourown.org",
+            
+            // Publishing
+            "https://www.amazon.com/kdp",
+            "https://www.ingramspark.com",
+            "https://www.barnesandnoble.com/publish",
+            "https://www.kobo.com/writinglife",
+            "https://www.apple.com/apple-books-for-authors",
+            "https://www.smashwords.com",
+            "https://www.draft2digital.com",
+            "https://www.publishdrive.com",
+            
+            // Freelance
+            "https://www.upwork.com",
+            "https://www.fiverr.com",
+            "https://www.freelancer.com",
+            "https://www.toptal.com",
+            "https://www.guru.com",
+            "https://www.peopleperhour.com",
+            "https://www.simplyhired.com",
+            "https://www.flexjobs.com",
+            
+            // Remote Work
+            "https://www.remote.co",
+            "https://www.we Work remotely.com",
+            "https://www.workingnomads.com",
+            "https://www.virtual vocations.com",
+            "https://www.jobspresso.co",
+            "https://www.pangian.com",
+            "https://www.outsourcely.com",
+            "https://www.crossover.com",
+            
+            // Startups
+            "https://www.ycombinator.com",
+            "https://www.techstars.com",
+            "https://www.500.co",
+            "https://www.angel.co",
+            "https://www.startupgrind.com",
+            "https://www.producthunt.com",
+            "https://www.betalist.com",
+            "https://www.indiehackers.com",
+            
+            // Investing
+            "https://www.robinhood.com",
+            "https://www.webull.com",
+            "https://www.m1finance.com",
+            "https://www.public.com",
+            "https://www.stash.com",
+            "https://www.acorns.com",
+            "https://www.betterment.com",
+            "https://www.wealthfront.com",
+            
+            // Crypto
+            "https://www.coinbase.com",
+            "https://www.binance.us",
+            "https://www.kraken.com",
+            "https://www.gemini.com",
+            "https://www.crypto.com",
+            "https://www.blockfi.com",
+            "https://www.celsius.network",
+            "https://www.nexo.io",
+            
+            // NFTs
+            "https://www.opensea.io",
+            "https://www.rarible.com",
+            "https://www.superrare.com",
+            "https://www.foundation.app",
+            "https://www.niftygateway.com",
+            "https://www.async.art",
+            "https://www.makersplace.com",
+            "https://www.knownorigin.io",
+            
+            // Metaverse
+            "https://www.sandbox.game",
+            "https://www.decentraland.org",
+            "https://www.axieinfinity.com",
+            "https://www.roblox.com",
+            "https://www.fortnite.com",
+            "https://www.horizon.com",
+            "https://www.vrchat.com",
+            "https://www.recroom.com",
+            
+            // VR
+            "https://www.oculus.com",
+            "https://www.vive.com",
+            "https://www.playstation.com/vr",
+            "https://www.steamvr.com",
+            "https://www.windows.com/mixed-reality",
+            "https://www.magicleap.com",
+            "https://www.hololens.com",
+            "https://www.google.com/glass",
+            
+            // AR
+            "https://www.apple.com/augmented-reality",
+            "https://developers.google.com/ar",
+            "https://www.sparkar.com",
+            "https://www.lensstudio.snapchat.com",
+            "https://www.effecthouse.tiktok.com",
+            "https://www.8thwall.com",
+            "https://www.zappar.com",
+            "https://www.blippar.com",
+            
+            // Databases
+            "https://www.mysql.com",
+            "https://www.postgresql.org",
+            "https://www.mongodb.com",
+            "https://www.redis.io",
+            "https://www.cockroachlabs.com",
+            "https://www.crate.io",
+            "https://www.scylladb.com",
+            "https://www.yugabyte.com",
+            
+            // Cloud
+            "https://www.aws.amazon.com",
+            "https://www.azure.microsoft.com",
+            "https://www.cloud.google.com",
+            "https://www.ibm.com/cloud",
+            "https://www.oracle.com/cloud",
+            "https://www.digitalocean.com",
+            "https://www.linode.com",
+            "https://www.vultr.com",
+            
+            // Containers
+            "https://www.docker.com",
+            "https://www.kubernetes.io",
+            "https://www.openshift.com",
+            "https://www.rancher.com",
+            "https://www.portainer.io",
+            "https://www.helm.sh",
+            "https://www.istio.io",
+            "https://www.envoyproxy.io",
+            
+            // CI/CD
+            "https://www.jenkins.io",
+            "https://www.github.com/features/actions",
+            "https://www.gitlab.com",
+            "https://www.travis-ci.com",
+            "https://www.circleci.com",
+            "https://www.drone.io",
+            "https://www.semaphoreci.com",
+            "https://www.appveyor.com",
+            
+            // Monitoring
+            "https://www.prometheus.io",
+            "https://www.grafana.com",
+            "https://www.datadoghq.com",
+            "https://www.newrelic.com",
+            "https://www.dynatrace.com",
+            "https://www.appdynamics.com",
+            "https://www.instana.com",
+            "https://www.honeycomb.io",
+            
+            // Testing
+            "https://www.selenium.dev",
+            "https://www.cypress.io",
+            "https://www.jestjs.io",
+            "https://www.mochajs.org",
+            "https://www.jasmine.github.io",
+            "https://www.karma-runner.github.io",
+            "https://www.cucumber.io",
+            "https://www.testcafe.io",
+            
+            // Security
+            "https://www.snyk.io",
+            "https://www.dependabot.com",
+            "https://www.whitesourcesoftware.com",
+            "https://www.sonarqube.org",
+            "https://www.veracode.com",
+            "https://www.checkmarx.com",
+            "https://www.aquasec.com",
+            "https://www.twistlock.com",
+            
+            // VPN
+            "https://www.expressvpn.com",
+            "https://www.nordvpn.com",
+            "https://www.surfshark.com",
+            "https://www.cyberghostvpn.com",
+            "https://www.privateinternetaccess.com",
+            "https://www.tunnelbear.com",
+            "https://www.protonvpn.com",
+            "https://www.windscribe.com",
+            
+            // Antivirus
+            "https://www.kaspersky.com",
+            "https://www.norton.com",
+            "https://www.mcafee.com",
+            "https://www.avast.com",
+            "https://www.avg.com",
+            "https://www.bitdefender.com",
+            "https://www.malwarebytes.com",
+            "https://www.webroot.com",
+            
+            // Backup
+            "https://www.backblaze.com",
+            "https://www.carbonite.com",
+            "https://www.idrive.com",
+            "https://www.crashplan.com",
+            "https://www.sos-online-backup.com",
+            "https://www.spideroak.com",
+            "https://www.sugarsync.com",
+            "https://www.zoolz.com",
+            
+            // File Recovery
+            "https://www.easeus.com",
+            "https://www.stellarinfo.com",
+            "https://www.disk drill.com",
+            "https://www.recuva.com",
+            "https://www.ontrack.com",
+            "https://www.r-studio.com",
+            "https://www.testdisk.org",
+            "https://www.photorec.org",
+            
+            // System Utils
+            "https://www.ccleaner.com",
+            "https://www.iobit.com",
+            "https://www.glarysoft.com",
+            "https://www.bleachbit.org",
+            "https://www.ccleaner.com/defraggler",
+            "https://www.ccleaner.com/recuva",
+            "https://www.ccleaner.com/speccy",
+            "https://www.hwinfo.com",
+            
+            // Benchmark
+            "https://www.futuremark.com",
+            "https://www.unigine.com",
+            "https://www.techpowerup.com/gpuz",
+            "https://www.cpuid.com",
+            "https://www.hwbot.org",
+            "https://www.userbenchmark.com",
+            "https://www.cpubenchmark.net",
+            "https://www.videocardbenchmark.net",
+            
+            // Overclocking
+            "https://www.msi.com/afterburner",
+            "https://www.asus.com/ai-suite",
+            "https://www.gigabyte.com/rgb-fusion",
+            "https://www.evga.com/precision",
+            "https://www.corsair.com/icue",
+            "https://www.nzxt.com/cam",
+            "https://www.rivatuner.com",
+            "https://www.throttlestop.com",
+            
+            // Emulation
+            "https://www.retroarch.com",
+            "https://www.dolphin-emu.org",
+            "https://www.pcsx2.net",
+            "https://www.rpcs3.net",
+            "https://www.citra-emu.org",
+            "https://www.yuzu-emu.org",
+            "https://www.ryujinx.org",
+            "https://www.xemu.app",
+            
+            // ROMs
+            "https://www.emuparadise.me",
+            "https://www.coolrom.com",
+            "https://www.loveroms.com",
+            "https://www.freeroms.com",
+            "https://www.romhustler.net",
+            "https://www.retro roms.com",
+            "https://www.vimm.net",
+            "https://www.edgeemu.net",
+            
+            // Homebrew
+            "https://www.brew.sh",
+            "https://www.chocolatey.org",
+            "https://www.scoop.sh",
+            "https://www.winget.run",
+            "https://www.ninite.com",
+            "https://www.patchmypc.net",
+            "https://www.sumatrapdfreader.org",
+            "https://www.voidtools.com",
+            
+            // Utilities
+            "https://www.voidtools.com",
+            "https://www.espanso.org",
+            "https://www.autohotkey.com",
+            "https://www.keyboardmaestro.com",
+            "https://www.hammerspoon.org",
+            "https://www.alfredapp.com",
+            "https://www.raycast.com",
+            "https://www.u.tools",
+            
+            // Window Management
+            "https://www.displayfusion.com",
+            "https://www.actualtools.com",
+            "https://www.nurgo-software.com",
+            "https://www.maxto.net",
+            "https://www.divvy.com",
+            "https://www.spectacleapp.com",
+            "https://www.rectangleapp.com",
+            "https://www.moomapp.com",
+            
+            // Clipboard
+            "https://www.ditto-cp.sourceforge.io",
+            "https://www.clipboardfusion.com",
+            "https://www.1clipboard.io",
+            "https://www.pasteapp.io",
+            "https://www.copiedapp.com",
+            "https://www.unclutterapp.com",
+            "https://www.pasty.app",
+            "https://www.clipy-app.com",
+            
+            // Screenshots
+            "https://www.snagit.com",
+            "https://www.screencast.com",
+            "https://www.faststone.org",
+            "https://www.picpick.org",
+            "https://www.greenshot.org",
+            "https://www.sharex.org",
+            "https://www.flameshot.org",
+            "https://www.ksnip.org",
+            
+            // Screen Recording
+            "https://www.obsproject.com",
+            "https://www.camtasia.com",
+            "https://www.screencast-o-matic.com",
+            "https://www.bandicam.com",
+            "https://www.fraps.com",
+            "https://www.dxtory.com",
+            "https://www.actionrec.com",
+            "https://www.mirillis.com",
+            
+            // Video Players
+            "https://www.videolan.org",
+            "https://www.kodi.tv",
+            "https://www.plex.tv",
+            "https://www.emby.media",
+            "https://www.jellyfin.org",
+            "https://www.mpv.io",
+            "https://www.mpc-hc.org",
+            "https://www.potplayer.com",
+            
+            // Audio Players
+            "https://www.foobar2000.org",
+            "https://www.musicbee.com",
+            "https://www.mediamonkey.com",
+            "https://www.aimp.ru",
+            "https://www.winamp.com",
+            "https://www.clementine-player.org",
+            "https://www.strawberrymusicplayer.org",
+            "https://www.quodlibet.com",
+            
+            // Chat
+            "https://www.discord.com",
+            "https://www.slack.com",
+            "https://www.microsoft.com/teams",
+            "https://www.zoom.us",
+            "https://www.telegram.org",
+            "https://www.signal.org",
+            "https://www.whatsapp.com",
+            "https://www.wechat.com",
+            
+            // Browsers
+            "https://www.google.com/chrome",
+            "https://www.mozilla.org/firefox",
+            "https://www.microsoft.com/edge",
+            "https://www.opera.com",
+            "https://www.brave.com",
+            "https://www.vivaldi.com",
+            "https://www.waterfox.net",
+            "https://www.librewolf.net",
+            
+            // Search
+            "https://www.google.com",
+            "https://www.bing.com",
+            "https://duckduckgo.com",
+            "https://www.startpage.com",
+            "https://www.ecosia.org",
+            "https://www.qwant.com",
+            "https://www.yandex.com",
+            "https://www.baidu.com",
+            
+            // Email
+            "https://www.gmail.com",
+            "https://www.outlook.com",
+            "https://www.yahoo.com/mail",
+            "https://www.protonmail.com",
+            "https://www.tutanota.com",
+            "https://www.zoho.com/mail",
+            "https://www.fastmail.com",
+            "https://www.mailfence.com",
+            
+            // Calendar
+            "https://www.google.com/calendar",
+            "https://www.outlook.com/calendar",
+            "https://www.apple.com/icloud/calendar",
+            "https://www.fantastical.app",
+            "https://www.busymac.com",
+            "https://www.flexibits.com",
+            "https://www.vyte.in",
+            "https://www.calendly.com",
+            
+            // Tasks
+            "https://www.todoist.com",
+            "https://www.things.com",
+            "https://www.omnifocus.com",
+            "https://www.rememberthemilk.com",
+            "https://www.any.do",
+            "https://www.ticktick.com",
+            "https://www.microsoft.com/to-do",
+            "https://www.google.com/tasks",
+            
+            // Notes
+            "https://www.evernote.com",
+            "https://www.onenote.com",
+            "https://www.notion.so",
+            "https://www.simplenote.com",
+            "https://www.standardnotes.org",
+            "https://www.joplinapp.org",
+            "https://obsidian.md",
+            "https://roamresearch.com",
+            
+            // Wiki
+            "https://www.wikipedia.org",
+            "https://www.wiktionary.org",
+            "https://www.wikiquote.org",
+            "https://www.wikisource.org",
+            "https://www.wikibooks.org",
+            "https://www.wikiversity.org",
+            "https://www.wikivoyage.org",
+            "https://www.wikinews.org",
+            
+            // Maps
+            "https://www.google.com/maps",
+            "https://www.apple.com/maps",
+            "https://www.openstreetmap.org",
+            "https://www.waze.com",
+            "https://www.here.com",
+            "https://www.mapquest.com",
+            "https://www.bing.com/maps",
+            "https://www.wego.here.com",
+            
+            // Weather
+            "https://www.weather.com",
+            "https://www.accuweather.com",
+            "https://www.wunderground.com",
+            "https://www.weather.gov",
+            "https://www.metoffice.gov.uk",
+            "https://www.bom.gov.au",
+            "https://www.metservice.com",
+            "https://www.yr.no",
+            
+            // Translate
+            "https://translate.google.com",
+            "https://www.deepl.com",
+            "https://www.bing.com/translator",
+            "https://www.systran.net",
+            "https://www.reverso.net",
+            "https://www.linguee.com",
+            "https://www.wordreference.com",
+            "https://www.dict.cc",
+            
+            // Finance
+            "https://www.bloomberg.com",
+            "https://www.reuters.com",
+            "https://www.cnbc.com",
+            "https://www.marketwatch.com",
+            "https://www.investing.com",
+            "https://www.seekingalpha.com",
+            "https://www.morningstar.com",
+            "https://www.thestreet.com",
+            
+            // Sports
+            "https://www.espn.com",
+            "https://www.sports.yahoo.com",
+            "https://www.bleacherreport.com",
+            "https://www.si.com",
+            "https://www.cbssports.com",
+            "https://www.skysports.com",
+            "https://www.bbc.com/sport",
+            "https://www.espncricinfo.com",
+            
+            // Entertainment
+            "https://www.netflix.com",
+            "https://www.hulu.com",
+            "https://www.amazon.com/primevideo",
+            "https://www.disneyplus.com",
+            "https://www.hbomax.com",
+            "https://www.peacocktv.com",
+            "https://www.paramountplus.com",
+            "https://www.apple.com/tv",
+            
+            // Music
+            "https://www.spotify.com",
+            "https://music.apple.com",
+            "https://music.amazon.com",
+            "https://www.youtube.com/music",
+            "https://www.pandora.com",
+            "https://www.tidal.com",
+            "https://www.deezer.com",
+            "https://www.soundcloud.com",
+            
+            // Gaming
+            "https://www.steam.com",
+            "https://www.epicgames.com",
+            "https://store.playstation.com",
+            "https://www.xbox.com",
+            "https://www.nintendo.com",
+            "https://www.gog.com",
+            "https://www.itch.io",
+            "https://www.origin.com",
+            
+            // Shopping
+            "https://www.amazon.com",
+            "https://www.ebay.com",
+            "https://www.walmart.com",
+            "https://www.target.com",
+            "https://www.bestbuy.com",
+            "https://www.etsy.com",
+            "https://www.alibaba.com",
+            "https://www.aliexpress.com",
+            
+            // Social
+            "https://www.facebook.com",
+            "https://www.twitter.com",
+            "https://www.instagram.com",
+            "https://www.linkedin.com",
+            "https://www.tiktok.com",
+            "https://www.snapchat.com",
+            "https://www.pinterest.com",
+            "https://www.reddit.com"
         ];
         
-        // State
+        // ==========================================
+        // THE ENGINE
+        // ==========================================
+        
         let state = {
-            clicks: parseInt(localStorage.getItem('voidgate_clicks') || '0'),
-            lastClick: null
+            clicks: parseInt(localStorage.getItem('uselessButton_clicks') || '0'),
+            history: JSON.parse(localStorage.getItem('uselessButton_history') || '[]')
         };
         
-        // Three.js Setup
-        let scene, camera, renderer, composer;
-        let mainButton, particleSystem, nebulaMesh;
-        let mouse = new THREE.Vector2();
-        let targetRotation = new THREE.Vector2();
-        let windowHalfX = window.innerWidth / 2;
-        let windowHalfY = window.innerHeight / 2;
-        let clock = new THREE.Clock();
-        let isHovering = false;
-        let isTraveling = false;
-        
-        // Custom shaders
-        const vertexShader = `
-            varying vec2 vUv;
-            varying vec3 vPosition;
-            uniform float time;
-            
-            void main() {
-                vUv = uv;
-                vPosition = position;
-                vec3 pos = position;
-                
-                float displacement = sin(pos.x * 10.0 + time) * cos(pos.y * 10.0 + time) * 0.1;
-                pos.z += displacement;
-                
-                gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+        // Initialize stars background
+        function createStars() {
+            const container = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.setProperty('--opacity', Math.random());
+                container.appendChild(star);
             }
-        `;
+        }
         
-        const fragmentShader = `
-            varying vec2 vUv;
-            varying vec3 vPosition;
-            uniform float time;
-            uniform vec3 color1;
-            uniform vec3 color2;
-            uniform float hover;
+        // Update UI
+        function updateStats() {
+            document.getElementById('click-count').textContent = state.clicks.toString().padStart(4, '0');
             
-            void main() {
-                vec3 color = mix(color1, color2, vUv.y + sin(time * 2.0) * 0.2);
+            // Show recent links if we have history
+            if (state.history.length > 0) {
+                const recentSection = document.getElementById('recent-section');
+                const recentLinks = document.getElementById('recent-links');
                 
-                float glow = sin(vUv.x * 20.0 + time * 3.0) * 0.5 + 0.5;
-                glow *= sin(vUv.y * 20.0 + time * 2.0) * 0.5 + 0.5;
-                
-                color += vec3(glow * 0.3) * hover;
-                
-                float alpha = 0.9 + glow * 0.1 * hover;
-                
-                gl_FragColor = vec4(color, alpha);
+                recentSection.style.display = 'block';
+                recentLinks.innerHTML = state.history.slice(-5).map(url => {
+                    const domain = new URL(url).hostname.replace('www.', '');
+                    return `<a href="${url}" target="_blank" class="recent-link">${domain}</a>`;
+                }).join('');
             }
-        `;
+        }
         
-        const particleVertexShader = `
-            attribute float size;
-            attribute vec3 customColor;
-            varying vec3 vColor;
-            uniform float time;
+        // The main function
+        function teleport() {
+            const button = document.getElementById('useless-button');
+            const loadingScreen = document.getElementById('loading-screen');
+            const destinationPreview = document.getElementById('destination-preview');
             
-            void main() {
-                vColor = customColor;
-                vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-                gl_PointSize = size * (300.0 / -mvPosition.z);
-                gl_Position = projectionMatrix * mvPosition;
-            }
-        `;
-        
-        const particleFragmentShader = `
-            varying vec3 vColor;
-            uniform float time;
+            // Disable button
+            button.classList.add('loading');
+            button.disabled = true;
             
-            void main() {
-                float dist = length(gl_PointCoord - vec2(0.5));
-                if (dist > 0.5) discard;
-                
-                float glow = 1.0 - (dist * 2.0);
-                glow = pow(glow, 2.0);
-                
-                gl_FragColor = vec4(vColor, glow);
-            }
-        `;
-        
-        function init() {
-            // Scene
-            scene = new THREE.Scene();
-            scene.fog = new THREE.FogExp2(0x000011, 0.02);
+            // Pick destination
+            const destination = DESTINATIONS[Math.floor(Math.random() * DESTINATIONS.length)];
+            const fullUrl = destination.startsWith('http') ? destination : 'https://' + destination;
             
-            // Camera
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 5;
-            
-            // Renderer
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            renderer.toneMapping = THREE.ReinhardToneMapping;
-            document.getElementById('canvas-container').appendChild(renderer.domElement);
-            
-            // Post Processing
-            const renderScene = new THREE.RenderPass(scene, camera);
-            
-            const bloomPass = new THREE.UnrealBloomPass(
-                new THREE.Vector2(window.innerWidth, window.innerHeight),
-                1.5, 0.4, 0.85
-            );
-            bloomPass.threshold = 0;
-            bloomPass.strength = 2.0;
-            bloomPass.radius = 0.5;
-            
-            composer = new THREE.EffectComposer(renderer);
-            composer.addPass(renderScene);
-            composer.addPass(bloomPass);
-            
-            // Create Objects
-            createMainButton();
-            createParticleSystem();
-            createNebula();
-            createStars();
-            createLightRays();
-            
-            // Event Listeners
-            document.addEventListener('mousemove', onDocumentMouseMove);
-            document.addEventListener('mousedown', onDocumentMouseDown);
-            document.addEventListener('resize', onWindowResize);
-            
-            // Custom cursor
-            initCursor();
+            // Show loading
+            destinationPreview.textContent = new URL(fullUrl).hostname;
+            loadingScreen.classList.add('active');
             
             // Update stats
-            updateStats();
-            
-            // Hide loader
-            setTimeout(() => {
-                document.getElementById('loader').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('loader').style.display = 'none';
-                    document.getElementById('interactionPrompt').classList.add('visible');
-                }, 1000);
-            }, 3000);
-            
-            // Start loop
-            animate();
-        }
-        
-        function createMainButton() {
-            // Create 3D Button Geometry
-            const geometry = new THREE.TorusGeometry(1.2, 0.4, 16, 100);
-            
-            const material = new THREE.ShaderMaterial({
-                uniforms: {
-                    time: { value: 0 },
-                    color1: { value: new THREE.Color(0xff00ff) },
-                    color2: { value: new THREE.Color(0x00ffff) },
-                    hover: { value: 0 }
-                },
-                vertexShader: vertexShader,
-                fragmentShader: fragmentShader,
-                transparent: true,
-                side: THREE.DoubleSide
-            });
-            
-            mainButton = new THREE.Mesh(geometry, material);
-            
-            // Add inner sphere
-            const sphereGeo = new THREE.SphereGeometry(0.8, 32, 32);
-            const sphereMat = new THREE.MeshBasicMaterial({
-                color: 0xffffff,
-                transparent: true,
-                opacity: 0.1,
-                wireframe: true
-            });
-            const sphere = new THREE.Mesh(sphereGeo, sphereMat);
-            mainButton.add(sphere);
-            
-            // Add text sprite
-            const canvas = document.createElement('canvas');
-            canvas.width = 512;
-            canvas.height = 128;
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = 'rgba(0,0,0,0)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.font = 'bold 60px Orbitron';
-            ctx.fillStyle = '#ffffff';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.shadowColor = '#ff00ff';
-            ctx.shadowBlur = 20;
-            ctx.fillText('INITIATE', 256, 64);
-            
-            const texture = new THREE.CanvasTexture(canvas);
-            const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
-            const sprite = new THREE.Sprite(spriteMat);
-            sprite.position.z = 0.5;
-            sprite.scale.set(2, 0.5, 1);
-            mainButton.add(sprite);
-            
-            scene.add(mainButton);
-        }
-        
-        function createParticleSystem() {
-            const geometry = new THREE.BufferGeometry();
-            const count = 5000;
-            
-            const positions = new Float32Array(count * 3);
-            const colors = new Float32Array(count * 3);
-            const sizes = new Float32Array(count);
-            
-            const color1 = new THREE.Color(0xff00ff);
-            const color2 = new THREE.Color(0x00ffff);
-            
-            for (let i = 0; i < count; i++) {
-                const i3 = i * 3;
-                
-                // Spherical distribution
-                const r = 10 + Math.random() * 20;
-                const theta = Math.random() * Math.PI * 2;
-                const phi = Math.acos(2 * Math.random() - 1);
-                
-                positions[i3] = r * Math.sin(phi) * Math.cos(theta);
-                positions[i3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-                positions[i3 + 2] = r * Math.cos(phi);
-                
-                const mixedColor = color1.clone().lerp(color2, Math.random());
-                colors[i3] = mixedColor.r;
-                colors[i3 + 1] = mixedColor.g;
-                colors[i3 + 2] = mixedColor.b;
-                
-                sizes[i] = Math.random() * 2;
-            }
-            
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-            geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-            
-            const material = new THREE.ShaderMaterial({
-                uniforms: { time: { value: 0 } },
-                vertexShader: particleVertexShader,
-                fragmentShader: particleFragmentShader,
-                transparent: true,
-                blending: THREE.AdditiveBlending,
-                depthWrite: false
-            });
-            
-            particleSystem = new THREE.Points(geometry, material);
-            scene.add(particleSystem);
-        }
-        
-        function createNebula() {
-            const geometry = new THREE.PlaneGeometry(50, 50, 32, 32);
-            
-            // Create nebula texture procedurally
-            const canvas = document.createElement('canvas');
-            canvas.width = 512;
-            canvas.height = 512;
-            const ctx = canvas.getContext('2d');
-            
-            const gradient = ctx.createRadialGradient(256, 256, 0, 256, 256, 256);
-            gradient.addColorStop(0, 'rgba(255, 0, 255, 0.2)');
-            gradient.addColorStop(0.5, 'rgba(0, 255, 255, 0.1)');
-            gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-            
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, 512, 512);
-            
-            const texture = new THREE.CanvasTexture(canvas);
-            
-            const material = new THREE.MeshBasicMaterial({
-                map: texture,
-                transparent: true,
-                opacity: 0.3,
-                side: THREE.DoubleSide,
-                blending: THREE.AdditiveBlending,
-                depthWrite: false
-            });
-            
-            nebulaMesh = new THREE.Mesh(geometry, material);
-            nebulaMesh.position.z = -10;
-            scene.add(nebulaMesh);
-        }
-        
-        function createStars() {
-            const geometry = new THREE.BufferGeometry();
-            const count = 2000;
-            const positions = new Float32Array(count * 3);
-            
-            for (let i = 0; i < count * 3; i += 3) {
-                positions[i] = (Math.random() - 0.5) * 100;
-                positions[i + 1] = (Math.random() - 0.5) * 100;
-                positions[i + 2] = (Math.random() - 0.5) * 100;
-            }
-            
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            
-            const material = new THREE.PointsMaterial({
-                color: 0xffffff,
-                size: 0.1,
-                transparent: true,
-                opacity: 0.8
-            });
-            
-            const stars = new THREE.Points(geometry, material);
-            scene.add(stars);
-        }
-        
-        function createLightRays() {
-            const geometry = new THREE.CylinderGeometry(0.1, 2, 20, 8, 1, true);
-            const material = new THREE.MeshBasicMaterial({
-                color: 0xffd700,
-                transparent: true,
-                opacity: 0.05,
-                side: THREE.DoubleSide,
-                blending: THREE.AdditiveBlending,
-                depthWrite: false
-            });
-            
-            for (let i = 0; i < 6; i++) {
-                const ray = new THREE.Mesh(geometry, material);
-                ray.position.z = -5;
-                ray.rotation.z = (i / 6) * Math.PI * 2;
-                ray.rotation.x = 0.2;
-                scene.add(ray);
-            }
-        }
-        
-        function onDocumentMouseMove(event) {
-            mouse.x = (event.clientX - windowHalfX) / 200;
-            mouse.y = (event.clientY - windowHalfY) / 200;
-            
-            // Update coordinates display
-            const x = ((event.clientX / window.innerWidth) * 100).toFixed(3);
-            const y = ((event.clientY / window.innerHeight) * 100).toFixed(3);
-            const z = (Math.random() * 100).toFixed(3);
-            document.getElementById('coordinates').textContent = 
-                `X: ${x} Y: ${y} Z: ${z}`;
-            
-            // Custom cursor
-            const cursorX = event.clientX;
-            const cursorY = event.clientY;
-            
-            document.getElementById('cursorDot').style.left = cursorX - 4 + 'px';
-            document.getElementById('cursorDot').style.top = cursorY - 4 + 'px';
-            
-            const follower = document.getElementById('cursorFollower');
-            setTimeout(() => {
-                follower.style.left = cursorX - 20 + 'px';
-                follower.style.top = cursorY - 20 + 'px';
-            }, 100);
-            
-            // Check hover
-            if (mainButton) {
-                const vector = new THREE.Vector3(mouse.x * 5, -mouse.y * 5, 0.5);
-                vector.unproject(camera);
-                const dir = vector.sub(camera.position).normalize();
-                const distance = -camera.position.z / dir.z;
-                const pos = camera.position.clone().add(dir.multiplyScalar(distance));
-                
-                const dist = pos.distanceTo(mainButton.position);
-                isHovering = dist < 2;
-                
-                document.body.style.cursor = isHovering ? 'pointer' : 'default';
-            }
-        }
-        
-        function onDocumentMouseDown(event) {
-            if (isHovering && !isTraveling) {
-                initiateTravel();
-            }
-        }
-        
-        function initiateTravel() {
-            isTraveling = true;
-            
-            // Update state
             state.clicks++;
-            localStorage.setItem('voidgate_clicks', state.clicks);
+            state.history.push(fullUrl);
+            if (state.history.length > 20) state.history.shift(); // Keep last 20
+            
+            localStorage.setItem('uselessButton_clicks', state.clicks);
+            localStorage.setItem('uselessButton_history', JSON.stringify(state.history));
+            
             updateStats();
             
-            // Wormhole effect
-            const wormhole = document.getElementById('wormhole');
-            wormhole.classList.add('active');
-            
-            // Animate button
-            const tl = setInterval(() => {
-                mainButton.scale.multiplyScalar(1.05);
-                mainButton.material.uniforms.hover.value = 2;
-            }, 50);
-            
-            // Select destination
-            const destination = DESTINATIONS[Math.floor(Math.random() * DESTINATIONS.length)];
-            
-            // Open after delay
+            // Actually navigate after delay
             setTimeout(() => {
-                window.open('https://' + destination, '_blank');
+                window.open(fullUrl, '_blank');
                 
+                // Reset UI
                 setTimeout(() => {
-                    wormhole.classList.remove('active');
-                    mainButton.scale.set(1, 1, 1);
-                    mainButton.material.uniforms.hover.value = 0;
-                    isTraveling = false;
-                    clearInterval(tl);
+                    loadingScreen.classList.remove('active');
+                    button.classList.remove('loading');
+                    button.disabled = false;
                 }, 500);
-            }, 2000);
+            }, 1500);
         }
         
-        function updateStats() {
-            document.getElementById('statClicks').textContent = 
-                state.clicks.toString().padStart(4, '0');
-        }
-        
-        function onWindowResize() {
-            windowHalfX = window.innerWidth / 2;
-            windowHalfY = window.innerHeight / 2;
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            composer.setSize(window.innerWidth, window.innerHeight);
-        }
-        
-        function initCursor() {
-            // Hide default cursor
-            document.body.style.cursor = 'none';
-        }
-        
-        function animate() {
-            requestAnimationFrame(animate);
-            
-            const time = clock.getElapsedTime();
-            
-            // Update shader uniforms
-            if (mainButton) {
-                mainButton.material.uniforms.time.value = time;
-                mainButton.material.uniforms.hover.value += (isHovering ? 1 : 0 - mainButton.material.uniforms.hover.value) * 0.1;
-                
-                // Float animation
-                mainButton.position.y = Math.sin(time) * 0.2;
-                mainButton.rotation.x = mouse.y * 0.5;
-                mainButton.rotation.y = mouse.x * 0.5 + time * 0.2;
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' || e.code === 'Enter') {
+                e.preventDefault();
+                if (!document.getElementById('useless-button').disabled) {
+                    teleport();
+                }
             }
+        });
+        
+        // Custom cursor
+        document.addEventListener('mousemove', (e) => {
+            const dot = document.getElementById('cursor-dot');
+            const follower = document.getElementById('cursor-follower');
             
-            if (particleSystem) {
-                particleSystem.material.uniforms.time.value = time;
-                particleSystem.rotation.y = time * 0.05;
-            }
+            dot.style.left = e.clientX - 4 + 'px';
+            dot.style.top = e.clientY - 4 + 'px';
             
-            if (nebulaMesh) {
-                nebulaMesh.rotation.z = time * 0.02;
-            }
-            
-            // Camera parallax
-            camera.position.x += (mouse.x - camera.position.x) * 0.05;
-            camera.position.y += (-mouse.y - camera.position.y) * 0.05;
-            camera.lookAt(scene.position);
-            
-            // Render with post processing
-            composer.render();
-        }
+            setTimeout(() => {
+                follower.style.left = e.clientX - 20 + 'px';
+                follower.style.top = e.clientY - 20 + 'px';
+            }, 100);
+        });
         
         // Simulate loading progress
         let progress = 0;
-        const loaderInterval = setInterval(() => {
-            progress += Math.random() * 10;
+        const interval = setInterval(() => {
+            progress += Math.random() * 15;
             if (progress >= 100) {
                 progress = 100;
-                clearInterval(loaderInterval);
+                clearInterval(interval);
+                setTimeout(() => {
+                    document.getElementById('loader').style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('interaction-prompt').classList.add('visible');
+                    }, 500);
+                }, 500);
             }
             document.getElementById('loaderBar').style.width = progress + '%';
         }, 200);
         
         // Initialize
-        init();
+        createStars();
+        updateStats();
+        
+        // Expose functions for footer links
+        function showAbout() {
+            alert('The Useless Button v2.0\n\nA portal to 5000+ random, weird, and wonderful websites.\n\nClick the button to teleport to a random corner of the internet.\n\nNo algorithms. No tracking. Pure chaos.');
+        }
+        
+        function showStats() {
+            const uniqueSites = new Set(state.history).size;
+            alert(`Your Stats:\n\nTotal Teleports: ${state.clicks}\nUnique Sites: ${uniqueSites}\nCurrent Session: ${state.history.length} sites`);
+        }
     </script>
 </body>
 </html>
