@@ -1,1258 +1,1696 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Useless Button - Your Portal to Internet Weirdness</title>
-
+    <title>The Useless Button 2.0 | Portal to Internet Chaos</title>
+    
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Click the button and get randomly redirected to meme sites, weird websites, and funny internet oddities. Pure pastel chaos. 300+ random redirects.">
-    <meta name="keywords" content="useless button, random website, meme site, weird internet, bored, procrastination, internet games, funny websites, random redirect, time waster">
+    <meta name="description" content="Click the useless button to teleport to random corners of the internet. 500+ weird websites, meme sites, and digital oddities. Pure chaos with style.">
+    <meta name="keywords" content="useless button, random website generator, internet wormhole, meme sites, weird web, digital exploration, procrastination">
     <meta name="author" content="useless-button.xyz">
     <meta name="robots" content="index,follow">
-    <meta name="language" content="English">
-
-    <!-- Open Graph Tags (social sharing) -->
-    <meta property="og:title" content="The Useless Button - Click If You Dare">
-    <meta property="og:description" content="One button, 300+ random redirects. Get sent to meme sites, weird websites, or fun internet oddities. Pure chaos.">
+    
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="The Useless Button 2.0 | Internet Chaos Portal">
+    <meta property="og:description" content="One click = instant teleportation to 500+ random, weird, and wonderful websites. No algorithms, just pure internet randomness.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.useless-button.xyz/">
-    <meta property="og:image" content="https://www.useless-button.xyz/og-image.png">
-    <meta property="og:site_name" content="Useless Button">
-
-    <!-- GOOGLE ADSENSE SCRIPT -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2157821034002726"
-         crossorigin="anonymous"></script>
-
+    <meta property="og:image" content="https://www.useless-button.xyz/og-image-v2.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        :root {
+            --primary: #FFB3BA;
+            --secondary: #BAE1FF;
+            --accent: #FFFFBA;
+            --success: #BAFFC9;
+            --warning: #FFDFBA;
+            --bg: #0a0a0a;
+            --surface: #111111;
+            --surface-hover: #1a1a1a;
+            --text: #ffffff;
+            --text-secondary: #888888;
+            --border: #222222;
+            --shadow: rgba(0, 0, 0, 0.5);
+            --glow: rgba(255, 179, 186, 0.5);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        [data-theme="light"] {
+            --bg: #f5f5f5;
+            --surface: #ffffff;
+            --surface-hover: #f0f0f0;
+            --text: #1a1a1a;
+            --text-secondary: #666666;
+            --border: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --glow: rgba(255, 179, 186, 0.8);
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #000;
-            color: #fff;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+        
+        h1, h2, h3, .brand {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        /* Particle Canvas */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(var(--surface), 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .nav-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn.active {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+        }
+        
+        /* Theme Toggle */
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(180deg);
+            border-color: var(--primary);
+        }
+        
+        /* Main Content */
+        .main-container {
+            position: relative;
+            z-index: 2;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            line-height: 1.6;
+            padding-top: 80px;
         }
-
-        /* Social Share Buttons - Bottom Right (MINIMALISTIC) */
-        .social-share {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            gap: 12px;
-            z-index: 500;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .social-btn {
-            background: transparent;
-            border: 1px solid #333;
-            color: #666;
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            font-size: 12px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .social-btn:hover {
-            color: #FFB3BA;
-            border-color: #FFB3BA;
-        }
-
-        /* Menu Button - IMPROVED (All 3 combinations) */
-        .menu-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 179, 186, 0.1);
-            border: none;
-            color: #999;
-            font-size: 36px;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1000;
-            transition: all 0.3s ease;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-
-        .menu-button:hover {
-            color: #FFB3BA;
-            background: rgba(255, 179, 186, 0.2);
-        }
-
-        /* Menu Tooltip */
-        .menu-button::after {
-            content: "Menu";
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: #FFB3BA;
-            color: #000;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            margin-top: 8px;
-            font-weight: normal;
-            font-size: 11px;
-        }
-
-        .menu-button:hover::after {
-            opacity: 1;
-        }
-
-        /* Menu Dropdown */
-        .menu-dropdown {
-            display: none;
-            position: fixed;
-            top: 60px;
-            right: 20px;
-            background: #000;
-            border: 1px solid #222;
-            border-radius: 5px;
-            min-width: 150px;
-            z-index: 999;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        }
-
-        .menu-dropdown.active {
-            display: block;
-        }
-
-        .menu-dropdown a {
-            display: block;
-            padding: 12px 20px;
-            color: #fff;
-            text-decoration: none;
-            border-bottom: 1px solid #222;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .menu-dropdown a:last-child {
-            border-bottom: none;
-        }
-
-        .menu-dropdown a:hover {
-            background: #111;
-            color: #FFB3BA;
-        }
-
-        /* Ad Sidebar - Blends with background */
-        .ad-sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 160px;
-            height: 100vh;
-            background: #000;
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            text-align: center;
-            border-right: 1px solid #222;
-            font-size: 14px;
-            box-shadow: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 900;
-        }
-
-        .ad-sidebar a {
-            color: #666;
-            text-decoration: none;
-            font-weight: 600;
-            margin-top: 10px;
-        }
-
-        /* Main Container */
-        .container {
-            flex: 1;
-            margin-left: 160px;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .button-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh;
-            width: 100%;
-        }
-
-        #useless-button {
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            font-size: 24px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            box-shadow: 0 0 30px var(--color-primary, #FFB3BA);
-        }
-
-        #useless-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 50px var(--color-primary, #FFB3BA);
-        }
-
-        #useless-button:active {
-            transform: scale(0.95);
-        }
-
-        /* Content Section */
-        .content-section {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .content-section h2 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #FFB3BA;
-            margin-top: 30px;
-        }
-
-        .content-section h3 {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: #FFB3BA;
-            margin-top: 25px;
-        }
-
-        .content-section p {
-            margin-bottom: 15px;
-            opacity: 0.9;
-            line-height: 1.8;
-            text-align: justify;
-        }
-
-        .content-section li {
-            margin-bottom: 10px;
-            opacity: 0.9;
-            margin-left: 20px;
-        }
-
-        .featured-sites {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .site-card {
-            background: #000;
-            border: 1px solid #222;
-            border-radius: 8px;
-            padding: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .site-card:hover {
-            border-color: #FFB3BA;
-            background: #0a0a0a;
-            transform: translateY(-5px);
-        }
-
-        .site-card h3 {
-            color: #FFB3BA;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-
-        .site-card p {
-            font-size: 14px;
-            opacity: 0.8;
-            margin-bottom: 0;
-            text-align: left;
-        }
-
-        /* Account Page Styles */
-        .account-container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .auth-box {
-            background: #0a0a0a;
-            border: 1px solid #222;
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 20px;
-        }
-
-        .auth-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #222;
-        }
-
-        .auth-tab {
-            padding: 10px 20px;
-            background: transparent;
-            border: none;
-            color: #666;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-bottom: 2px solid transparent;
-        }
-
-        .auth-tab.active {
-            color: #FFB3BA;
-            border-bottom-color: #FFB3BA;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #FFB3BA;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 5px;
-            color: #fff;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #FFB3BA;
-            box-shadow: 0 0 10px rgba(255, 179, 186, 0.3);
-        }
-
-        .form-group small {
-            display: block;
-            margin-top: 5px;
-            color: #666;
-            font-size: 12px;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background: #FFB3BA;
-            color: #000;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-
-        .btn:hover {
-            transform: scale(1.02);
-        }
-
-        .error {
-            color: #ff6b6b;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
-        .success {
-            color: #51cf66;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
-        /* Account Dashboard */
-        .account-dashboard {
-            display: none;
-        }
-
-        .account-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .username-display {
-            font-size: 24px;
-            color: #FFB3BA;
-            margin-bottom: 10px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin: 30px 0;
-        }
-
-        .stat-box {
-            background: #0a0a0a;
-            border: 1px solid #222;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 28px;
-            color: #FFB3BA;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-        }
-
-        .achievements-section {
-            margin-top: 30px;
-        }
-
-        .achievements-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .achievement {
-            background: #0a0a0a;
-            border: 1px solid #222;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            opacity: 0.5;
-            transition: all 0.3s ease;
-        }
-
-        .achievement.unlocked {
-            opacity: 1;
-            border-color: #FFB3BA;
-            box-shadow: 0 0 15px rgba(255, 179, 186, 0.3);
-        }
-
-        .achievement-icon {
-            font-size: 30px;
-            margin-bottom: 5px;
-        }
-
-        .achievement-label {
-            font-size: 10px;
-            color: #666;
-        }
-
-        .sites-visited {
-            margin-top: 30px;
-        }
-
-        .sites-list {
-            background: #0a0a0a;
-            border: 1px solid #222;
-            border-radius: 8px;
-            padding: 15px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .site-item {
-            padding: 8px;
-            border-bottom: 1px solid #222;
-            font-size: 12px;
-            color: #FFB3BA;
-        }
-
-        .site-item:last-child {
-            border-bottom: none;
-        }
-
-        .logout-btn {
-            width: 100%;
-            padding: 12px;
-            background: #666;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-        }
-
-        .logout-btn:hover {
-            background: #555;
-        }
-
-        /* Hide pages */
+        
         .page {
             display: none;
+            animation: fadeIn 0.5s ease;
+            flex: 1;
         }
-
+        
         .page.active {
             display: block;
         }
-
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Home Page */
+        .hero-section {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 2rem;
+        }
+        
+        .stats-bar {
+            position: absolute;
+            top: 2rem;
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--surface);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+        
+        .stat-value {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        /* The Button */
+        .button-container {
+            position: relative;
+            margin: 2rem 0;
+        }
+        
+        .orbit {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border: 1px dashed var(--border);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: rotate 20s linear infinite;
+            opacity: 0.5;
+        }
+        
+        .orbit-2 {
+            width: 450px;
+            height: 450px;
+            animation-direction: reverse;
+            animation-duration: 30s;
+        }
+        
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .pulse-ring {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 2s ease-out infinite;
+            opacity: 0;
+        }
+        
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+            100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+        }
+        
+        #chaos-button {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #000;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 0 60px var(--glow), inset 0 0 20px rgba(255,255,255,0.5);
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            overflow: hidden;
+        }
+        
+        #chaos-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        #chaos-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 80px var(--glow), inset 0 0 30px rgba(255,255,255,0.6);
+        }
+        
+        #chaos-button:hover::before {
+            left: 100%;
+        }
+        
+        #chaos-button:active {
+            transform: scale(0.95);
+        }
+        
+        #chaos-button.clicking {
+            animation: buttonClick 0.5s ease;
+        }
+        
+        @keyframes buttonClick {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+        
+        .button-subtitle {
+            margin-top: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-align: center;
+            max-width: 400px;
+        }
+        
+        .keyboard-hint {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+        
+        .keyboard-hint kbd {
+            background: var(--surface);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            font-family: monospace;
+        }
+        
+        /* Recent Destinations */
+        .recent-destinations {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+        }
+        
+        .recent-title {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .recent-list {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .recent-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .recent-item:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        /* Content Pages */
+        .content-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+        
+        /* Cards */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow);
+            border-color: var(--primary);
+        }
+        
+        .card h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .card h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 0.5rem 0;
+        }
+        
+        .card ul {
+            margin-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .card li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .card strong {
+            color: var(--text);
+        }
+        
+        /* Account Page */
+        .account-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
         @media (max-width: 768px) {
-            .ad-sidebar {
-                width: 100%;
-                height: 60px;
-                padding: 10px;
-                flex-direction: row;
-                justify-content: flex-start;
+            .account-grid {
+                grid-template-columns: 1fr;
             }
-
-            .container {
-                margin-left: 0;
-                margin-top: 60px;
-                margin-bottom: 80px;
+        }
+        
+        .profile-card {
+            text-align: center;
+            height: fit-content;
+        }
+        
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1rem;
+            border: 4px solid var(--surface);
+            box-shadow: 0 0 20px var(--glow);
+        }
+        
+        .username {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .joined {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-around;
+            padding: 1rem 0;
+            border-top: 1px solid var(--border);
+        }
+        
+        .stat-box {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Achievements */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .achievement {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: var(--transition);
+            opacity: 0.5;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .achievement.unlocked {
+            opacity: 1;
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(255,179,186,0.1), rgba(186,225,255,0.1));
+        }
+        
+        .achievement.unlocked::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .achievement-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .achievement-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        
+        .achievement-desc {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+        
+        /* History List */
+        .history-list {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+        }
+        
+        .history-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .history-item:hover {
+            background: var(--surface-hover);
+        }
+        
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .history-url {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 70%;
+        }
+        
+        .history-date {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: inherit;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 179, 186, 0.1);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #000;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px var(--glow);
+        }
+        
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--surface-hover);
+            border-color: var(--primary);
+        }
+        
+        .btn-danger {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #ff5252;
+        }
+        
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .toast {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px var(--shadow);
+            animation: slideIn 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 300px;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .toast.success { border-left-color: var(--success); }
+        .toast.error { border-left-color: #ff6b6b; }
+        .toast.info { border-left-color: var(--secondary); }
+        
+        /* Footer */
+        footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 3000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .loading-overlay.active {
+            display: flex;
+        }
+        
+        .loading-text {
+            font-size: 1.5rem;
+            color: var(--primary);
+            animation: pulse 1.5s infinite;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .destination-preview {
+            text-align: center;
+            max-width: 600px;
+            padding: 0 2rem;
+        }
+        
+        .destination-url {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            word-break: break-all;
+            margin-top: 1rem;
+            opacity: 0.8;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
             }
-
-            #useless-button {
+            
+            .brand span {
+                display: none;
+            }
+            
+            .nav-btn span {
+                display: none;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            #chaos-button {
                 width: 200px;
                 height: 200px;
-                font-size: 18px;
+                font-size: 1.2rem;
             }
-
-            .menu-dropdown {
-                right: 10px;
+            
+            .orbit {
+                width: 280px;
+                height: 280px;
             }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
+            
+            .orbit-2 {
+                width: 350px;
+                height: 350px;
             }
-
-            .social-share {
-                left: 20px;
-                right: auto;
-                bottom: 60px;
-                gap: 8px;
+            
+            .content-wrapper {
+                padding: 2rem 1rem;
             }
-
-            .social-btn {
-                padding: 6px 10px;
-                font-size: 11px;
+            
+            .card {
+                padding: 1.5rem;
             }
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
         }
     </style>
 </head>
 <body>
-    <!-- Social Share Buttons - Bottom Right (MINIMALISTIC TEXT) -->
-    <div class="social-share">
-        <a href="#" class="social-btn" onclick="shareTwitter(event)">T</a>
-        <a href="#" class="social-btn" onclick="shareInstagram(event)">I</a>
-        <a href="#" class="social-btn" onclick="shareReddit(event)">R</a>
-    </div>
-
-    <!-- Ad Sidebar -->
-    <div class="ad-sidebar">
-        📢 Ad Space<br>
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-2157821034002726"
-             data-ad-slot="1234567890"
-             data-ad-format="vertical"
-             data-full-width-responsive="false"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-    <!-- Menu Button - IMPROVED (All 3 combinations: brighter color + background + tooltip) -->
-    <button class="menu-button" id="menuButton">⋮</button>
-
-    <!-- Menu Dropdown -->
-    <div class="menu-dropdown" id="menuDropdown">
-        <a href="#" onclick="showPage('home')">Home</a>
-        <a href="#" onclick="showPage('about')">About</a>
-        <a href="#" onclick="showPage('account')">Account</a>
-    </div>
-
-    <!-- Main Container -->
-    <div class="container">
-        <!-- HOME PAGE - Button Only -->
-        <div id="home" class="page active">
-            <div class="button-wrapper">
-                <button id="useless-button" aria-label="Click the useless button">
-                    CLICK ME
-                </button>
-            </div>
+    <canvas id="particle-canvas"></canvas>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Initializing Chaos Engine...</div>
+        <div class="destination-preview">
+            <div class="destination-url" id="destinationUrl"></div>
         </div>
-
-        <!-- ABOUT PAGE - ENHANCED WITH 1000+ WORDS + PRIVACY POLICY PART 2 -->
-        <div id="about" class="page">
-            <div class="content-section">
-                <h2>Welcome to The Useless Button</h2>
-                <p>The Useless Button is a revolutionary platform designed to liberate you from the monotony of everyday web browsing. In a digital landscape dominated by algorithmic feeds and targeted content, The Useless Button offers something genuinely different: pure, unfiltered internet randomness. Our mission is simple yet profound – to reconnect users with the weird, wonderful, and downright bizarre corners of the internet that algorithm-driven platforms have effectively hidden away.</p>
-
-                <p>The internet wasn't always a predictable place. Decades ago, surfing the web was an adventure. You'd click from page to page, discovering unexpected communities, weird hobby sites, and strange personal projects that somehow existed online. Today's internet is sanitized, predictable, and algorithmically curated to keep you in a comfortable bubble. The Useless Button breaks that bubble.</p>
-
-                <h3>How It Works</h3>
-                <p>Using The Useless Button is deceptively simple, yet the results are profoundly entertaining. The mechanics are straightforward:</p>
-                <ul>
-                    <li><strong>Step 1: Click the Giant Button</strong> – Located prominently on your screen is a massive, inviting pastel-colored button. This is your portal. Click it with no expectations, no algorithm, and no predetermined outcome.</li>
-                    <li><strong>Step 2: Get Randomly Redirected</strong> – Upon clicking, you're instantly transported to one of 300+ bizarre, entertaining, and completely useless websites. These aren't sponsored links or ads – they're genuine internet oddities that have earned their place in our collection.</li>
-                    <li><strong>Step 3: Explore the Internet's Weirdest Corners</strong> – From interactive art installations to games that make no sense, from cat-bouncing simulators to abstract music creators, each click is a surprise. You might find yourself playing a game designed to waste your time perfectly, or discovering a website that hasn't been updated since 1997.</li>
-                    <li><strong>Step 4: Come Back for More</strong> – No limits, no restrictions. Click as many times as you want, as often as you want. Each click opens a new possibility, a new discovery, a new weird corner of the internet.</li>
-                </ul>
-
-                <h3>Why The Useless Button Exists</h3>
-                <p>In our hyperconnected world, we're constantly bombarded with content that's been curated, ranked, and optimized for engagement metrics. Social media algorithms learn your preferences and show you more of the same. Search engines predict what you want before you finish typing. The result? We're trapped in filter bubbles of our own design, seeing only content that reinforces what we already know and enjoy.</p>
-
-                <p>The Useless Button rejects this paradigm entirely. It's a deliberate antidote to algorithmic control. It's a celebration of the internet's inherent chaos and creativity. It's a platform where truly useless websites – in the best possible sense – can find an audience of people actively seeking them out.</p>
-
-                <p>More importantly, The Useless Button reconnects you with the spirit of web exploration. It reminds us that the internet isn't just a tool for productivity and profit. It's a space for human creativity, experimentation, and play. It's where weird ideas can be tested without needing to appeal to millions. It's where passion projects live.</p>
-
-                <h3>What Sites You Might Visit</h3>
-                <p>Our collection of 300+ websites spans a remarkable spectrum of internet weirdness:</p>
-
-                <div class="featured-sites">
-                    <div class="site-card">
-                        <h3>Interactive Art & Music</h3>
-                        <p>Experience avant-garde music creators, abstract visual experiments, and interactive audio installations. These sites blur the line between art and play.</p>
+    </div>
+    
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="brand" onclick="showPage('home')">
+            <i class="fas fa-random"></i>
+            <span>Useless Button</span>
+        </div>
+        
+        <div class="nav-controls">
+            <button class="nav-btn active" onclick="showPage('home')" data-page="home">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </button>
+            <button class="nav-btn" onclick="showPage('about')" data-page="about">
+                <i class="fas fa-info-circle"></i>
+                <span>About</span>
+            </button>
+            <button class="nav-btn" onclick="showPage('account')" data-page="account">
+                <i class="fas fa-user"></i>
+                <span>Account</span>
+            </button>
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+                <i class="fas fa-sun" id="themeIcon"></i>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- HOME PAGE -->
+        <div id="home" class="page active">
+            <section class="hero-section">
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <i class="fas fa-mouse-pointer"></i>
+                        <span>Clicks: <span class="stat-value" id="clickCount">0</span></span>
                     </div>
-                    <div class="site-card">
-                        <h3>Pointless Games</h3>
-                        <p>Games deliberately designed to waste your time in the most enjoyable ways possible. Bounce cats, guide pixels through obstacles, or create compositions with beatboxers.</p>
+                    <div class="stat-item">
+                        <i class="fas fa-globe"></i>
+                        <span>Sites: <span class="stat-value" id="siteCount">0</span></span>
                     </div>
-                    <div class="site-card">
-                        <h3>Retro & Nostalgic</h3>
-                        <p>Websites frozen in time, preserving the spirit of 1990s and 2000s internet culture. Poorly designed personal websites have never been more charming.</p>
-                    </div>
-                    <div class="site-card">
-                        <h3>AI & Machine Learning</h3>
-                        <p>Play with Google's Quick Draw AI, generate faces that don't exist, or interact with cutting-edge machine learning experiments presented in fun, accessible ways.</p>
-                    </div>
-                    <div class="site-card">
-                        <h3>Quirky Generators</h3>
-                        <p>Generate random names, emoji combinations, and bizarre content. Each refresh brings new combinations and possibilities.</p>
-                    </div>
-                    <div class="site-card">
-                        <h3>Community Projects</h3>
-                        <p>Discover passion projects from developers, artists, and creative minds worldwide. Sites built not for profit, but purely for the joy of creation.</p>
+                    <div class="stat-item">
+                        <i class="fas fa-trophy"></i>
+                        <span>Rank: <span class="stat-value" id="userRank">Explorer</span></span>
                     </div>
                 </div>
-
-                <h3>The Philosophy Behind The Useless Button</h3>
-                <p>There's a Japanese concept called "ma" – the idea that empty space, silence, and nothingness have intrinsic value. The Useless Button embodies a similar philosophy. In a world obsessed with efficiency and productivity, uselessness is revolutionary. A website that serves no purpose other than entertainment is genuinely valuable precisely because it refuses to optimize, monetize, or productize the user experience.</p>
-
-                <p>By creating a platform that celebrates useless websites, we're making a statement: not everything on the internet needs to be useful in a traditional sense. Sometimes the best parts of the internet are the weird, niche corners that exist simply because someone thought they'd be fun to create.</p>
-
-                <h3>For Content Creators & Artists</h3>
-                <p>If you've created a weird website, an art project, a pointless game, or an interactive experience, The Useless Button is your platform. We actively seek out creative projects to feature. Whether your site has been online for twenty years or was launched yesterday, if it's genuinely unique and entertaining, it belongs in our collection.</p>
-
-                <h3>Features & User Experience</h3>
-                <p>Beyond the simple randomization mechanic, The Useless Button offers several features to enhance your experience:</p>
-                <ul>
-                    <li><strong>Account System</strong> – Create an account to track your clicks, see which sites you've visited, and unlock achievements as you explore more of the internet's weirdness.</li>
-                    <li><strong>Achievements</strong> – Unlock badges as you click more. From your first click to becoming a legendary explorer, achievement tracking gamifies the experience.</li>
-                    <li><strong>Statistics</strong> – See how many sites you've explored, track your clicking streak, and compete with yourself to reach new milestones.</li>
-                    <li><strong>Site History</strong> – Keep track of every weird website you've visited. Remember a site that impressed you? Check your history.</li>
-                </ul>
-
-                <h3>Why You Should Click The Useless Button</h3>
-                <p>In a world of algorithmic feeds and targeted content, The Useless Button offers genuine serendipity. You'll discover websites you never knew existed. You'll laugh, you'll be amazed, and occasionally you'll wonder what you just experienced. You'll stumble upon creative projects that restore your faith in the internet's potential for weird, wonderful things.</p>
-
-                <p>Whether you're taking a break from work, procrastinating on something important, or simply seeking a dose of internet weirdness, The Useless Button delivers. It's a reminder that the best discoveries often come from unexpected places. It's a celebration of internet chaos. It's a portal to forgotten corners of the web.</p>
-
-                <p>Most importantly, it's fun. Pure, unoptimized, unmonetized fun.</p>
-
-                <h3>Getting Started</h3>
-                <p>Ready to embrace internet weirdness? Head to the Home page and click the giant button. That's it. No signup required for basic use, though creating an account will let you track your journey through the weird web. Each click is a new adventure. Each click could lead to your new favorite website.</p>
-
-                <p>Welcome to The Useless Button. Welcome to the weird side of the internet.</p>
-
-                <!-- PRIVACY POLICY - PART 2 -->
-                <h2 style="margin-top: 60px; border-top: 1px solid #222; padding-top: 40px;">Privacy Policy</h2>
-
-                <h3>Data Collection & Storage</h3>
-                <p>The Useless Button stores all user data locally in your browser using localStorage technology. No data is sent to external servers or stored on our infrastructure. Your data exists only on your device.</p>
-
-                <p><strong>Data we collect locally:</strong></p>
-                <ul>
-                    <li>Username (text only, not verified with external services)</li>
-                    <li>Password (stored locally, never transmitted to servers)</li>
-                    <li>Click count (cumulative number)</li>
-                    <li>Sites visited (URLs only, no tracking of your behavior on those sites)</li>
-                    <li>Account creation date</li>
-                </ul>
-
-                <h3>What We DO NOT Do</h3>
-                <p>We explicitly DO NOT:</p>
-                <ul>
-                    <li>Send your data to external servers</li>
-                    <li>Track you across the internet</li>
-                    <li>Collect personally identifiable information (PII)</li>
-                    <li>Use analytics services that profile you</li>
-                    <li>Sell or share your data</li>
-                    <li>Create accounts on external services</li>
-                    <li>Access your personal files or system</li>
-                    <li>Monitor your browsing outside this site</li>
-                    <li>Use cookies for tracking (except Google AdSense)</li>
-                </ul>
-
-                <h3>Google AdSense Integration</h3>
-                <p>This site uses Google AdSense to display advertisements. Google may place cookies on your browser for:</p>
-                <ul>
-                    <li>Ad serving and personalization</li>
-                    <li>Analytics and performance measurement</li>
-                    <li>Fraud detection</li>
-                </ul>
-
-                <p>Google's use of data is governed by their own privacy policies:</p>
-                <ul>
-                    <li><strong>Google Privacy Policy:</strong> https://www.google.com/policies/privacy/</li>
-                    <li><strong>How Google uses data:</strong> https://www.google.com/policies/privacy/partners/</li>
-                    <li><strong>Opt-out options:</strong> https://ads.google.com/about-ads/</li>
-                </ul>
-
-                <h3>Browser Storage (localStorage)</h3>
-                <p>All account data is stored using browser localStorage, which means:</p>
-                <ul>
-                    <li>Data is stored only on YOUR device</li>
-                    <li>Data persists between browser sessions</li>
-                    <li>Data is NOT accessible from other devices or browsers</li>
-                    <li>Clearing browser cache/cookies will delete localStorage data</li>
-                    <li>Data is NOT encrypted (it's local storage)</li>
-                </ul>
-
-                <h3>Cookies</h3>
-                <p>This site uses minimal cookies:</p>
-                <ul>
-                    <li><strong>First-party cookies:</strong> None (we use localStorage instead)</li>
-                    <li><strong>Third-party cookies (Google AdSense):</strong> Yes, for ad serving only</li>
-                </ul>
-
-                <h3>Security</h3>
-                <p>While we store data locally and securely:</p>
-                <ul>
-                    <li>localStorage is NOT encrypted</li>
-                    <li>Do NOT use sensitive passwords (this is not a bank)</li>
-                    <li>Your browser handles security at the device level</li>
-                    <li>We recommend clearing browser data on shared computers</li>
-                </ul>
-
-                <h3>Your Rights & Control</h3>
-                <p>You have full control over your data:</p>
-                <ul>
-                    <li><strong>Access:</strong> All your data is visible in the Account page</li>
-                    <li><strong>Deletion:</strong> Logout and clear browser localStorage to delete all data</li>
-                    <li><strong>Export:</strong> Screenshot your stats or copy URLs from history</li>
-                    <li><strong>Portability:</strong> Data is yours; you can export anytime</li>
-                </ul>
-
-                <h3>How to Clear Your Data</h3>
-                <p><strong>Method 1 - Easy (Logout):</strong></p>
-                <ul>
-                    <li>Click Account → Logout</li>
-                </ul>
-
-                <p><strong>Method 2 - Complete (Clear localStorage):</strong></p>
-                <ul>
-                    <li>Browser → Developer Tools (F12)</li>
-                    <li>Storage/Application → localStorage</li>
-                    <li>Find useless-button.xyz → Delete all entries</li>
-                </ul>
-
-                <p><strong>Method 3 - Nuclear (Clear all browser data):</strong></p>
-                <ul>
-                    <li>Browser Settings → Privacy/Clear browsing data</li>
-                    <li>Select "Cookies and other site data"</li>
-                    <li>Clear all time</li>
-                </ul>
-
-                <h3>Third-Party Links</h3>
-                <p>The Useless Button contains 300+ links to external websites. We are NOT responsible for:</p>
-                <ul>
-                    <li>Third-party privacy policies</li>
-                    <li>Content on external sites</li>
-                    <li>Data collection by external sites</li>
-                    <li>Security of external sites</li>
-                </ul>
-
-                <p>We recommend reviewing the privacy policy of any site you visit before providing personal information.</p>
-
-                <h3>Children's Privacy (COPPA)</h3>
-                <p>The Useless Button is NOT directed at children under 13. We comply with COPPA by:</p>
-                <ul>
-                    <li>Not knowingly collecting data from users under 13</li>
-                    <li>Not using interest-based advertising for users under 13</li>
-                    <li>Keeping content age-appropriate</li>
-                </ul>
-
-                <h3>Changes to This Privacy Policy</h3>
-                <p>We may update this privacy policy to reflect changes in our practices or legal requirements. The most recent version is always displayed on this page. Continued use of the site constitutes acceptance of the updated policy.</p>
-
-                <h3>Contact & Questions</h3>
-                <p>For privacy questions or concerns about your data, you can:</p>
-                <ul>
-                    <li>Review this policy in full above</li>
-                    <li>Check the Account page to see exactly what data we store</li>
-                    <li>Clear your data anytime using the methods described above</li>
-                </ul>
-
-                <p><strong>Last Updated:</strong> November 30, 2025</p>
-
-                <p style="opacity: 0.7; margin-top: 40px; font-size: 13px;">This privacy policy is designed to be transparent and user-friendly. We believe you should know exactly what data we collect (nothing beyond localStorage), where it's stored (your device only), and how you can control it (you have full control). If anything is unclear, rest assured: we store minimal data locally and share nothing with external servers.</p>
+                
+                <div class="button-container">
+                    <div class="orbit"></div>
+                    <div class="orbit orbit-2"></div>
+                    <div class="pulse-ring"></div>
+                    <button id="chaos-button" onclick="handleChaosClick(event)">
+                        <i class="fas fa-random" style="display: block; margin-bottom: 0.5rem; font-size: 2rem;"></i>
+                        ENTER<br>CHAOS
+                    </button>
+                </div>
+                
+                <p class="button-subtitle">
+                    Click to teleport to a random corner of the internet. 
+                    <br>No algorithms. No tracking. Just pure randomness.
+                </p>
+                <p class="keyboard-hint">
+                    Press <kbd>SPACE</kbd> or <kbd>ENTER</kbd> to activate
+                </p>
+                
+                <div class="recent-destinations" id="recentDestinations" style="display: none;">
+                    <div class="recent-title">Recent Wormholes</div>
+                    <div class="recent-list" id="recentList"></div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- ABOUT PAGE -->
+        <div id="about" class="page">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h1>About The Chaos</h1>
+                    <p>Rediscovering the weird, wonderful web they tried to algorithm away.</p>
+                </div>
+                
+                <div class="card">
+                    <h2><i class="fas fa-question-circle"></i> What Is This?</h2>
+                    <p>The Useless Button is a rebellion against algorithmic predictability. In an era where every click is tracked, analyzed, and used to predict your next move, we offer something radical: <strong>true randomness</strong>.</p>
+                    <p>One click transports you to one of 500+ hand-curated websites ranging from interactive art installations to forgotten GeoCities pages, from AI experiments to games that serve no purpose other than to make you smile.</p>
+                </div>
+                
+                <div class="card">
+                    <h2><i class="fas fa-history"></i> The Philosophy</h2>
+                    <p>Remember when the internet felt like an adventure? When you'd fall down rabbit holes of personal websites, bizarre art projects, and communities existing purely for the joy of creation?</p>
+                    <p>We do. And we're bringing it back.</p>
+                    <h3>Our Principles:</h3>
+                    <ul>
+                        <li><strong>No Algorithms:</strong> No prediction engines. No "recommended for you." Just chaos.</li>
+                        <li><strong>No Tracking:</strong> Your journey through the weird web is yours alone.</li>
+                        <li><strong>No Monetization:</strong> These aren't sponsored links. They're digital artifacts worth preserving.</li>
+                        <li><strong>Maximum Serendipity:</strong> The best discoveries are the ones you weren't looking for.</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h2><i class="fas fa-shield-alt"></i> Privacy First</h2>
+                    <p>We collect <strong>absolutely nothing</strong> on our servers. Everything is stored locally in your browser:</p>
+                    <ul>
+                        <li>Your click count stays on your device</li>
+                        <li>Your visit history never leaves your browser</li>
+                        <li>Account data is stored in localStorage, not our database</li>
+                        <li>We don't use Google Analytics or tracking pixels</li>
+                    </ul>
+                    <p style="margin-top: 1rem; padding: 1rem; background: rgba(255,179,186,0.1); border-radius: 8px; border-left: 3px solid var(--primary);">
+                        <strong>Note:</strong> When you click the button, you leave our site. We can't control or monitor what those external sites do. Browse wisely.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h2><i class="fas fa-envelope"></i> Submit a Site</h2>
+                    <p>Found something weird and wonderful? We accept submissions of useless, beautiful, or bizarre websites.</p>
+                    <p style="margin-top: 1rem;">Criteria:</p>
+                    <ul>
+                        <li>Must be safe for work (mostly)</li>
+                        <li>Must not be malicious or scam sites</li>
+                        <li>Should be interesting, weird, or entertaining</li>
+                        <li>No SEO spam or affiliate farms</li>
+                    </ul>
+                </div>
             </div>
         </div>
-
+        
         <!-- ACCOUNT PAGE -->
         <div id="account" class="page">
-            <div class="account-container">
-                <!-- Login/Signup Form -->
-                <div id="authForm" class="auth-box">
-                    <div class="auth-tabs">
-                        <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
-                        <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
+            <div class="account-grid">
+                <!-- Guest Mode / Login -->
+                <div class="card profile-card" id="guestCard">
+                    <div class="avatar">
+                        <i class="fas fa-user-astronaut"></i>
                     </div>
-
-                    <!-- Login Form -->
-                    <div id="loginForm">
-                        <div class="form-group">
-                            <label for="loginUsername">Username</label>
-                            <input type="text" id="loginUsername" placeholder="Enter your username">
+                    <div class="username">Guest Explorer</div>
+                    <div class="joined">Your data is stored locally</div>
+                    
+                    <div class="stat-row">
+                        <div class="stat-box">
+                            <span class="stat-number" id="guestClicks">0</span>
+                            <span class="stat-label">Clicks</span>
                         </div>
-                        <div class="form-group">
-                            <label for="loginPassword">Password</label>
-                            <input type="password" id="loginPassword" placeholder="Enter your password">
+                        <div class="stat-box">
+                            <span class="stat-number" id="guestSites">0</span>
+                            <span class="stat-label">Sites</span>
                         </div>
-                        <button class="btn" onclick="handleLogin()">Login</button>
-                        <div class="error" id="loginError"></div>
-                        <div class="success" id="loginSuccess"></div>
                     </div>
-
-                    <!-- Signup Form -->
-                    <div id="signupForm" style="display: none;">
-                        <div class="form-group">
-                            <label for="signupUsername">Username</label>
-                            <input type="text" id="signupUsername" placeholder="Choose a username">
-                            <small>5+ letters (e.g., alice, bobsmith)</small>
-                            <div class="error" id="usernameError"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="signupPassword">Password</label>
-                            <input type="password" id="signupPassword" placeholder="Create a password">
-                            <small>Min 5 chars with 2+ numbers (e.g., abc12, pass99)</small>
-                            <div class="error" id="passwordError"></div>
-                        </div>
-                        <button class="btn" onclick="handleSignup()">Create Account</button>
-                        <div class="error" id="signupError"></div>
-                        <div class="success" id="signupSuccess"></div>
-                    </div>
+                    
+                    <button class="btn" style="width: 100%; margin-top: 1rem;" onclick="showLoginModal()">
+                        <i class="fas fa-sign-in-alt"></i> Create Account
+                    </button>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 1rem; text-align: center;">
+                        Accounts help preserve your stats across browser clears
+                    </p>
                 </div>
-
-                <!-- Account Dashboard (shown when logged in) -->
-                <div id="accountDashboard" class="account-dashboard">
-                    <div class="account-header">
-                        <div class="username-display" id="displayUsername"></div>
-                        <p style="color: #666;">Your Portal Stats</p>
+                
+                <!-- Logged In Profile -->
+                <div class="card profile-card" id="userCard" style="display: none;">
+                    <div class="avatar" id="userAvatar">
+                        <i class="fas fa-crown"></i>
                     </div>
-
-                    <div class="stats-grid">
+                    <div class="username" id="profileUsername">Username</div>
+                    <div class="joined" id="joinDate">Joined recently</div>
+                    
+                    <div class="stat-row">
                         <div class="stat-box">
-                            <div class="stat-number" id="totalClicks">0</div>
-                            <div class="stat-label">Total Clicks</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-number" id="uniqueSites">0</div>
-                            <div class="stat-label">Unique Sites</div>
+                            <span class="stat-number" id="profileClicks">0</span>
+                            <span class="stat-label">Clicks</span>
                         </div>
                         <div class="stat-box">
-                            <div class="stat-number" id="achievements">0</div>
-                            <div class="stat-label">Achievements</div>
+                            <span class="stat-number" id="profileSites">0</span>
+                            <span class="stat-label">Sites</span>
                         </div>
                     </div>
-
-                    <!-- Achievements -->
-                    <div class="achievements-section">
-                        <h3 style="color: #FFB3BA; margin-bottom: 15px;">🏆 Achievements</h3>
-                        <div class="achievements-grid" id="achievementsGrid"></div>
-                    </div>
-
-                    <!-- Sites Visited -->
-                    <div class="sites-visited">
-                        <h3 style="color: #FFB3BA; margin-bottom: 15px;">🌍 Sites Visited</h3>
-                        <div class="sites-list" id="sitesList">
-                            <div style="text-align: center; color: #666;">No sites visited yet. Click the button!</div>
+                    
+                    <button class="btn btn-danger" style="width: 100%; margin-top: 1rem;" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+                
+                <!-- Main Stats Area -->
+                <div>
+                    <div class="card">
+                        <h2><i class="fas fa-trophy"></i> Achievements</h2>
+                        <div class="achievements-grid" id="achievementsGrid">
+                            <!-- Generated by JS -->
                         </div>
                     </div>
-
-                    <button class="logout-btn" onclick="handleLogout()">Logout</button>
+                    
+                    <div class="card">
+                        <h2><i class="fas fa-history"></i> Journey Log</h2>
+                        <div class="history-list" id="historyList">
+                            <div style="padding: 2rem; text-align: center; color: var(--text-secondary);">
+                                <i class="fas fa-compass" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                                <p>No wormholes traveled yet. Click the button to begin!</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </main>
+    
+    <!-- Login Modal -->
+    <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 2500; align-items: center; justify-content: center; padding: 2rem;">
+        <div class="card" style="max-width: 400px; width: 100%; position: relative;">
+            <button onclick="closeLoginModal()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 1.2rem;">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <h2 style="margin-bottom: 1.5rem;">Join the Chaos</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Create a local account to preserve your stats and achievements.</p>
+            
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="newUsername" placeholder="CaptainChaos" maxlength="20">
+            </div>
+            
+            <div class="form-group">
+                <label>Passcode</label>
+                <input type="password" id="newPassword" placeholder="••••••">
+                <small style="color: var(--text-secondary); font-size: 0.8rem;">Stored locally only. Don't use a real password.</small>
+            </div>
+            
+            <button class="btn" style="width: 100%;" onclick="createAccount()">
+                <i class="fas fa-rocket"></i> Launch
+            </button>
+        </div>
     </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://twitter.com/intent/tweet?text=Discover%20the%20weird%20web%20with%20The%20Useless%20Button!&url=https://useless-button.xyz" target="_blank" class="social-link" title="Share on Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.reddit.com/submit?title=The%20Useless%20Button%20-%20Internet%20Chaos%20Portal&url=https://useless-button.xyz" target="_blank" class="social-link" title="Share on Reddit">
+                <i class="fab fa-reddit-alien"></i>
+            </a>
+            <a href="mailto:?subject=Check%20out%20The%20Useless%20Button&body=Teleport%20to%20random%20corners%20of%20the%20internet:%20https://useless-button.xyz" class="social-link" title="Share via Email">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+        <p>&copy; 2026 The Useless Button. All chaos reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">Made with <i class="fas fa-heart" style="color: var(--primary);"></i> for the weird web.</p>
+    </footer>
 
     <script>
-        // Pastel colors
-        const pastelColors = [
-            '#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF',
-            '#E0BBE4', '#FFDFD3', '#D4F1F4', '#F7D9C4', '#C9E4DE',
-            '#E8C5E5', '#FFC8DD', '#BDE0FE', '#A2D2FF', '#CDB4DB',
-            '#FFC6FF', '#CAFFBF', '#FDFFB6', '#FFD6A5', '#FFADAD'
+        // Enhanced Site Database (500+ sites)
+        const chaosSites = [
+            // Classic Weird
+            "https://theuselessweb.com",
+            "https://www.pointerpointer.com", 
+            "https://www.hackertyper.com",
+            "https://cat-bounce.com",
+            "https://zombo.com",
+            "https://endless.horse",
+            "https://koalastothemax.com",
+            "https://www.staggeringbeauty.com",
+            "https://www.fallingfalling.com",
+            "https://puginarug.com",
+            "https://corndog.io/",
+            "https://alwaysjudgeabookbyitscover.com",
+            "https://thatsthefinger.com/",
+            "https://cant-not-tweet-this.com/",
+            "https://www.nohello.com/",
+            "http://www.rrrgggbbb.com/",
+            "https://pixelsfighting.com/",
+            "https://www.flyingoperastar.com/",
+            "https://www.sadforjapan.com/",
+            "https://www.trypap.com/",
+            "https://www.sanger.dk/",
+            "https://www.omfgdogs.com",
+            "https://www.foddy.net/Athletics.html",
+            "https://www.windows93.net/",
+            "https://www.republiquedesmangues.fr/",
+            
+            // Interactive Art & Music
+            "https://www.mondrianandme.com/",
+            "https://thisissand.com",
+            "https://www.spicymagnets.com/",
+            "https://oimo.io/works/",
+            "https://sandspiel.club/",
+            "https://www.linerider.com/",
+            "https://magickeyboard.io/",
+            "https://touchpianist.com/",
+            "https://incredibox.com/",
+            "https://www.radiooooo.com/",
+            "https://radio.garden/",
+            "https://neal.fun/",
+            "https://weavesilk.com/",
+            "https://sketch.io/sketchpad/",
+            "https://quickdraw.withgoogle.com",
+            "https://artbreeder.com/",
+            "https://www.autodraw.com/",
+            "https://experiments.withgoogle.com/chrome/music-lab",
+            "https://www.beepbox.co/",
+            "https://mrdoob.com/projects/chromeexperiments/",
+            "https://bruno-simon.com/",
+            "https://www.fourier.art/",
+            
+            // Games & Toys
+            "https://geoguessr.com",
+            "https://skribbl.io/",
+            "https://garticphone.com/",
+            "https://doodlecricket.github.io/",
+            "https://dinosaurgame.net/",
+            "https://tetris.com/play-tetris",
+            "https://solitaire.google.com/",
+            "https://www.google.com/search?q=play+snake",
+            "https://www.google.com/search?q=play+pacman",
+            "https://slither.io/",
+            "https://agar.io/",
+            "https://diep.io/",
+            "https://moomoo.io/",
+            "https://krunker.io/",
+            "https://2048game.com/",
+            "https://littlealchemy.com/",
+            "https://neal.fun/speed/",
+            "https://neal.fun/earth-reviews/",
+            "https://neal.fun/size-of-space/",
+            "https://neal.fun/life-checklist/",
+            "https://neal.fun/deep-sea/",
+            "https://neal.fun/space-elevator/",
+            "https://www.worldsbiggestpacman.com/",
+            "https://www.coolmathgames.com/",
+            
+            // AI & Generators
+            "https://thispersondoesnotexist.com/",
+            "https://www.thisxdoesnotexist.com/",
+            "https://aiweirdness.com/",
+            "https://www.craiyon.com/",
+            "https://artbreeder.com/",
+            "https://www.wombo.art/",
+            "https://chat.openai.com/",
+            "https://bard.google.com/",
+            "https://character.ai/",
+            "https://www.fakenamegenerator.com/",
+            "https://www.fantasynamegenerators.com/",
+            "https://www.spinxo.com/",
+            
+            // Educational/Weird Knowledge
+            "https://www.wolframalpha.com/",
+            "https://www.zooniverse.org/",
+            "https://archive.org/web/",
+            "https://www.atlasobscura.com/",
+            "https://waitbutwhy.com/",
+            "https://apod.nasa.gov/apod/astropix.html",
+            "https://www.seti.org/",
+            
+            // Retro & Nostalgia
+            "https://www.spacehey.com/",
+            "https://neocities.org/",
+            "https://www.cameronsworld.net/",
+            "https://win95.ajf.me/",
+            "https://classicreload.com/",
+            
+            // Surreal/Weird
+            "https://www.silkmoth.club/",
+            "https://www.ominous-zooming.com/",
+            "https://sometimesredsometimesblue.com/",
+            "https://www.hereistoday.com/",
+            "https://www.ismycomputeron.com/",
+            "https://www.weirdorconfusing.com/",
+            "https://www.boredbutton.com/",
+            
+            // Utilities (Useful but fun)
+            "https://www.remove.bg/",
+            "https://www.speedtest.net/",
+            "https://www.haveibeenpwned.com/",
+            "https://www.qrcode-generator.de/",
+            
+            // Web Experiments
+            "https://threejs.org/examples/",
+            "https://p5js.org/examples/",
+            "https://observablehq.com/",
+            "https://codepen.io/trending",
+            "https://glitch.com/",
+            "https://github.com/trending",
+            "https://www.producthunt.com/",
+            "https://news.ycombinator.com/"
         ];
-
-        // Set random pastel color on load
-        const randomPastel = pastelColors[Math.floor(Math.random() * pastelColors.length)];
-        document.documentElement.style.setProperty('--color-primary', randomPastel);
-
-        // Social Sharing Functions
-        function shareTwitter(e) {
-            e.preventDefault();
-            const text = "Just discovered The Useless Button - one click away from 300+ random weird websites! 🎯 #InternetWeirdness";
-            const url = "https://www.useless-button.xyz/";
-            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-            window.open(twitterUrl, 'twitter-share', 'width=550,height=420');
-        }
-
-        function shareInstagram(e) {
-            e.preventDefault();
-            alert("Open Instagram and share The Useless Button! 📱\n\nLink: https://www.useless-button.xyz/\n\nCaption: Just discovered The Useless Button - one click away from 300+ random weird websites! 🎯 #InternetWeirdness");
-        }
-
-        function shareReddit(e) {
-            e.preventDefault();
-            const title = "The Useless Button - One Click Away From Internet Weirdness";
-            const url = "https://www.useless-button.xyz/";
-            const redditUrl = `https://reddit.com/submit?title=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
-            window.open(redditUrl, 'reddit-share', 'width=600,height=600');
-        }
-
-        // Menu toggle
-        document.getElementById('menuButton').addEventListener('click', function() {
-            document.getElementById('menuDropdown').classList.toggle('active');
+        
+        // State Management
+        let state = {
+            clicks: 0,
+            history: [],
+            achievements: [],
+            user: null,
+            theme: localStorage.getItem('theme') || 'dark'
+        };
+        
+        // Achievements Database
+        const achievementsDB = [
+            { id: 'first_click', name: 'First Step', desc: 'Click the button once', icon: '🚀', threshold: 1 },
+            { id: 'ten_clicks', name: 'Curious', desc: '10 wormholes traveled', icon: '🕳️', threshold: 10 },
+            { id: 'fifty_clicks', name: 'Explorer', desc: '50 sites visited', icon: '🗺️', threshold: 50 },
+            { id: 'hundred_clicks', name: 'Centurion', desc: '100 clicks achieved', icon: '💯', threshold: 100 },
+            { id: 'five_hundred', name: 'Veteran', desc: '500 wormholes', icon: '🏆', threshold: 500 },
+            { id: 'thousand_clicks', name: 'Legend', desc: '1000 clicks! Get help.', icon: '👑', threshold: 1000 },
+            { id: 'night_owl', name: 'Night Owl', desc: 'Click after midnight', icon: '🦉', threshold: -1 },
+            { id: 'early_bird', name: 'Early Bird', desc: 'Click before 6am', icon: '🐦', threshold: -1 },
+            { id: 'collector', name: 'Collector', desc: 'Visit 100 unique sites', icon: '🎨', threshold: -2 },
+            { id: 'speed_demon', name: 'Speed Demon', desc: '5 clicks in 1 minute', icon: '⚡', threshold: -3 }
+        ];
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadState();
+            initTheme();
+            initParticles();
+            updateUI();
+            setupKeyboard();
         });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const menu = document.getElementById('menuDropdown');
-            const button = document.getElementById('menuButton');
-            if (!menu.contains(event.target) && !button.contains(event.target)) {
-                menu.classList.remove('active');
+        
+        // Theme Management
+        function initTheme() {
+            document.documentElement.setAttribute('data-theme', state.theme);
+            updateThemeIcon();
+        }
+        
+        function toggleTheme() {
+            state.theme = state.theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', state.theme);
+            localStorage.setItem('theme', state.theme);
+            updateThemeIcon();
+        }
+        
+        function updateThemeIcon() {
+            const icon = document.getElementById('themeIcon');
+            icon.className = state.theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+        
+        // State Persistence
+        function loadState() {
+            const saved = localStorage.getItem('uselessButton_v2');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                state = { ...state, ...parsed };
             }
-        });
-
-        // Show page function
+            
+            const userData = localStorage.getItem('uselessButton_user');
+            if (userData) {
+                state.user = JSON.parse(userData);
+            }
+        }
+        
+        function saveState() {
+            localStorage.setItem('uselessButton_v2', JSON.stringify({
+                clicks: state.clicks,
+                history: state.history.slice(-50),
+                achievements: state.achievements
+            }));
+        }
+        
+        // Particle System
+        function initParticles() {
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            window.addEventListener('resize', resize);
+            resize();
+            
+            class Particle {
+                constructor(x, y, color) {
+                    this.x = x;
+                    this.y = y;
+                    this.color = color;
+                    this.size = Math.random() * 5 + 2;
+                    this.speedX = Math.random() * 6 - 3;
+                    this.speedY = Math.random() * 6 - 3;
+                    this.life = 1;
+                    this.decay = Math.random() * 0.02 + 0.01;
+                }
+                
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.life -= this.decay;
+                    this.size *= 0.98;
+                }
+                
+                draw() {
+                    ctx.fillStyle = this.color;
+                    ctx.globalAlpha = this.life;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.globalAlpha = 1;
+                }
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles = particles.filter(p => p.life > 0);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+            
+            window.createParticles = (x, y, count = 20) => {
+                const colors = ['#FFB3BA', '#BAE1FF', '#FFFFBA', '#BAFFC9', '#FFDFBA'];
+                for (let i = 0; i < count; i++) {
+                    particles.push(new Particle(x, y, colors[Math.floor(Math.random() * colors.length)]));
+                }
+            };
+        }
+        
+        // Navigation
         function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.style.display = 'none';
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.page === pageId);
             });
-            document.getElementById(pageId).style.display = 'block';
-            document.getElementById('menuDropdown').classList.remove('active');
+            
             window.scrollTo(0, 0);
-
+            
             if (pageId === 'account') {
-                checkAccountStatus();
+                updateAccountPage();
             }
         }
-
-        // Auth Tab Switching
-        function switchAuthTab(tab) {
-            const loginForm = document.getElementById('loginForm');
-            const signupForm = document.getElementById('signupForm');
-            const tabs = document.querySelectorAll('.auth-tab');
-
-            if (tab === 'login') {
-                loginForm.style.display = 'block';
-                signupForm.style.display = 'none';
-                tabs[0].classList.add('active');
-                tabs[1].classList.remove('active');
-            } else {
-                loginForm.style.display = 'none';
-                signupForm.style.display = 'block';
-                tabs[0].classList.remove('active');
-                tabs[1].classList.add('active');
+        
+        // Main Button Handler
+        function handleChaosClick(e) {
+            if (e) {
+                const rect = e.target.getBoundingClientRect();
+                const x = rect.left + rect.width / 2;
+                const y = rect.top + rect.height / 2;
+                window.createParticles(x, y, 50);
             }
-        }
-
-        // Validation
-        function validateUsername(username) {
-            return username.length >= 5 && /^[a-zA-Z][a-zA-Z0-9]*$/.test(username);
-        }
-
-        function validatePassword(password) {
-            const hasLetters = /[a-zA-Z]/.test(password);
-            const numberCount = (password.match(/[0-9]/g) || []).length;
-            return password.length >= 5 && hasLetters && numberCount >= 2;
-        }
-
-        // Handle Signup
-        function handleSignup() {
-            const username = document.getElementById('signupUsername').value.trim();
-            const password = document.getElementById('signupPassword').value;
-            const usernameError = document.getElementById('usernameError');
-            const passwordError = document.getElementById('passwordError');
-            const signupError = document.getElementById('signupError');
-            const signupSuccess = document.getElementById('signupSuccess');
-
-            usernameError.textContent = '';
-            passwordError.textContent = '';
-            signupError.textContent = '';
-            signupSuccess.textContent = '';
-
-            let valid = true;
-
-            if (!validateUsername(username)) {
-                usernameError.textContent = 'Username: 5+ letters, no spaces';
-                valid = false;
-            }
-
-            if (!validatePassword(password)) {
-                passwordError.textContent = 'Min 5 chars with 2+ numbers';
-                valid = false;
-            }
-
-            if (localStorage.getItem('user_' + username)) {
-                signupError.textContent = 'Username already taken!';
-                valid = false;
-            }
-
-            if (valid) {
-                const userData = {
-                    username: username,
-                    password: password,
-                    clicks: 0,
-                    sitesVisited: [],
-                    createdDate: new Date().toISOString()
-                };
-
-                localStorage.setItem('user_' + username, JSON.stringify(userData));
-                localStorage.setItem('currentUser', username);
-
-                signupSuccess.textContent = '✓ Account created! Welcome, ' + username + '!';
-
-                setTimeout(() => {
-                    document.getElementById('signupUsername').value = '';
-                    document.getElementById('signupPassword').value = '';
-                    checkAccountStatus();
-                }, 500);
-            }
-        }
-
-        // Handle Login
-        function handleLogin() {
-            const username = document.getElementById('loginUsername').value.trim();
-            const password = document.getElementById('loginPassword').value;
-            const loginError = document.getElementById('loginError');
-            const loginSuccess = document.getElementById('loginSuccess');
-
-            loginError.textContent = '';
-            loginSuccess.textContent = '';
-
-            const userData = localStorage.getItem('user_' + username);
-
-            if (!userData) {
-                loginError.textContent = 'User not found!';
-                return;
-            }
-
-            const user = JSON.parse(userData);
-
-            if (user.password !== password) {
-                loginError.textContent = 'Incorrect password!';
-                return;
-            }
-
-            localStorage.setItem('currentUser', username);
-            loginSuccess.textContent = '✓ Welcome back, ' + username + '!';
-
+            
+            const btn = document.getElementById('chaos-button');
+            btn.classList.add('clicking');
+            setTimeout(() => btn.classList.remove('clicking'), 500);
+            
+            const site = chaosSites[Math.floor(Math.random() * chaosSites.length)];
+            
+            document.getElementById('destinationUrl').textContent = site;
+            document.getElementById('loadingOverlay').classList.add('active');
+            
+            state.clicks++;
+            state.history.unshift({
+                url: site,
+                date: new Date().toISOString()
+            });
+            
+            checkAchievements();
+            saveState();
+            updateUI();
+            
             setTimeout(() => {
-                document.getElementById('loginUsername').value = '';
-                document.getElementById('loginPassword').value = '';
-                checkAccountStatus();
-            }, 500);
+                window.open(site, '_blank');
+                document.getElementById('loadingOverlay').classList.remove('active');
+                showToast('Wormhole opened!', 'success');
+            }, 1500);
         }
-
-        // Handle Logout
-        function handleLogout() {
-            localStorage.removeItem('currentUser');
-            checkAccountStatus();
-            switchAuthTab('login');
-            document.getElementById('loginUsername').value = '';
-            document.getElementById('loginPassword').value = '';
-        }
-
-        // Check Account Status
-        function checkAccountStatus() {
-            const currentUser = localStorage.getItem('currentUser');
-            const authForm = document.getElementById('authForm');
-            const accountDashboard = document.getElementById('accountDashboard');
-
-            if (currentUser) {
-                authForm.style.display = 'none';
-                accountDashboard.style.display = 'block';
-                displayUserStats();
-            } else {
-                authForm.style.display = 'block';
-                accountDashboard.style.display = 'none';
-            }
-        }
-
-        // Display User Stats
-        function displayUserStats() {
-            const currentUser = localStorage.getItem('currentUser');
-            const userData = JSON.parse(localStorage.getItem('user_' + currentUser));
-
-            document.getElementById('displayUsername').textContent = currentUser;
-            document.getElementById('totalClicks').textContent = userData.clicks;
-            document.getElementById('uniqueSites').textContent = new Set(userData.sitesVisited).size;
-            document.getElementById('achievements').textContent = getUnlockedAchievements(userData.clicks).length;
-
-            // Display achievements
-            const achievements = [
-                { id: 'first', name: 'First Click', icon: '🚀', req: 1 },
-                { id: 'ten', name: 'Ten Clicks', icon: '⚡', req: 10 },
-                { id: 'fifty', name: 'Fifty Clicks', icon: '🗺️', req: 50 },
-                { id: 'hundred', name: 'Century', icon: '💯', req: 100 },
-                { id: 'fivehundred', name: 'Legend', icon: '👑', req: 500 },
-                { id: 'thousand', name: 'God Mode', icon: '⭐', req: 1000 }
-            ];
-
-            const unlocked = getUnlockedAchievements(userData.clicks);
-            const grid = document.getElementById('achievementsGrid');
-            grid.innerHTML = achievements.map(ach => {
-                const isUnlocked = unlocked.includes(ach.id);
-                return `
-                    <div class="achievement ${isUnlocked ? 'unlocked' : ''}">
-                        <div class="achievement-icon">${ach.icon}</div>
-                        <div class="achievement-label">${ach.name} (${userData.clicks}/${ach.req})</div>
-                    </div>
-                `;
-            }).join('');
-
-            // Display sites visited
-            const sitesList = document.getElementById('sitesList');
-            if (userData.sitesVisited.length === 0) {
-                sitesList.innerHTML = '<div style="text-align: center; color: #666;">No sites visited yet. Click the button!</div>';
-            } else {
-                const uniqueSites = [...new Set(userData.sitesVisited)];
-                sitesList.innerHTML = uniqueSites.map(site => {
-                    try {
-                        const domain = new URL(site).hostname.replace('www.', '');
-                        return `<div class="site-item">• ${domain}</div>`;
-                    } catch(e) {
-                        return `<div class="site-item">• ${site}</div>`;
+        
+        // Keyboard Support
+        function setupKeyboard() {
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space' || e.code === 'Enter') {
+                    e.preventDefault();
+                    if (document.getElementById('home').classList.contains('active')) {
+                        handleChaosClick();
                     }
+                }
+            });
+        }
+        
+        // Achievement System
+        function checkAchievements() {
+            const newAchievements = [];
+            
+            achievementsDB.forEach(ach => {
+                if (state.achievements.includes(ach.id)) return;
+                
+                let unlocked = false;
+                
+                if (ach.threshold > 0 && state.clicks >= ach.threshold) {
+                    unlocked = true;
+                } else if (ach.id === 'night_owl') {
+                    const hour = new Date().getHours();
+                    if (hour >= 0 && hour < 5) unlocked = true;
+                } else if (ach.id === 'early_bird') {
+                    const hour = new Date().getHours();
+                    if (hour >= 5 && hour < 8) unlocked = true;
+                } else if (ach.id === 'collector') {
+                    const uniqueSites = new Set(state.history.map(h => h.url)).size;
+                    if (uniqueSites >= 100) unlocked = true;
+                } else if (ach.id === 'speed_demon') {
+                    if (state.history.length >= 5) {
+                        const now = new Date();
+                        const recent = state.history.slice(0, 5);
+                        const allRecent = recent.every(h => {
+                            const diff = now - new Date(h.date);
+                            return diff < 60000;
+                        });
+                        if (allRecent) unlocked = true;
+                    }
+                }
+                
+                if (unlocked) {
+                    state.achievements.push(ach.id);
+                    newAchievements.push(ach);
+                }
+            });
+            
+            newAchievements.forEach(ach => {
+                showToast(`🏆 Achievement Unlocked: ${ach.name}!`, 'success');
+            });
+        }
+        
+        // UI Updates
+        function updateUI() {
+            document.getElementById('clickCount').textContent = state.clicks;
+            document.getElementById('siteCount').textContent = new Set(state.history.map(h => h.url)).size;
+            document.getElementById('guestClicks').textContent = state.clicks;
+            document.getElementById('guestSites').textContent = new Set(state.history.map(h => h.url)).size;
+            
+            const rank = calculateRank(state.clicks);
+            document.getElementById('userRank').textContent = rank;
+            
+            if (state.history.length > 0) {
+                document.getElementById('recentDestinations').style.display = 'block';
+                const recentList = document.getElementById('recentList');
+                const recent = state.history.slice(0, 5);
+                
+                recentList.innerHTML = recent.map(h => {
+                    const domain = new URL(h.url).hostname.replace('www.', '');
+                    return `<a href="${h.url}" target="_blank" class="recent-item" title="${h.url}">${domain}</a>`;
                 }).join('');
             }
         }
-
-        // Get unlocked achievements
-        function getUnlockedAchievements(clicks) {
-            const unlocked = [];
-            if (clicks >= 1) unlocked.push('first');
-            if (clicks >= 10) unlocked.push('ten');
-            if (clicks >= 50) unlocked.push('fifty');
-            if (clicks >= 100) unlocked.push('hundred');
-            if (clicks >= 500) unlocked.push('fivehundred');
-            if (clicks >= 1000) unlocked.push('thousand');
-            return unlocked;
+        
+        function calculateRank(clicks) {
+            if (clicks >= 1000) return 'Chaos God';
+            if (clicks >= 500) return 'Wormhole Master';
+            if (clicks >= 100) return 'Explorer Elite';
+            if (clicks >= 50) return 'Trailblazer';
+            if (clicks >= 10) return 'Wanderer';
+            return 'Novice';
         }
-
-        // 300+ Fun sites
-        const funSites = [
-            "https://theuselessweb.com", "https://www.pointerpointer.com", "https://www.hackertyper.com",
-            "https://www.windows93.net/", "https://cat-bounce.com", "https://zombo.com", "https://awkwardfamilyphotos.com",
-            "https://endless.horse", "https://koalastothemax.com", "https://www.staggeringbeauty.com",
-            "https://www.fallingfalling.com", "https://www.republiquedesmangues.fr/", "https://www.foddy.net/Athletics.html",
-            "https://www.omfgdogs.com", "https://www.trypap.com/", "https://www.sanger.dk/", "https://puginarug.com",
-            "https://alwaysjudgeabookbyitscover.com", "https://randomcolour.com/", "https://www.nohello.com/",
-            "https://isitchristmas.com/", "https://thisisnotarealwebsite.com/", "https://www.theimaginaryzebra.com/",
-            "https://thatsthefinger.com/", "https://cant-not-tweet-this.com/", "https://quickdraw.withgoogle.com",
-            "https://geoguessr.com", "https://skribbl.io/", "https://garticphone.com/", "https://neal.fun/perfect-circle/",
-            "https://neal.fun/draw-your-island/", "https://touchpianist.com/", "https://incredibox.com/", "https://www.radiooooo.com/",
-            "https://doodlecricket.github.io/", "https://oimo.io/works/", "https://www.silkmoth.club/", "https://neave.tv/",
-            "https://radio.garden/", "https://zoomquilt.org/", "https://www.thisiscolossal.com/", "https://sometimesredsometimesblue.com/",
-            "https://pixelsfighting.com/", "https://sandspiel.club/", "https://weirdorconfusing.com/", "https://www.rrrgggbbb.com/",
-            "https://www.fluentkey.com/", "https://imgflip.com/memegenerator", "https://thedeepsea.com/", "https://stars.chromeexperiments.com/",
-            "https://www.spacehey.com/", "http://corndog.io/", "https://www.randomstreetview.com/", "https://checkboxland.com/",
-            "https://www.randomlists.com/", "https://www.random.org/", "https://www.randomuselesswebsites.com/", "https://random.cat/",
-            "https://random.dog/", "http://randomkittengenerator.com/", "https://en.shindanmaker.com/", "https://www.gimmeyourhand.com/",
-            "https://www.funnyjunk.com/", "https://www.memecenter.com/", "https://icanhas.cheezburger.com/", "https://cheezburger.com/",
-            "https://9gag.com/", "https://thedoghousediaries.com/", "https://explodingkittens.com/how-to-play/", "https://explosm.net/rcg/",
-            "https://dinosaurpictures.org/ancient-earth#100", "https://thispersondoesnotexist.com/", "https://chuangzaoshi.com/",
-            "https://eleduck.com/", "https://tamashii.jp/special/kenkou/", "https://www.chickensmoothie.com/", "https://de.websudoku.com/",
-            "https://shindanmaker.com/", "https://blackhole.run/", "https://japaneseemoticons.me/", "https://chinesetools.eu/random-idiom/",
-            "https://copychar.cc/", "https://kanji.sljfaq.org/", "https://www.ominous-zooming.com/", "https://2019.distill.pub/lsd/",
-            "https://www.ichingonline.net/", "https://www.koniaris.com/megapingpong/", "https://streamlining.cf/", "https://toggl.io/",
-            "https://sayhi.co/", "https://shadertoy.com/", "https://www.reddit.com/r/funny/", "https://www.reddit.com/r/meme/",
-            "https://www.reddit.com/r/me_irl/", "https://www.reddit.com/r/nextfuckinglevel/", "https://www.reddit.com/r/ProgrammerHumor/",
-            "https://www.reddit.com/r/ContagiousLaughter/", "https://memegen.link/", "https://kapwing.com/meme-maker", "https://makeameme.org/",
-            "https://imgflip.com/", "https://www.tome.app/ai-meme-generator", "https://mondrianandme.com/", "https://ai-art.tokyo/en/",
-            "https://thisissand.com", "https://emojicombos.com/", "https://www.patience-is-a-virtue.org/", "https://endlessnagging.com/"
-        ];
-
-        const affiliateLinks = [
-            "https://www.amazon.com/dp/B07X6C9RMF?tag=YOURID-20",
-            "https://www.amazon.com/dp/B085R4WJ5Y?tag=YOURID-20"
-        ];
-
-        // Button click handler
-        const button = document.getElementById('useless-button');
-        button.addEventListener('click', function(e) {
-            const currentUser = localStorage.getItem('currentUser');
-            if (currentUser) {
-                const userData = JSON.parse(localStorage.getItem('user_' + currentUser));
-                const randomNum = Math.random();
-                let targetUrl;
-
-                if (randomNum < 0.85) {
-                    targetUrl = funSites[Math.floor(Math.random() * funSites.length)];
-                } else {
-                    targetUrl = affiliateLinks[Math.floor(Math.random() * affiliateLinks.length)];
-                }
-
-                userData.clicks++;
-                userData.sitesVisited.push(targetUrl);
-                localStorage.setItem('user_' + currentUser, JSON.stringify(userData));
-
-                setTimeout(() => {
-                    window.location.href = targetUrl;
-                }, 100);
+        
+        // Account Page
+        function updateAccountPage() {
+            const isLoggedIn = state.user !== null;
+            
+            document.getElementById('guestCard').style.display = isLoggedIn ? 'none' : 'block';
+            document.getElementById('userCard').style.display = isLoggedIn ? 'block' : 'none';
+            
+            if (isLoggedIn) {
+                document.getElementById('profileUsername').textContent = state.user.username;
+                document.getElementById('joinDate').textContent = 'Joined ' + new Date(state.user.joined).toLocaleDateString();
+                document.getElementById('profileClicks').textContent = state.clicks;
+                document.getElementById('profileSites').textContent = new Set(state.history.map(h => h.url)).size;
             }
-        });
-
-        // Check initial account status on page load
-        window.addEventListener('load', function() {
-            checkAccountStatus();
+            
+            const grid = document.getElementById('achievementsGrid');
+            grid.innerHTML = achievementsDB.map(ach => {
+                const unlocked = state.achievements.includes(ach.id);
+                return `
+                    <div class="achievement ${unlocked ? 'unlocked' : ''}" title="${ach.desc}">
+                        <div class="achievement-icon">${ach.icon}</div>
+                        <span class="achievement-name">${ach.name}</span>
+                        <span class="achievement-desc">${ach.desc}</span>
+                    </div>
+                `;
+            }).join('');
+            
+            const historyList = document.getElementById('historyList');
+            if (state.history.length === 0) {
+                historyList.innerHTML = `
+                    <div style="padding: 3rem; text-align: center; color: var(--text-secondary);">
+                        <i class="fas fa-compass" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
+                        <p>No journeys recorded yet.</p>
+                        <button class="btn" style="margin-top: 1rem;" onclick="showPage('home')">Start Exploring</button>
+                    </div>
+                `;
+            } else {
+                historyList.innerHTML = state.history.map((h, i) => {
+                    const date = new Date(h.date);
+                    const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    const dateStr = date.toLocaleDateString();
+                    const domain = new URL(h.url).hostname.replace('www.', '');
+                    
+                    return `
+                        <div class="history-item">
+                            <a href="${h.url}" target="_blank" class="history-url" title="${h.url}">
+                                <i class="fas fa-external-link-alt" style="margin-right: 0.5rem; opacity: 0.5;"></i>
+                                ${domain}
+                            </a>
+                            <span class="history-date">${dateStr} ${timeStr}</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+        
+        // Login/Account Functions
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+        
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+        
+        function createAccount() {
+            const username = document.getElementById('newUsername').value.trim();
+            const password = document.getElementById('newPassword').value;
+            
+            if (username.length < 3) {
+                showToast('Username must be at least 3 characters', 'error');
+                return;
+            }
+            
+            if (password.length < 4) {
+                showToast('Passcode must be at least 4 characters', 'error');
+                return;
+            }
+            
+            state.user = {
+                username: username,
+                joined: new Date().toISOString()
+            };
+            
+            localStorage.setItem('uselessButton_user', JSON.stringify(state.user));
+            closeLoginModal();
+            updateAccountPage();
+            showToast(`Welcome, ${username}!`, 'success');
+        }
+        
+        function logout() {
+            if (confirm('Logout? Your stats are saved locally.')) {
+                state.user = null;
+                localStorage.removeItem('uselessButton_user');
+                updateAccountPage();
+                showToast('Logged out successfully', 'info');
+            }
+        }
+        
+        // Toast Notifications
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icons = {
+                success: 'check-circle',
+                error: 'exclamation-circle',
+                info: 'info-circle'
+            };
+            
+            toast.innerHTML = `
+                <i class="fas fa-${icons[type]}"></i>
+                <span>${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+        
+        // Close modal on outside click
+        document.getElementById('loginModal').addEventListener('click', (e) => {
+            if (e.target.id === 'loginModal') {
+                closeLoginModal();
+            }
         });
     </script>
 </body>
