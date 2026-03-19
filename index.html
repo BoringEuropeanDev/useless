@@ -1,1697 +1,500 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Useless Button 2.0 | Portal to Internet Chaos</title>
+    <title>THE USELESS BUTTON | ENTERPRISE EDITION</title>
+    <meta name="description" content="A $1,000,000 production to teleport you to 5000+ useless websites. WebGL 3.0 Enabled.">
     
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Click the useless button to teleport to random corners of the internet. 500+ weird websites, meme sites, and digital oddities. Pure chaos with style.">
-    <meta name="keywords" content="useless button, random website generator, internet wormhole, meme sites, weird web, digital exploration, procrastination">
-    <meta name="author" content="useless-button.xyz">
-    <meta name="robots" content="index,follow">
-    
-    <!-- Open Graph / Social -->
-    <meta property="og:title" content="The Useless Button 2.0 | Internet Chaos Portal">
-    <meta property="og:description" content="One click = instant teleportation to 500+ random, weird, and wonderful websites. No algorithms, just pure internet randomness.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.useless-button.xyz/">
-    <meta property="og:image" content="https://www.useless-button.xyz/og-image-v2.png">
-    
-    <!-- Fonts -->
+    <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         :root {
-            --primary: #FFB3BA;
-            --secondary: #BAE1FF;
-            --accent: #FFFFBA;
-            --success: #BAFFC9;
-            --warning: #FFDFBA;
-            --bg: #0a0a0a;
-            --surface: #111111;
-            --surface-hover: #1a1a1a;
-            --text: #ffffff;
-            --text-secondary: #888888;
-            --border: #222222;
-            --shadow: rgba(0, 0, 0, 0.5);
-            --glow: rgba(255, 179, 186, 0.5);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        [data-theme="light"] {
-            --bg: #f5f5f5;
-            --surface: #ffffff;
-            --surface-hover: #f0f0f0;
-            --text: #1a1a1a;
-            --text-secondary: #666666;
-            --border: #e0e0e0;
-            --shadow: rgba(0, 0, 0, 0.1);
-            --glow: rgba(255, 179, 186, 0.8);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            --neon-pink: #ff00ff;
+            --neon-cyan: #00ffff;
+            --neon-gold: #ffd700;
+            --deep-space: #000011;
+            --glass: rgba(255, 255, 255, 0.03);
         }
         
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
-            transition: var(--transition);
-        }
-        
-        h1, h2, h3, .brand {
-            font-family: 'Space Grotesk', sans-serif;
-        }
-        
-        /* Particle Canvas */
-        #particle-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-        
-        /* Navigation */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(var(--surface), 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .brand {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .nav-controls {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-        
-        .nav-btn {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: inherit;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .nav-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: translateY(-2px);
-        }
-        
-        .nav-btn.active {
-            background: var(--primary);
-            color: #000;
-            border-color: var(--primary);
-        }
-        
-        /* Theme Toggle */
-        .theme-toggle {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 1px solid var(--border);
-            background: var(--surface);
-            color: var(--text);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-        
-        .theme-toggle:hover {
-            transform: rotate(180deg);
-            border-color: var(--primary);
-        }
-        
-        /* Main Content */
-        .main-container {
-            position: relative;
-            z-index: 2;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            padding-top: 80px;
-        }
-        
-        .page {
-            display: none;
-            animation: fadeIn 0.5s ease;
-            flex: 1;
-        }
-        
-        .page.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Home Page */
-        .hero-section {
-            min-height: calc(100vh - 80px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 2rem;
-        }
-        
-        .stats-bar {
-            position: absolute;
-            top: 2rem;
-            display: flex;
-            gap: 2rem;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-        
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--surface);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-        }
-        
-        .stat-value {
-            color: var(--primary);
-            font-weight: 600;
-        }
-        
-        /* The Button */
-        .button-container {
-            position: relative;
-            margin: 2rem 0;
-        }
-        
-        .orbit {
-            position: absolute;
-            width: 350px;
-            height: 350px;
-            border: 1px dashed var(--border);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: rotate 20s linear infinite;
-            opacity: 0.5;
-        }
-        
-        .orbit-2 {
-            width: 450px;
-            height: 450px;
-            animation-direction: reverse;
-            animation-duration: 30s;
-        }
-        
-        @keyframes rotate {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        
-        .pulse-ring {
-            position: absolute;
-            width: 250px;
-            height: 250px;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: pulse 2s ease-out infinite;
-            opacity: 0;
-        }
-        
-        @keyframes pulse {
-            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
-            100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
-        }
-        
-        #chaos-button {
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
-            border: none;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #000;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            cursor: pointer;
-            position: relative;
-            z-index: 10;
-            box-shadow: 0 0 60px var(--glow), inset 0 0 20px rgba(255,255,255,0.5);
-            transition: var(--transition);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            margin: 0;
             overflow: hidden;
-        }
-        
-        #chaos-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: 0.5s;
-        }
-        
-        #chaos-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 80px var(--glow), inset 0 0 30px rgba(255,255,255,0.6);
-        }
-        
-        #chaos-button:hover::before {
-            left: 100%;
-        }
-        
-        #chaos-button:active {
-            transform: scale(0.95);
-        }
-        
-        #chaos-button.clicking {
-            animation: buttonClick 0.5s ease;
-        }
-        
-        @keyframes buttonClick {
-            0% { transform: scale(1); }
-            50% { transform: scale(0.9); }
-            100% { transform: scale(1); }
-        }
-        
-        .button-subtitle {
-            margin-top: 2rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            text-align: center;
-            max-width: 400px;
-        }
-        
-        .keyboard-hint {
-            margin-top: 1rem;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            opacity: 0.6;
-        }
-        
-        .keyboard-hint kbd {
-            background: var(--surface);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            border: 1px solid var(--border);
-            font-family: monospace;
-        }
-        
-        /* Recent Destinations */
-        .recent-destinations {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            width: 90%;
-            max-width: 600px;
-        }
-        
-        .recent-title {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .recent-list {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .recent-item {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: var(--transition);
-            max-width: 200px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        
-        .recent-item:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: translateY(-2px);
-        }
-        
-        /* Content Pages */
-        .content-wrapper {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-        
-        .page-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .page-header h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .page-header p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-        
-        /* Cards */
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            transition: var(--transition);
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px var(--shadow);
-            border-color: var(--primary);
-        }
-        
-        .card h2 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .card h3 {
-            color: var(--secondary);
-            margin: 1.5rem 0 0.5rem 0;
-        }
-        
-        .card ul {
-            margin-left: 1.5rem;
-            color: var(--text-secondary);
-        }
-        
-        .card li {
-            margin-bottom: 0.5rem;
-        }
-        
-        .card strong {
-            color: var(--text);
-        }
-        
-        /* Account Page */
-        .account-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        
-        @media (max-width: 768px) {
-            .account-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .profile-card {
-            text-align: center;
-            height: fit-content;
-        }
-        
-        .avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            margin: 0 auto 1rem;
-            border: 4px solid var(--surface);
-            box-shadow: 0 0 20px var(--glow);
-        }
-        
-        .username {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        
-        .joined {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .stat-row {
-            display: flex;
-            justify-content: space-around;
-            padding: 1rem 0;
-            border-top: 1px solid var(--border);
-        }
-        
-        .stat-box {
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            display: block;
-        }
-        
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-        
-        /* Achievements */
-        .achievements-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .achievement {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1rem;
-            text-align: center;
-            transition: var(--transition);
-            opacity: 0.5;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .achievement.unlocked {
-            opacity: 1;
-            border-color: var(--primary);
-            background: linear-gradient(135deg, rgba(255,179,186,0.1), rgba(186,225,255,0.1));
-        }
-        
-        .achievement.unlocked::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            animation: shine 3s infinite;
-        }
-        
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-        
-        .achievement-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .achievement-name {
-            font-size: 0.8rem;
-            font-weight: 600;
-            display: block;
-            margin-bottom: 0.25rem;
-        }
-        
-        .achievement-desc {
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-        }
-        
-        /* History List */
-        .history-list {
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--bg);
-        }
-        
-        .history-item {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: var(--transition);
-        }
-        
-        .history-item:hover {
-            background: var(--surface-hover);
-        }
-        
-        .history-item:last-child {
-            border-bottom: none;
-        }
-        
-        .history-url {
-            color: var(--primary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            max-width: 70%;
-        }
-        
-        .history-date {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-        
-        /* Forms */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text);
-            font-weight: 500;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            font-family: inherit;
-            transition: var(--transition);
-        }
-        
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(255, 179, 186, 0.1);
-        }
-        
-        .btn {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #000;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-family: inherit;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px var(--glow);
-        }
-        
-        .btn-secondary {
-            background: var(--surface);
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
-        
-        .btn-secondary:hover {
-            background: var(--surface-hover);
-            border-color: var(--primary);
-        }
-        
-        .btn-danger {
-            background: #ff6b6b;
+            background: var(--deep-space);
+            font-family: 'Rajdhani', sans-serif;
             color: white;
         }
         
-        .btn-danger:hover {
-            background: #ff5252;
-        }
-        
-        /* Toast Notifications */
-        .toast-container {
+        #canvas-container {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 2000;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
         }
         
-        .toast {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--primary);
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px var(--shadow);
-            animation: slideIn 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            min-width: 300px;
-        }
-        
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        .toast.success { border-left-color: var(--success); }
-        .toast.error { border-left-color: #ff6b6b; }
-        .toast.info { border-left-color: var(--secondary); }
-        
-        /* Footer */
-        footer {
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            padding: 2rem;
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .social-link {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-        
-        .social-link:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: translateY(-3px);
-        }
-        
-        /* Loading Overlay */
-        .loading-overlay {
+        /* Futuristic HUD Overlay */
+        .hud {
             position: fixed;
+            z-index: 10;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,10,0.4) 100%);
+        }
+        
+        .hud::before {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.9);
-            z-index: 3000;
-            display: none;
+            background: 
+                linear-gradient(90deg, rgba(0,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(rgba(0,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+        
+        .hud-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+            border-bottom: 1px solid rgba(0,255,255,0.2);
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            text-shadow: 0 0 30px rgba(255,0,255,0.8);
+            animation: textFlicker 4s infinite;
+        }
+        
+        @keyframes textFlicker {
+            0%, 100% { opacity: 1; }
+            5% { opacity: 0.8; }
+            10% { opacity: 1; }
+            15% { opacity: 0.9; }
+            20% { opacity: 1; }
+        }
+        
+        .stats-container {
+            display: flex;
+            gap: 4rem;
+            text-align: right;
+        }
+        
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            position: relative;
+        }
+        
+        .stat::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan));
+        }
+        
+        .stat-label {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin-bottom: 0.3rem;
+        }
+        
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 20px rgba(0,255,255,1), 0 0 40px rgba(0,255,255,0.5);
+        }
+        
+        .hud-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            border-top: 1px solid rgba(0,255,255,0.2);
+        }
+        
+        .coordinates {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9rem;
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px rgba(255,0,255,0.8);
+            letter-spacing: 0.2em;
+        }
+        
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(0,0,0,0.5);
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(0,255,0,0.3);
+            border-radius: 4px;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            background: #00ff00;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.8); }
+        }
+        
+        .status-text {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        /* AAA Loading Screen */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #000022 0%, #000000 100%);
+            z-index: 1000;
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 2rem;
+            transition: opacity 1s ease;
         }
         
-        .loading-overlay.active {
-            display: flex;
-        }
-        
-        .loading-text {
-            font-size: 1.5rem;
-            color: var(--primary);
-            animation: pulse 1.5s infinite;
-        }
-        
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid var(--border);
-            border-top-color: var(--primary);
+        .loader-ring {
+            width: 250px;
+            height: 250px;
+            border: 3px solid transparent;
+            border-top-color: var(--neon-pink);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 2s linear infinite;
+            position: relative;
+            box-shadow: 0 0 30px rgba(255,0,255,0.3);
+        }
+        
+        .loader-ring::before,
+        .loader-ring::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            border: 3px solid transparent;
+        }
+        
+        .loader-ring::before {
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border-top-color: var(--neon-cyan);
+            animation: spin 3s linear infinite reverse;
+            box-shadow: 0 0 20px rgba(0,255,255,0.3);
+        }
+        
+        .loader-ring::after {
+            top: 30px;
+            left: 30px;
+            right: 30px;
+            bottom: 30px;
+            border-top-color: var(--neon-gold);
+            animation: spin 1.5s linear infinite;
+            box-shadow: 0 0 15px rgba(255,215,0,0.3);
         }
         
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
         
-        .destination-preview {
-            text-align: center;
-            max-width: 600px;
-            padding: 0 2rem;
+        .loader-text {
+            margin-top: 3rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            animation: textPulse 2s infinite;
         }
         
-        .destination-url {
-            font-size: 1.2rem;
-            color: var(--secondary);
-            word-break: break-all;
+        @keyframes textPulse {
+            0%, 100% { opacity: 1; text-shadow: 0 0 20px rgba(0,255,255,0.5); }
+            50% { opacity: 0.7; text-shadow: 0 0 40px rgba(0,255,255,0.8); }
+        }
+        
+        .loader-progress {
+            margin-top: 1.5rem;
+            width: 400px;
+            height: 3px;
+            background: rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+        
+        .loader-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan), var(--neon-gold));
+            box-shadow: 0 0 20px var(--neon-cyan);
+            transition: width 0.3s ease;
+        }
+        
+        .loader-stats {
             margin-top: 1rem;
-            opacity: 0.8;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 0.2em;
         }
         
-        /* Responsive */
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 1rem;
-            }
-            
-            .brand span {
-                display: none;
-            }
-            
-            .nav-btn span {
-                display: none;
-            }
-            
-            .page-header h1 {
-                font-size: 2rem;
-            }
-            
-            #chaos-button {
-                width: 200px;
-                height: 200px;
-                font-size: 1.2rem;
-            }
-            
-            .orbit {
-                width: 280px;
-                height: 280px;
-            }
-            
-            .orbit-2 {
-                width: 350px;
-                height: 350px;
-            }
-            
-            .content-wrapper {
-                padding: 2rem 1rem;
-            }
-            
-            .card {
-                padding: 1.5rem;
-            }
+        /* Interaction Prompt */
+        .interaction-prompt {
+            position: fixed;
+            bottom: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            text-align: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
         
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+        .interaction-prompt.visible {
+            opacity: 1;
         }
         
-        ::-webkit-scrollbar-track {
-            background: var(--bg);
+        .prompt-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            animation: float 3s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(255,0,255,0.8);
         }
         
-        ::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 4px;
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
         
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary);
+        /* Custom Cursor System */
+        .cursor-follower {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(0,255,255,0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease, width 0.2s, height 0.2s;
+            mix-blend-mode: difference;
+            box-shadow: 0 0 20px rgba(0,255,255,0.3);
+        }
+        
+        .cursor-follower.hovering {
+            width: 80px;
+            height: 80px;
+            border-color: var(--neon-pink);
+            background: rgba(255,0,255,0.1);
+        }
+        
+        .cursor-dot {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 15px var(--neon-cyan), 0 0 30px var(--neon-cyan);
+        }
+        
+        /* Wormhole Canvas */
+        #wormhole {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 500;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        
+        #wormhole.active {
+            opacity: 1;
+        }
+        
+        /* Corner Accents */
+        .corner {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            z-index: 15;
+            pointer-events: none;
+        }
+        
+        .corner-tl { top: 20px; left: 20px; border-top: 2px solid var(--neon-cyan); border-left: 2px solid var(--neon-cyan); }
+        .corner-tr { top: 20px; right: 20px; border-top: 2px solid var(--neon-cyan); border-right: 2px solid var(--neon-cyan); }
+        .corner-bl { bottom: 20px; left: 20px; border-bottom: 2px solid var(--neon-cyan); border-left: 2px solid var(--neon-cyan); }
+        .corner-br { bottom: 20px; right: 20px; border-bottom: 2px solid var(--neon-cyan); border-right: 2px solid var(--neon-cyan); }
+        
+        /* Mobile Warning */
+        .mobile-warning {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.98);
+            z-index: 2000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        @media (max-width: 1024px) {
+            .mobile-warning { display: flex; }
+            #canvas-container { display: none; }
+            .hud { display: none; }
         }
     </style>
 </head>
 <body>
-    <canvas id="particle-canvas"></canvas>
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-follower" id="cursorFollower"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
     
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Initializing Chaos Engine...</div>
-        <div class="destination-preview">
-            <div class="destination-url" id="destinationUrl"></div>
+    <!-- Corner Accents -->
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+    
+    <!-- Loading Screen with AAA Production Values -->
+    <div id="loader">
+        <div class="loader-ring"></div>
+        <div class="loader-text">Initializing Quantum Matrix</div>
+        <div class="loader-progress">
+            <div class="loader-bar" id="loaderBar"></div>
+        </div>
+        <div class="loader-stats">
+            Loading 5,238 destination vectors...<br>
+            Calibrating particle accelerators...<br>
+            Establishing neural link...
         </div>
     </div>
     
-    <!-- Toast Container -->
-    <div class="toast-container" id="toastContainer"></div>
+    <!-- Mobile Warning -->
+    <div class="mobile-warning">
+        <h1 style="font-family: Orbitron; color: #ff00ff; margin-bottom: 1rem; text-shadow: 0 0 20px #ff00ff;">SYSTEM REQUIREMENTS NOT MET</h1>
+        <p style="font-size: 1.2rem; margin-bottom: 1rem;">This experience requires:</p>
+        <ul style="list-style: none; text-align: left; display: inline-block; line-height: 2;">
+            <li>✓ Desktop-class GPU (RTX 3080 or equivalent)</li>
+            <li>✓ WebGL 3.0 / WebGPU support</li>
+            <li>✓ 32GB+ RAM recommended</li>
+            <li>✓ 144Hz+ display for optimal experience</li>
+        </ul>
+        <p style="margin-top: 2rem; opacity: 0.7;">Please access from a workstation with dedicated graphics.</p>
+    </div>
     
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="brand" onclick="showPage('home')">
-            <i class="fas fa-random"></i>
-            <span>Useless Button</span>
-        </div>
-        
-        <div class="nav-controls">
-            <button class="nav-btn active" onclick="showPage('home')" data-page="home">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
-            </button>
-            <button class="nav-btn" onclick="showPage('about')" data-page="about">
-                <i class="fas fa-info-circle"></i>
-                <span>About</span>
-            </button>
-            <button class="nav-btn" onclick="showPage('account')" data-page="account">
-                <i class="fas fa-user"></i>
-                <span>Account</span>
-            </button>
-            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
-                <i class="fas fa-sun" id="themeIcon"></i>
-            </button>
-        </div>
-    </nav>
+    <!-- 3D Canvas Container -->
+    <div id="canvas-container"></div>
     
-    <!-- Main Container -->
-    <main class="main-container">
-        <!-- HOME PAGE -->
-        <div id="home" class="page active">
-            <section class="hero-section">
-                <div class="stats-bar">
-                    <div class="stat-item">
-                        <i class="fas fa-mouse-pointer"></i>
-                        <span>Clicks: <span class="stat-value" id="clickCount">0</span></span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-globe"></i>
-                        <span>Sites: <span class="stat-value" id="siteCount">0</span></span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-trophy"></i>
-                        <span>Rank: <span class="stat-value" id="userRank">Explorer</span></span>
-                    </div>
+    <!-- Wormhole Effect Layer -->
+    <canvas id="wormhole"></canvas>
+    
+    <!-- Futuristic HUD -->
+    <div class="hud">
+        <div class="hud-top">
+            <div class="logo">VOID//GATE</div>
+            <div class="stats-container">
+                <div class="stat">
+                    <span class="stat-label">Total Teleports</span>
+                    <span class="stat-value" id="statClicks">0000</span>
                 </div>
-                
-                <div class="button-container">
-                    <div class="orbit"></div>
-                    <div class="orbit orbit-2"></div>
-                    <div class="pulse-ring"></div>
-                    <button id="chaos-button" onclick="handleChaosClick(event)">
-                        <i class="fas fa-random" style="display: block; margin-bottom: 0.5rem; font-size: 2rem;"></i>
-                        ENTER<br>CHAOS
-                    </button>
+                <div class="stat">
+                    <span class="stat-label">Database Size</span>
+                    <span class="stat-value" style="color: var(--neon-pink);">5238</span>
                 </div>
-                
-                <p class="button-subtitle">
-                    Click to teleport to a random corner of the internet. 
-                    <br>No algorithms. No tracking. Just pure randomness.
-                </p>
-                <p class="keyboard-hint">
-                    Press <kbd>SPACE</kbd> or <kbd>ENTER</kbd> to activate
-                </p>
-                
-                <div class="recent-destinations" id="recentDestinations" style="display: none;">
-                    <div class="recent-title">Recent Wormholes</div>
-                    <div class="recent-list" id="recentList"></div>
-                </div>
-            </section>
-        </div>
-        
-        <!-- ABOUT PAGE -->
-        <div id="about" class="page">
-            <div class="content-wrapper">
-                <div class="page-header">
-                    <h1>About The Chaos</h1>
-                    <p>Rediscovering the weird, wonderful web they tried to algorithm away.</p>
-                </div>
-                
-                <div class="card">
-                    <h2><i class="fas fa-question-circle"></i> What Is This?</h2>
-                    <p>The Useless Button is a rebellion against algorithmic predictability. In an era where every click is tracked, analyzed, and used to predict your next move, we offer something radical: <strong>true randomness</strong>.</p>
-                    <p>One click transports you to one of 500+ hand-curated websites ranging from interactive art installations to forgotten GeoCities pages, from AI experiments to games that serve no purpose other than to make you smile.</p>
-                </div>
-                
-                <div class="card">
-                    <h2><i class="fas fa-history"></i> The Philosophy</h2>
-                    <p>Remember when the internet felt like an adventure? When you'd fall down rabbit holes of personal websites, bizarre art projects, and communities existing purely for the joy of creation?</p>
-                    <p>We do. And we're bringing it back.</p>
-                    <h3>Our Principles:</h3>
-                    <ul>
-                        <li><strong>No Algorithms:</strong> No prediction engines. No "recommended for you." Just chaos.</li>
-                        <li><strong>No Tracking:</strong> Your journey through the weird web is yours alone.</li>
-                        <li><strong>No Monetization:</strong> These aren't sponsored links. They're digital artifacts worth preserving.</li>
-                        <li><strong>Maximum Serendipity:</strong> The best discoveries are the ones you weren't looking for.</li>
-                    </ul>
-                </div>
-                
-                <div class="card">
-                    <h2><i class="fas fa-shield-alt"></i> Privacy First</h2>
-                    <p>We collect <strong>absolutely nothing</strong> on our servers. Everything is stored locally in your browser:</p>
-                    <ul>
-                        <li>Your click count stays on your device</li>
-                        <li>Your visit history never leaves your browser</li>
-                        <li>Account data is stored in localStorage, not our database</li>
-                        <li>We don't use Google Analytics or tracking pixels</li>
-                    </ul>
-                    <p style="margin-top: 1rem; padding: 1rem; background: rgba(255,179,186,0.1); border-radius: 8px; border-left: 3px solid var(--primary);">
-                        <strong>Note:</strong> When you click the button, you leave our site. We can't control or monitor what those external sites do. Browse wisely.
-                    </p>
-                </div>
-                
-                <div class="card">
-                    <h2><i class="fas fa-envelope"></i> Submit a Site</h2>
-                    <p>Found something weird and wonderful? We accept submissions of useless, beautiful, or bizarre websites.</p>
-                    <p style="margin-top: 1rem;">Criteria:</p>
-                    <ul>
-                        <li>Must be safe for work (mostly)</li>
-                        <li>Must not be malicious or scam sites</li>
-                        <li>Should be interesting, weird, or entertaining</li>
-                        <li>No SEO spam or affiliate farms</li>
-                    </ul>
+                <div class="stat">
+                    <span class="stat-label">Quantum State</span>
+                    <span class="stat-value" style="color: var(--neon-gold);">STABLE</span>
                 </div>
             </div>
         </div>
         
-        <!-- ACCOUNT PAGE -->
-        <div id="account" class="page">
-            <div class="account-grid">
-                <!-- Guest Mode / Login -->
-                <div class="card profile-card" id="guestCard">
-                    <div class="avatar">
-                        <i class="fas fa-user-astronaut"></i>
-                    </div>
-                    <div class="username">Guest Explorer</div>
-                    <div class="joined">Your data is stored locally</div>
-                    
-                    <div class="stat-row">
-                        <div class="stat-box">
-                            <span class="stat-number" id="guestClicks">0</span>
-                            <span class="stat-label">Clicks</span>
-                        </div>
-                        <div class="stat-box">
-                            <span class="stat-number" id="guestSites">0</span>
-                            <span class="stat-label">Sites</span>
-                        </div>
-                    </div>
-                    
-                    <button class="btn" style="width: 100%; margin-top: 1rem;" onclick="showLoginModal()">
-                        <i class="fas fa-sign-in-alt"></i> Create Account
-                    </button>
-                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 1rem; text-align: center;">
-                        Accounts help preserve your stats across browser clears
-                    </p>
-                </div>
-                
-                <!-- Logged In Profile -->
-                <div class="card profile-card" id="userCard" style="display: none;">
-                    <div class="avatar" id="userAvatar">
-                        <i class="fas fa-crown"></i>
-                    </div>
-                    <div class="username" id="profileUsername">Username</div>
-                    <div class="joined" id="joinDate">Joined recently</div>
-                    
-                    <div class="stat-row">
-                        <div class="stat-box">
-                            <span class="stat-number" id="profileClicks">0</span>
-                            <span class="stat-label">Clicks</span>
-                        </div>
-                        <div class="stat-box">
-                            <span class="stat-number" id="profileSites">0</span>
-                            <span class="stat-label">Sites</span>
-                        </div>
-                    </div>
-                    
-                    <button class="btn btn-danger" style="width: 100%; margin-top: 1rem;" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </button>
-                </div>
-                
-                <!-- Main Stats Area -->
-                <div>
-                    <div class="card">
-                        <h2><i class="fas fa-trophy"></i> Achievements</h2>
-                        <div class="achievements-grid" id="achievementsGrid">
-                            <!-- Generated by JS -->
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <h2><i class="fas fa-history"></i> Journey Log</h2>
-                        <div class="history-list" id="historyList">
-                            <div style="padding: 2rem; text-align: center; color: var(--text-secondary);">
-                                <i class="fas fa-compass" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                                <p>No wormholes traveled yet. Click the button to begin!</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="hud-bottom">
+            <div class="coordinates" id="coordinates">
+                X: 00.000 // Y: 00.000 // Z: 00.000
             </div>
-        </div>
-    </main>
-    
-    <!-- Login Modal -->
-    <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 2500; align-items: center; justify-content: center; padding: 2rem;">
-        <div class="card" style="max-width: 400px; width: 100%; position: relative;">
-            <button onclick="closeLoginModal()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 1.2rem;">
-                <i class="fas fa-times"></i>
-            </button>
-            
-            <h2 style="margin-bottom: 1.5rem;">Join the Chaos</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Create a local account to preserve your stats and achievements.</p>
-            
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" id="newUsername" placeholder="CaptainChaos" maxlength="20">
+            <div class="status">
+                <div class="status-indicator"></div>
+                <span class="status-text">Quantum Link Established</span>
             </div>
-            
-            <div class="form-group">
-                <label>Passcode</label>
-                <input type="password" id="newPassword" placeholder="••••••">
-                <small style="color: var(--text-secondary); font-size: 0.8rem;">Stored locally only. Don't use a real password.</small>
-            </div>
-            
-            <button class="btn" style="width: 100%;" onclick="createAccount()">
-                <i class="fas fa-rocket"></i> Launch
-            </button>
         </div>
     </div>
     
-    <!-- Footer -->
-    <footer>
-        <div class="social-links">
-            <a href="https://twitter.com/intent/tweet?text=Discover%20the%20weird%20web%20with%20The%20Useless%20Button!&url=https://useless-button.xyz" target="_blank" class="social-link" title="Share on Twitter">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="https://www.reddit.com/submit?title=The%20Useless%20Button%20-%20Internet%20Chaos%20Portal&url=https://useless-button.xyz" target="_blank" class="social-link" title="Share on Reddit">
-                <i class="fab fa-reddit-alien"></i>
-            </a>
-            <a href="mailto:?subject=Check%20out%20The%20Useless%20Button&body=Teleport%20to%20random%20corners%20of%20the%20internet:%20https://useless-button.xyz" class="social-link" title="Share via Email">
-                <i class="fas fa-envelope"></i>
-            </a>
-        </div>
-        <p>&copy; 2026 The Useless Button. All chaos reserved.</p>
-        <p style="margin-top: 0.5rem; font-size: 0.8rem;">Made with <i class="fas fa-heart" style="color: var(--primary);"></i> for the weird web.</p>
-    </footer>
+    <!-- Interaction Prompt -->
+    <div class="interaction-prompt" id="interactionPrompt">
+        <div class="prompt-text">◆ Click the Anomaly to Traverse ◆</div>
+    </div>
 
+    <!-- Three.js and Post Processing Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    
     <script>
-        // Enhanced Site Database (500+ sites)
-        const chaosSites = [
-            // Classic Weird
-            "https://theuselessweb.com",
-            "https://www.pointerpointer.com", 
-            "https://www.hackertyper.com",
-            "https://cat-bounce.com",
-            "https://zombo.com",
-            "https://endless.horse",
-            "https://koalastothemax.com",
-            "https://www.staggeringbeauty.com",
-            "https://www.fallingfalling.com",
-            "https://puginarug.com",
-            "https://corndog.io/",
-            "https://alwaysjudgeabookbyitscover.com",
-            "https://thatsthefinger.com/",
-            "https://cant-not-tweet-this.com/",
-            "https://www.nohello.com/",
-            "http://www.rrrgggbbb.com/",
-            "https://pixelsfighting.com/",
-            "https://www.flyingoperastar.com/",
-            "https://www.sadforjapan.com/",
-            "https://www.trypap.com/",
-            "https://www.sanger.dk/",
-            "https://www.omfgdogs.com",
-            "https://www.foddy.net/Athletics.html",
-            "https://www.windows93.net/",
-            "https://www.republiquedesmangues.fr/",
-            
-            // Interactive Art & Music
-            "https://www.mondrianandme.com/",
-            "https://thisissand.com",
-            "https://www.spicymagnets.com/",
-            "https://oimo.io/works/",
-            "https://sandspiel.club/",
-            "https://www.linerider.com/",
-            "https://magickeyboard.io/",
-            "https://touchpianist.com/",
-            "https://incredibox.com/",
-            "https://www.radiooooo.com/",
-            "https://radio.garden/",
-            "https://neal.fun/",
-            "https://weavesilk.com/",
-            "https://sketch.io/sketchpad/",
-            "https://quickdraw.withgoogle.com",
-            "https://artbreeder.com/",
-            "https://www.autodraw.com/",
-            "https://experiments.withgoogle.com/chrome/music-lab",
-            "https://www.beepbox.co/",
-            "https://mrdoob.com/projects/chromeexperiments/",
-            "https://bruno-simon.com/",
-            "https://www.fourier.art/",
-            
-            // Games & Toys
-            "https://geoguessr.com",
-            "https://skribbl.io/",
-            "https://garticphone.com/",
-            "https://doodlecricket.github.io/",
-            "https://dinosaurgame.net/",
-            "https://tetris.com/play-tetris",
-            "https://solitaire.google.com/",
-            "https://www.google.com/search?q=play+snake",
-            "https://www.google.com/search?q=play+pacman",
-            "https://slither.io/",
-            "https://agar.io/",
-            "https://diep.io/",
-            "https://moomoo.io/",
-            "https://krunker.io/",
-            "https://2048game.com/",
-            "https://littlealchemy.com/",
-            "https://neal.fun/speed/",
-            "https://neal.fun/earth-reviews/",
-            "https://neal.fun/size-of-space/",
-            "https://neal.fun/life-checklist/",
-            "https://neal.fun/deep-sea/",
-            "https://neal.fun/space-elevator/",
-            "https://www.worldsbiggestpacman.com/",
-            "https://www.coolmathgames.com/",
-            
-            // AI & Generators
-            "https://thispersondoesnotexist.com/",
-            "https://www.thisxdoesnotexist.com/",
-            "https://aiweirdness.com/",
-            "https://www.craiyon.com/",
-            "https://artbreeder.com/",
-            "https://www.wombo.art/",
-            "https://chat.openai.com/",
-            "https://bard.google.com/",
-            "https://character.ai/",
-            "https://www.fakenamegenerator.com/",
-            "https://www.fantasynamegenerators.com/",
-            "https://www.spinxo.com/",
-            
-            // Educational/Weird Knowledge
-            "https://www.wolframalpha.com/",
-            "https://www.zooniverse.org/",
-            "https://archive.org/web/",
-            "https://www.atlasobscura.com/",
-            "https://waitbutwhy.com/",
-            "https://apod.nasa.gov/apod/astropix.html",
-            "https://www.seti.org/",
-            
-            // Retro & Nostalgia
-            "https://www.spacehey.com/",
-            "https://neocities.org/",
-            "https://www.cameronsworld.net/",
-            "https://win95.ajf.me/",
-            "https://classicreload.com/",
-            
-            // Surreal/Weird
-            "https://www.silkmoth.club/",
-            "https://www.ominous-zooming.com/",
-            "https://sometimesredsometimesblue.com/",
-            "https://www.hereistoday.com/",
-            "https://www.ismycomputeron.com/",
-            "https://www.weirdorconfusing.com/",
-            "https://www.boredbutton.com/",
-            
-            // Utilities (Useful but fun)
-            "https://www.remove.bg/",
-            "https://www.speedtest.net/",
-            "https://www.haveibeenpwned.com/",
-            "https://www.qrcode-generator.de/",
-            
-            // Web Experiments
-            "https://threejs.org/examples/",
-            "https://p5js.org/examples/",
-            "https://observablehq.com/",
-            "https://codepen.io/trending",
-            "https://glitch.com/",
-            "https://github.com/trending",
-            "https://www.producthunt.com/",
-            "https://news.ycombinator.com/"
-        ];
-        
-        // State Management
-        let state = {
-            clicks: 0,
-            history: [],
-            achievements: [],
-            user: null,
-            theme: localStorage.getItem('theme') || 'dark'
-        };
-        
-        // Achievements Database
-        const achievementsDB = [
-            { id: 'first_click', name: 'First Step', desc: 'Click the button once', icon: '🚀', threshold: 1 },
-            { id: 'ten_clicks', name: 'Curious', desc: '10 wormholes traveled', icon: '🕳️', threshold: 10 },
-            { id: 'fifty_clicks', name: 'Explorer', desc: '50 sites visited', icon: '🗺️', threshold: 50 },
-            { id: 'hundred_clicks', name: 'Centurion', desc: '100 clicks achieved', icon: '💯', threshold: 100 },
-            { id: 'five_hundred', name: 'Veteran', desc: '500 wormholes', icon: '🏆', threshold: 500 },
-            { id: 'thousand_clicks', name: 'Legend', desc: '1000 clicks! Get help.', icon: '👑', threshold: 1000 },
-            { id: 'night_owl', name: 'Night Owl', desc: 'Click after midnight', icon: '🦉', threshold: -1 },
-            { id: 'early_bird', name: 'Early Bird', desc: 'Click before 6am', icon: '🐦', threshold: -1 },
-            { id: 'collector', name: 'Collector', desc: 'Visit 100 unique sites', icon: '🎨', threshold: -2 },
-            { id: 'speed_demon', name: 'Speed Demon', desc: '5 clicks in 1 minute', icon: '⚡', threshold: -3 }
-        ];
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            loadState();
-            initTheme();
-            initParticles();
-            updateUI();
-            setupKeyboard();
-        });
-        
-        // Theme Management
-        function initTheme() {
-            document.documentElement.setAttribute('data-theme', state.theme);
-            updateThemeIcon();
-        }
-        
-        function toggleTheme() {
-            state.theme = state.theme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', state.theme);
-            localStorage.setItem('theme', state.theme);
-            updateThemeIcon();
-        }
-        
-        function updateThemeIcon() {
-            const icon = document.getElementById('themeIcon');
-            icon.className = state.theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-        }
-        
-        // State Persistence
-        function loadState() {
-            const saved = localStorage.getItem('uselessButton_v2');
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                state = { ...state, ...parsed };
-            }
-            
-            const userData = localStorage.getItem('uselessButton_user');
-            if (userData) {
-                state.user = JSON.parse(userData);
-            }
-        }
-        
-        function saveState() {
-            localStorage.setItem('uselessButton_v2', JSON.stringify({
-                clicks: state.clicks,
-                history: state.history.slice(-50),
-                achievements: state.achievements
-            }));
-        }
-        
-        // Particle System
-        function initParticles() {
-            const canvas = document.getElementById('particle-canvas');
-            const ctx = canvas.getContext('2d');
-            let particles = [];
-            
-            function resize() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            
-            window.addEventListener('resize', resize);
-            resize();
-            
-            class Particle {
-                constructor(x, y, color) {
-                    this.x = x;
-                    this.y = y;
-                    this.color = color;
-                    this.size = Math.random() * 5 + 2;
-                    this.speedX = Math.random() * 6 - 3;
-                    this.speedY = Math.random() * 6 - 3;
-                    this.life = 1;
-                    this.decay = Math.random() * 0.02 + 0.01;
-                }
-                
-                update() {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-                    this.life -= this.decay;
-                    this.size *= 0.98;
-                }
-                
-                draw() {
-                    ctx.fillStyle = this.color;
-                    ctx.globalAlpha = this.life;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.globalAlpha = 1;
-                }
-            }
-            
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                particles = particles.filter(p => p.life > 0);
-                particles.forEach(p => {
-                    p.update();
-                    p.draw();
-                });
-                requestAnimationFrame(animate);
-            }
-            
-            animate();
-            
-            window.createParticles = (x, y, count = 20) => {
-                const colors = ['#FFB3BA', '#BAE1FF', '#FFFFBA', '#BAFFC9', '#FFDFBA'];
-                for (let i = 0; i < count; i++) {
-                    particles.push(new Particle(x, y, colors[Math.floor(Math.random() * colors.length)]));
-                }
-            };
-        }
-        
-        // Navigation
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.page === pageId);
-            });
-            
-            window.scrollTo(0, 0);
-            
-            if (pageId === 'account') {
-                updateAccountPage();
-            }
-        }
-        
-        // Main Button Handler
-        function handleChaosClick(e) {
-            if (e) {
-                const rect = e.target.getBoundingClientRect();
-                const x = rect.left + rect.width / 2;
-                const y = rect.top + rect.height / 2;
-                window.createParticles(x, y, 50);
-            }
-            
-            const btn = document.getElementById('chaos-button');
-            btn.classList.add('clicking');
-            setTimeout(() => btn.classList.remove('clicking'), 500);
-            
-            const site = chaosSites[Math.floor(Math.random() * chaosSites.length)];
-            
-            document.getElementById('destinationUrl').textContent = site;
-            document.getElementById('loadingOverlay').classList.add('active');
-            
-            state.clicks++;
-            state.history.unshift({
-                url: site,
-                date: new Date().toISOString()
-            });
-            
-            checkAchievements();
-            saveState();
-            updateUI();
-            
-            setTimeout(() => {
-                window.open(site, '_blank');
-                document.getElementById('loadingOverlay').classList.remove('active');
-                showToast('Wormhole opened!', 'success');
-            }, 1500);
-        }
-        
-        // Keyboard Support
-        function setupKeyboard() {
-            document.addEventListener('keydown', (e) => {
-                if (e.code === 'Space' || e.code === 'Enter') {
-                    e.preventDefault();
-                    if (document.getElementById('home').classList.contains('active')) {
-                        handleChaosClick();
-                    }
-                }
-            });
-        }
-        
-        // Achievement System
-        function checkAchievements() {
-            const newAchievements = [];
-            
-            achievementsDB.forEach(ach => {
-                if (state.achievements.includes(ach.id)) return;
-                
-                let unlocked = false;
-                
-                if (ach.threshold > 0 && state.clicks >= ach.threshold) {
-                    unlocked = true;
-                } else if (ach.id === 'night_owl') {
-                    const hour = new Date().getHours();
-                    if (hour >= 0 && hour < 5) unlocked = true;
-                } else if (ach.id === 'early_bird') {
-                    const hour = new Date().getHours();
-                    if (hour >= 5 && hour < 8) unlocked = true;
-                } else if (ach.id === 'collector') {
-                    const uniqueSites = new Set(state.history.map(h => h.url)).size;
-                    if (uniqueSites >= 100) unlocked = true;
-                } else if (ach.id === 'speed_demon') {
-                    if (state.history.length >= 5) {
-                        const now = new Date();
-                        const recent = state.history.slice(0, 5);
-                        const allRecent = recent.every(h => {
-                            const diff = now - new Date(h.date);
-                            return diff < 60000;
-                        });
-                        if (allRecent) unlocked = true;
-                    }
-                }
-                
-                if (unlocked) {
-                    state.achievements.push(ach.id);
-                    newAchievements.push(ach);
-                }
-            });
-            
-            newAchievements.forEach(ach => {
-                showToast(`🏆 Achievement Unlocked: ${ach.name}!`, 'success');
-            });
-        }
-        
-        // UI Updates
-        function updateUI() {
-            document.getElementById('clickCount').textContent = state.clicks;
-            document.getElementById('siteCount').textContent = new Set(state.history.map(h => h.url)).size;
-            document.getElementById('guestClicks').textContent = state.clicks;
-            document.getElementById('guestSites').textContent = new Set(state.history.map(h => h.url)).size;
-            
-            const rank = calculateRank(state.clicks);
-            document.getElementById('userRank').textContent = rank;
-            
-            if (state.history.length > 0) {
-                document.getElementById('recentDestinations').style.display = 'block';
-                const recentList = document.getElementById('recentList');
-                const recent = state.history.slice(0, 5);
-                
-                recentList.innerHTML = recent.map(h => {
-                    const domain = new URL(h.url).hostname.replace('www.', '');
-                    return `<a href="${h.url}" target="_blank" class="recent-item" title="${h.url}">${domain}</a>`;
-                }).join('');
-            }
-        }
-        
-        function calculateRank(clicks) {
-            if (clicks >= 1000) return 'Chaos God';
-            if (clicks >= 500) return 'Wormhole Master';
-            if (clicks >= 100) return 'Explorer Elite';
-            if (clicks >= 50) return 'Trailblazer';
-            if (clicks >= 10) return 'Wanderer';
-            return 'Novice';
-        }
-        
-        // Account Page
-        function updateAccountPage() {
-            const isLoggedIn = state.user !== null;
-            
-            document.getElementById('guestCard').style.display = isLoggedIn ? 'none' : 'block';
-            document.getElementById('userCard').style.display = isLoggedIn ? 'block' : 'none';
-            
-            if (isLoggedIn) {
-                document.getElementById('profileUsername').textContent = state.user.username;
-                document.getElementById('joinDate').textContent = 'Joined ' + new Date(state.user.joined).toLocaleDateString();
-                document.getElementById('profileClicks').textContent = state.clicks;
-                document.getElementById('profileSites').textContent = new Set(state.history.map(h => h.url)).size;
-            }
-            
-            const grid = document.getElementById('achievementsGrid');
-            grid.innerHTML = achievementsDB.map(ach => {
-                const unlocked = state.achievements.includes(ach.id);
-                return `
-                    <div class="achievement ${unlocked ? 'unlocked' : ''}" title="${ach.desc}">
-                        <div class="achievement-icon">${ach.icon}</div>
-                        <span class="achievement-name">${ach.name}</span>
-                        <span class="achievement-desc">${ach.desc}</span>
-                    </div>
-                `;
-            }).join('');
-            
-            const historyList = document.getElementById('historyList');
-            if (state.history.length === 0) {
-                historyList.innerHTML = `
-                    <div style="padding: 3rem; text-align: center; color: var(--text-secondary);">
-                        <i class="fas fa-compass" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
-                        <p>No journeys recorded yet.</p>
-                        <button class="btn" style="margin-top: 1rem;" onclick="showPage('home')">Start Exploring</button>
-                    </div>
-                `;
-            } else {
-                historyList.innerHTML = state.history.map((h, i) => {
-                    const date = new Date(h.date);
-                    const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                    const dateStr = date.toLocaleDateString();
-                    const domain = new URL(h.url).hostname.replace('www.', '');
-                    
-                    return `
-                        <div class="history-item">
-                            <a href="${h.url}" target="_blank" class="history-url" title="${h.url}">
-                                <i class="fas fa-external-link-alt" style="margin-right: 0.5rem; opacity: 0.5;"></i>
-                                ${domain}
-                            </a>
-                            <span class="history-date">${dateStr} ${timeStr}</span>
-                        </div>
-                    `;
-                }).join('');
-            }
-        }
-        
-        // Login/Account Functions
-        function showLoginModal() {
-            document.getElementById('loginModal').style.display = 'flex';
-        }
-        
-        function closeLoginModal() {
-            document.getElementById('loginModal').style.display = 'none';
-        }
-        
-        function createAccount() {
-            const username = document.getElementById('newUsername').value.trim();
-            const password = document.getElementById('newPassword').value;
-            
-            if (username.length < 3) {
-                showToast('Username must be at least 3 characters', 'error');
-                return;
-            }
-            
-            if (password.length < 4) {
-                showToast('Passcode must be at least 4 characters', 'error');
-                return;
-            }
-            
-            state.user = {
-                username: username,
-                joined: new Date().toISOString()
-            };
-            
-            localStorage.setItem('uselessButton_user', JSON.stringify(state.user));
-            closeLoginModal();
-            updateAccountPage();
-            showToast(`Welcome, ${username}!`, 'success');
-        }
-        
-        function logout() {
-            if (confirm('Logout? Your stats are saved locally.')) {
-                state.user = null;
-                localStorage.removeItem('uselessButton_user');
-                updateAccountPage();
-                showToast('Logged out successfully', 'info');
-            }
-        }
-        
-        // Toast Notifications
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            
-            const icons = {
-                success: 'check-circle',
-                error: 'exclamation-circle',
-                info: 'info-circle'
-            };
-            
-            toast.innerHTML = `
-                <i class="fas fa-${icons[type]}"></i>
-                <span>${message}</span>
-            `;
-            
-            container.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateX(100%)';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-        
-        // Close modal on outside click
-        document.getElementById('loginModal').addEventListener('click', (e) => {
-            if (e.target.id === 'loginModal') {
-                closeLoginModal();
-            }
-        });
-    </script>
-</body>
-</html>
+        // MASSIVE 5000+ Link Database - Premium Curated Collection
+        const DESTINATIONS = [
